@@ -1,0 +1,19 @@
+# Secrets - never commit
+cookies/
+*.txt.cookies
+
+# Scratch / generated data
+data/raw/
+data/tmp_audio/
+logs/
+state/processed.json
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# OS
+.DS_Store

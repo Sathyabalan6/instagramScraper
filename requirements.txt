@@ -1,0 +1,6 @@
+instaloader>=4.11
+yt-dlp>=2024.1
+openai-whisper>=20231117
+pyyaml>=6.0
+rapidfuzz>=3.6
+tqdm>=4.66

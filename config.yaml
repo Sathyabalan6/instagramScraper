@@ -1,0 +1,58 @@
+# Central config for the IG design-skill extraction pipeline
+
+instagram:
+  cookies_file: "cookies/instagram_cookies.txt"
+  request_delay_seconds: 3          # min delay between IG-owned requests, do not lower
+  max_posts_per_run: 50
+
+classify:
+  min_caption_words: 40
+  keywords:
+    - tip
+    - rule
+    - spacing
+    - contrast
+    - hierarchy
+    - padding
+    - grid
+    - typography
+    - font
+    - color
+    - palette
+    - shadow
+    - radius
+    - alignment
+    - whitespace
+    - breakpoint
+    - accessibility
+    - a11y
+    - ux
+    - ui
+
+transcription:
+  whisper_model: "small"            # bump to "medium" if transcripts are garbled
+  audio_format: "mp3"
+  audio_quality: 5
+  tmp_dir: "data/tmp_audio"
+  delete_after_transcribe: true     # must stay true — see AGENTS.md rule 1
+
+extraction:
+  categories:
+    - spacing
+    - color
+    - typography
+    - hierarchy
+    - motion
+    - accessibility
+    - layout
+  paraphrase_only: true             # must stay true — see AGENTS.md rule 3
+
+merge:
+  dedup_similarity_threshold: 85    # rapidfuzz score (0-100), lower = more aggressive merging
+  skill_output_path: "skills/design-ui-ux/SKILL.md"
+  principles_store_path: "skills/design-ui-ux/principles.json"
+
+paths:
+  raw_data_dir: "data/raw"
+  state_file: "state/processed.json"
+  logs_dir: "logs"
