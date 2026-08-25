@@ -57,13 +57,32 @@ def resolve_cookie_file(cookies_file: str) -> str:
 def download_audio_only(
     url: str,
     output_template: str,
-    cookies_file: str = None
+    cookies_file: str = None,
+    direct_video_url: str = None
 ) -> str:
     """
-    Download audio-only stream from Instagram video using yt-dlp.
-    Never downloads or persists full video.
+    Download audio-only stream from Instagram video.
+    Never downloads or persists full video to disk.
+    Tries ffmpeg on direct video_url stream first if available, falls back to yt-dlp -x.
     Returns path to the downloaded audio file if successful.
     """
+    out_file = output_template.replace("%(id)s.%(ext)s", "audio.mp3")
+
+    # Method 1: Extract audio stream directly via ffmpeg without saving video
+    if direct_video_url:
+        try:
+            cmd_ffmpeg = [
+                "ffmpeg", "-y", "-i", direct_video_url,
+                "-vn", "-acodec", "libmp3lame", "-q:a", "5",
+                out_file
+            ]
+            res = subprocess.run(cmd_ffmpeg, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            if res.returncode == 0 and os.path.exists(out_file) and os.path.getsize(out_file) > 0:
+                return out_file
+        except Exception as e:
+            logger.debug(f"Direct stream ffmpeg extraction failed: {e}")
+
+    # Method 2: Fallback to yt-dlp audio-only extraction (-x)
     resolved_cookies = resolve_cookie_file(cookies_file)
     cmd = [
         "yt-dlp",
@@ -188,7 +207,12 @@ def transcribe_posts(
         logger.info(f"Transcribing audio [{idx}/{len(audio_posts)}]: {shortcode}...")
         downloaded_audio_path = None
         try:
-            downloaded_audio_path = download_audio_only(url, output_template, cookies_file)
+            downloaded_audio_path = download_audio_only(
+                url=url,
+                output_template=output_template,
+                cookies_file=cookies_file,
+                direct_video_url=post.get("video_url")
+            )
             if downloaded_audio_path and os.path.exists(downloaded_audio_path):
                 transcript = transcribe_single_audio(downloaded_audio_path, model_name=whisper_model)
                 post["transcript"] = transcript

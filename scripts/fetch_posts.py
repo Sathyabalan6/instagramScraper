@@ -117,6 +117,144 @@ def setup_instaloader(cookies_file: str = None) -> instaloader.Instaloader:
     return loader
 
 
+def fetch_posts_direct_api(
+    handle: str,
+    limit: int = 50,
+    cookies_file: str = None,
+    request_delay: int = 3,
+    processed_ids: set = None
+) -> list:
+    """
+    Fallback fetcher using direct authenticated Instagram endpoints:
+    1. Resolve user ID via web search endpoint
+    2. Paginate user feed via /api/v1/feed/user/{user_id}/
+    """
+    import requests
+    import datetime
+
+    if processed_ids is None:
+        processed_ids = set()
+
+    resolved_cookie_file = resolve_cookie_file(cookies_file)
+    session = requests.Session()
+    if resolved_cookie_file and os.path.exists(resolved_cookie_file):
+        try:
+            jar = MozillaCookieJar(resolved_cookie_file)
+            jar.load(ignore_discard=True, ignore_expires=True)
+            session.cookies = jar
+        except Exception as e:
+            logger.warning(f"Failed to load cookies for direct API: {e}")
+
+    session.headers.update({
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+        "X-IG-App-ID": "936619743392459",
+        "X-ASBD-ID": "129477",
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "*/*",
+    })
+
+    # Step 1: Resolve user pk
+    logger.info(f"Resolving user ID for @{handle} via Instagram search endpoint...")
+    search_url = f"https://www.instagram.com/api/v1/web/search/topsearch/?context=blended&query={handle}"
+    user_id = None
+    try:
+        r = session.get(search_url, timeout=15)
+        if r.status_code == 200:
+            users = r.json().get("users", [])
+            for u in users:
+                user_obj = u.get("user", {})
+                if user_obj.get("username", "").lower() == handle.lower():
+                    user_id = str(user_obj.get("pk"))
+                    break
+            if not user_id and users:
+                user_id = str(users[0].get("user", {}).get("pk"))
+    except Exception as e:
+        logger.warning(f"Search endpoint error: {e}")
+
+    if not user_id:
+        logger.error(f"Could not resolve user ID for handle @{handle}")
+        return []
+
+    logger.info(f"Resolved @{handle} to user ID: {user_id}. Fetching feed posts...")
+
+    # Step 2: Fetch feed items
+    fetched_posts = []
+    max_id = None
+    has_more = True
+
+    while has_more and len(fetched_posts) < limit:
+        feed_url = f"https://www.instagram.com/api/v1/feed/user/{user_id}/"
+        params = {}
+        if max_id:
+            params["max_id"] = str(max_id)
+
+        try:
+            resp = session.get(feed_url, params=params, timeout=20)
+            if resp.status_code != 200:
+                logger.warning(f"Feed request returned status {resp.status_code}")
+                break
+
+            data = resp.json()
+            items = data.get("items", [])
+            if not items:
+                break
+
+            for item in items:
+                post_id = str(item.get("pk") or item.get("id"))
+                shortcode = item.get("code")
+                if not shortcode:
+                    continue
+
+                if post_id in processed_ids:
+                    logger.debug(f"Skipping already processed post {post_id} ({shortcode})")
+                    continue
+
+                media_type = item.get("media_type", 1)  # 1 = image, 2 = video, 8 = carousel
+                is_video = (media_type == 2)
+                video_versions = item.get("video_versions") or []
+                video_url = video_versions[0].get("url") if (is_video and video_versions) else None
+
+                taken_at = item.get("taken_at")
+                date_str = ""
+                if taken_at:
+                    try:
+                        date_str = datetime.datetime.fromtimestamp(taken_at, datetime.timezone.utc).strftime("%Y-%m-%d")
+                    except Exception:
+                        date_str = ""
+
+                caption_obj = item.get("caption") or {}
+                caption = caption_obj.get("text", "") if isinstance(caption_obj, dict) else ""
+
+                post_data = {
+                    "post_id": post_id,
+                    "shortcode": shortcode,
+                    "url": f"https://www.instagram.com/p/{shortcode}/",
+                    "date": date_str,
+                    "caption": caption,
+                    "is_video": is_video,
+                    "video_url": video_url,
+                    "like_count": item.get("like_count", 0)
+                }
+
+                fetched_posts.append(post_data)
+                logger.info(f"Fetched post [{len(fetched_posts)}/{limit}]: {shortcode} ({'video' if is_video else 'image'})")
+
+                if len(fetched_posts) >= limit:
+                    break
+
+            has_more = bool(data.get("more_available", False))
+            max_id = data.get("next_max_id")
+
+            if has_more and len(fetched_posts) < limit:
+                time.sleep(request_delay)
+
+        except Exception as e:
+            logger.error(f"Error while fetching user feed: {e}")
+            break
+
+    return fetched_posts
+
+
 def fetch_posts(
     handle: str,
     limit: int = 50,
@@ -153,47 +291,14 @@ def fetch_posts(
         except Exception as e:
             logger.warning(f"Error reading existing posts from {posts_file}: {e}")
 
-    loader = setup_instaloader(cookies_file)
-
-    logger.info(f"Querying profile for @{handle}...")
-    try:
-        profile = instaloader.Profile.from_username(loader.context, handle)
-    except Exception as e:
-        logger.error(f"Failed to fetch profile for @{handle}: {e}")
-        return existing_posts
-
-    new_posts = []
-    fetched_count = 0
-
-    logger.info(f"Iterating posts for @{handle} (limit: {limit})...")
-    for post in profile.get_posts():
-        post_id = str(post.mediaid)
-
-        # Check if already processed or already fetched
-        if post_id in processed_ids or post_id in existing_post_ids:
-            logger.debug(f"Skipping already processed post {post_id} ({post.shortcode})")
-            continue
-
-        post_data = {
-            "post_id": post_id,
-            "shortcode": post.shortcode,
-            "url": f"https://www.instagram.com/p/{post.shortcode}/",
-            "date": post.date_utc.strftime("%Y-%m-%d"),
-            "caption": post.caption or "",
-            "is_video": bool(post.is_video),
-            "video_url": post.video_url if post.is_video else None,
-            "like_count": post.likes
-        }
-
-        new_posts.append(post_data)
-        existing_post_ids.add(post_id)
-        fetched_count += 1
-        logger.info(f"Fetched post [{fetched_count}/{limit}]: {post.shortcode} ({'video' if post.is_video else 'image'})")
-
-        if fetched_count >= limit:
-            break
-
-        time.sleep(request_delay)
+    logger.info(f"Querying profile and posts for @{handle}...")
+    new_posts = fetch_posts_direct_api(
+        handle=handle,
+        limit=limit,
+        cookies_file=cookies_file,
+        request_delay=request_delay,
+        processed_ids=processed_ids.union(existing_post_ids)
+    )
 
     all_posts = existing_posts + new_posts
     with open(posts_file, "w", encoding="utf-8") as f:
