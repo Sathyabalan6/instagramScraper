@@ -1,21 +1,32 @@
 """
-Stage 3: Extract design principles from captions and transcripts.
-Strict constraint: Always paraphrase — never quote captions or transcripts verbatim.
-Outputs structured JSON adhering to the project schema.
+Stage 4: Extract design principles from captions and transcripts using real LLM analysis.
+Strict constraints:
+- Always paraphrase — never quote captions or transcripts verbatim (Rule 3).
+- Real LLM analysis only — no synthetic template fallbacks (prevents fabrication).
+- Outputs structured JSON adhering to the project schema.
 """
 
 import os
 import re
+import sys
 import json
 import argparse
 import logging
 from pathlib import Path
+import urllib.request
 import yaml
+
+# Try loading .env if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
 logger = logging.getLogger("extract_principles")
 
 EXTRACTION_SYSTEM_PROMPT = """
-You are an expert UI/UX design synthesizer. Your job is to extract actionable UI/UX design principles from Instagram post captions and video transcripts.
+You are an expert UI/UX design synthesizer. Your job is to analyze real Instagram post captions and video transcripts, and extract actionable UI/UX design principles actually taught or demonstrated in them.
 
 CATEGORIES ALLOWED:
 - spacing
@@ -28,14 +39,17 @@ CATEGORIES ALLOWED:
 
 HARD QUALITY & COPYRIGHT CONSTRAINTS:
 1. ALWAYS PARAPHRASE: Under no circumstances should you copy or quote text verbatim from the source. State the rule, why, and example clearly in your own concise, authoritative words.
-2. STRICT ACTIONABILITY TEST:
-   - If the rule could apply to any UI decision without meaningfully constraining it (e.g. 'maintain visual balance', 'use consistent styling', 'structure elements cleanly'), DO NOT INCLUDE IT.
+2. STRICT ACTIONABILITY & SPECIFICITY TEST:
+   - If the rule could apply to any UI decision without meaningfully constraining it (e.g. 'maintain visual balance', 'use consistent styling', 'structure elements cleanly', 'use systematic color rules'), DO NOT INCLUDE IT.
    - The `rule` field MUST name a specific, checkable action, value, pairing, technique, ratio, or threshold (e.g. 'Pair warm earth tones with electric cool blue accents for focal pop', 'Structure hero layouts with a 12-column editorial grid and focal portrait photography', 'Apply backdrop-filter blur (12-16px) to sticky navigation headers over hero media').
 3. CONFIDENCE RATING:
    - 'high': Concrete, specific, highly actionable design rule or pairing taught directly.
    - 'medium': Actionable guideline with clear practical context.
-   - 'low': Vague, speculative, or loosely implied concept.
-4. If the post does not contain any concrete, actionable UI/UX design guideline (e.g. generic motivational quote, sponsorship announcement, meme, or vague promotional text), return an empty array `[]`.
+   - 'low': Vague, speculative, or loosely implied concept (will be quarantined).
+4. NO FABRICATION: If the post does not contain any concrete, actionable UI/UX design guideline (e.g. it is a personal vlog, general photo edit, lifestyle clip, sponsorship, meme, or vague promotional text), you MUST return an empty array `[]`.
+5. EVIDENCE FIDELITY & NO INVENTED MEASUREMENTS:
+   - Only include specific numerical values, percentages, opacities, or color hex codes (e.g. '16px', '10%', '#E2E8F0') if they are EXPLICITLY stated in the creator's transcript or caption text.
+   - If the creator demonstrates a visual technique conceptually without citing exact numbers, describe the technique (e.g. 'subtle low opacity', 'soft backdrop blur', 'light neutral border') rather than fabricating specific measurements.
 
 Return ONLY a JSON array matching this schema:
 [
@@ -58,23 +72,29 @@ def load_config(config_path: str = "config.yaml") -> dict:
         return yaml.safe_load(f)
 
 
-def call_llm_for_extraction(text: str, categories: list = None) -> list:
+def call_llm_for_extraction(text: str, categories: list = None) -> tuple:
     """
-    Call an available LLM API (Anthropic or OpenAI) if API keys are configured.
-    Returns parsed list of principles or None if no LLM configured.
+    Call an available LLM API (Anthropic, OpenAI, Gemini, Groq, or OpenAI-compatible endpoint).
+    Returns (list_of_principles, provider_info_dict).
+    Raises RuntimeError if no LLM API key/endpoint is configured.
     """
     anthropic_key = os.environ.get("ANTHROPIC_API_KEY")
     openai_key = os.environ.get("OPENAI_API_KEY")
+    gemini_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
+    groq_key = os.environ.get("GROQ_API_KEY")
+    openai_base = os.environ.get("OPENAI_BASE_URL")
+    attempt_errors = []
 
+    # 1. Anthropic Claude
     if anthropic_key:
         try:
-            import urllib.request
+            model = os.environ.get("ANTHROPIC_MODEL", "claude-3-5-sonnet-20241022")
             req_data = {
-                "model": "claude-3-5-sonnet-20241022",
-                "max_tokens": 1000,
+                "model": model,
+                "max_tokens": 1200,
                 "system": EXTRACTION_SYSTEM_PROMPT,
                 "messages": [
-                    {"role": "user", "content": f"Extract design principles from this content:\n\n{text}"}
+                    {"role": "user", "content": f"Extract design principles from this creator content:\n\n{text}"}
                 ]
             }
             req = urllib.request.Request(
@@ -87,141 +107,150 @@ def call_llm_for_extraction(text: str, categories: list = None) -> list:
                 },
                 method="POST"
             )
-            with urllib.request.urlopen(req, timeout=30) as resp:
+            with urllib.request.urlopen(req, timeout=45) as resp:
                 data = json.loads(resp.read().decode("utf-8"))
                 reply_text = data.get("content", [{}])[0].get("text", "")
-                # Extract JSON array
                 match = re.search(r"\[.*\]", reply_text, re.DOTALL)
                 if match:
-                    return json.loads(match.group(0))
+                    return json.loads(match.group(0)), {"provider": "anthropic", "model": model}
         except Exception as e:
-            logger.warning(f"Anthropic API extraction error: {e}")
+            logger.warning(f"Anthropic provider failed ({e}). Falling back to next available provider...")
+            attempt_errors.append(f"Anthropic: {e}")
 
-    if openai_key:
+    # 2. OpenAI / Compatible endpoint
+    if openai_key or openai_base:
         try:
-            import urllib.request
+            model = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
+            base_url = openai_base.rstrip("/") if openai_base else "https://api.openai.com/v1"
             req_data = {
-                "model": "gpt-4o-mini",
+                "model": model,
                 "messages": [
                     {"role": "system", "content": EXTRACTION_SYSTEM_PROMPT},
-                    {"role": "user", "content": f"Extract design principles from this content:\n\n{text}"}
+                    {"role": "user", "content": f"Extract design principles from this creator content:\n\n{text}"}
                 ],
-                "temperature": 0.2
+                "temperature": 0.1
             }
+            headers = {"Content-Type": "application/json"}
+            if openai_key:
+                headers["Authorization"] = f"Bearer {openai_key}"
+
             req = urllib.request.Request(
-                "https://api.openai.com/v1/chat/completions",
+                f"{base_url}/chat/completions",
                 data=json.dumps(req_data).encode("utf-8"),
-                headers={
-                    "Authorization": f"Bearer {openai_key}",
-                    "Content-Type": "application/json"
-                },
+                headers=headers,
                 method="POST"
             )
-            with urllib.request.urlopen(req, timeout=30) as resp:
+            with urllib.request.urlopen(req, timeout=45) as resp:
                 data = json.loads(resp.read().decode("utf-8"))
                 reply_text = data["choices"][0]["message"]["content"]
                 match = re.search(r"\[.*\]", reply_text, re.DOTALL)
                 if match:
-                    return json.loads(match.group(0))
+                    return json.loads(match.group(0)), {"provider": "openai", "model": model}
         except Exception as e:
-            logger.warning(f"OpenAI API extraction error: {e}")
+            logger.warning(f"OpenAI provider failed ({e}). Falling back to next available provider...")
+            attempt_errors.append(f"OpenAI: {e}")
 
-    return None
+    # 3. Groq (Fast Cloud LLM)
+    if groq_key:
+        try:
+            model = os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile")
+            req_data = {
+                "model": model,
+                "messages": [
+                    {"role": "system", "content": EXTRACTION_SYSTEM_PROMPT},
+                    {"role": "user", "content": f"Extract design principles from this creator content:\n\n{text}"}
+                ],
+                "temperature": 0.1
+            }
+            req = urllib.request.Request(
+                "https://api.groq.com/openai/v1/chat/completions",
+                data=json.dumps(req_data).encode("utf-8"),
+                headers={
+                    "Authorization": f"Bearer {groq_key}",
+                    "Content-Type": "application/json"
+                },
+                method="POST"
+            )
+            with urllib.request.urlopen(req, timeout=45) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+                reply_text = data["choices"][0]["message"]["content"]
+                match = re.search(r"\[.*\]", reply_text, re.DOTALL)
+                if match:
+                    return json.loads(match.group(0)), {"provider": "groq", "model": model}
+        except Exception as e:
+            logger.warning(f"Groq provider failed ({e}). Falling back to next available provider...")
+            attempt_errors.append(f"Groq: {e}")
 
+    # 4. Google Gemini
+    if gemini_key:
+        model = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash-lite")
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+        req_data = {
+            "contents": [
+                {
+                    "parts": [
+                        {"text": f"{EXTRACTION_SYSTEM_PROMPT}\n\nCreator Content to Analyze:\n{text}"}
+                    ]
+                }
+            ],
+            "generationConfig": {"temperature": 0.1}
+        }
 
-def rule_based_fallback_extract(text: str, allowed_categories: list) -> list:
-    """
-    Intelligent NLP/rule-based extraction fallback for offline execution.
-    Synthesizes and paraphrases principles without quoting verbatim.
-    """
-    if not text or len(text.strip().split()) < 8:
-        return []
+        # Retry up to 3 times on 429 / rate limits
+        for attempt in range(4):
+            try:
+                req = urllib.request.Request(
+                    url,
+                    data=json.dumps(req_data).encode("utf-8"),
+                    headers={
+                        "Content-Type": "application/json",
+                        "X-goog-api-key": gemini_key
+                    },
+                    method="POST"
+                )
+                with urllib.request.urlopen(req, timeout=45) as resp:
+                    data = json.loads(resp.read().decode("utf-8"))
+                    reply_text = data["candidates"][0]["content"]["parts"][0]["text"]
+                    # Clean possible markdown fence ```json ... ```
+                    clean_text = re.sub(r"^```(?:json)?\s*", "", reply_text.strip(), flags=re.MULTILINE)
+                    clean_text = re.sub(r"\s*```$", "", clean_text.strip(), flags=re.MULTILINE)
+                    match = re.search(r"\[.*\]", clean_text, re.DOTALL)
+                    if match:
+                        return json.loads(match.group(0)), {"provider": "gemini", "model": model}
+                    elif clean_text.startswith("[") and clean_text.endswith("]"):
+                        return json.loads(clean_text), {"provider": "gemini", "model": model}
+                    return [], {"provider": "gemini", "model": model}
+            except urllib.error.HTTPError as e:
+                if e.code == 429 and attempt < 3:
+                    wait_time = (attempt + 1) * 5
+                    logger.warning(f"Gemini API 429 rate limit hit. Backing off for {wait_time}s (attempt {attempt + 1}/3)...")
+                    import time
+                    time.sleep(wait_time)
+                else:
+                    logger.warning(f"Gemini API HTTP Error {e.code}: {e}")
+                    attempt_errors.append(f"Gemini: HTTP {e.code} - {e}")
+                    break
+            except Exception as e:
+                logger.warning(f"Gemini API extraction error: {e}")
+                attempt_errors.append(f"Gemini: {e}")
+                break
 
-    text_lower = text.lower()
-    principles = []
+    # If providers were attempted but all failed
+    if attempt_errors:
+        raise RuntimeError(
+            f"All configured LLM extraction providers failed:\n" + "\n".join(f"  - {err}" for err in attempt_errors)
+        )
 
-    # --- 1. Color Combination & Palette Principles ---
-    if "color" in allowed_categories:
-        if "brown" in text_lower and "blue" in text_lower:
-            principles.append({
-                "principle": "Warm Earth and Cool Accent Color Contrast",
-                "category": "color",
-                "rule": "Pair warm earthy base tones (such as rich terracotta or dark brown) with saturated cool blue accents to generate vibrant visual contrast while preserving organic warmth.",
-                "why": "Breaks the monotony of monochromatic neutral palettes by using temperature contrast to guide user gaze toward focal interaction points.",
-                "example": "Applying slate/royal blue to call-to-action buttons against a warm espresso card background.",
-                "confidence": "high"
-            })
-        if "navy" in text_lower and "red" in text_lower:
-            principles.append({
-                "principle": "High-Energy Navy and Crimson Accent Hierarchy",
-                "category": "color",
-                "rule": "Accent deep navy foundations with vibrant crimson or coral red highlights rather than relying solely on low-contrast monochromes.",
-                "why": "Deep blue establishes an authoritative base structure, while energetic red accents provide unmistakable visual prominence for key metrics and alerts.",
-                "example": "Using vibrant red notification badges or urgent status indicators on dark navy navigation bars.",
-                "confidence": "high"
-            })
-        if "gray" in text_lower and "blue" in text_lower:
-            principles.append({
-                "principle": "Slate Gray and Cool Blue Modern Minimalism",
-                "category": "color",
-                "rule": "Anchor interfaces with subtle slate gray neutral surfaces and use precise cool blue highlights for active states and links.",
-                "why": "Reduces visual fatigue and clutter, giving dashboards and SaaS tools a clean, scannable, and modern aesthetic.",
-                "example": "Light gray secondary panels paired with cobalt blue primary actions and focus rings.",
-                "confidence": "high"
-            })
-        if "green" in text_lower and "red" in text_lower:
-            principles.append({
-                "principle": "Strategic Complementary Color Accents",
-                "category": "color",
-                "rule": "Utilize complementary color pairings (such as forest green and warm red) with distinct luminance levels to make critical status distinctions stand out instantly.",
-                "why": "Complementary hues create maximum chromatic vibration and instant differentiation when calibrated for proper contrast ratios.",
-                "example": "Positive vs. negative comparative indicators in financial analytics and comparison tables.",
-                "confidence": "high"
-            })
-
-    # --- 2. Layout, Composition & Texture Principles ---
-    if "layout" in allowed_categories:
-        if "grid" in text_lower and ("portrait" in text_lower or "magazine" in text_lower or "photo" in text_lower):
-            principles.append({
-                "principle": "Editorial Grid with Hero Imagery",
-                "category": "layout",
-                "rule": "Structure layout frameworks around disciplined column grids integrated with high-impact hero portrait photography to achieve an editorial, magazine-grade composition.",
-                "why": "Imparts prestige and human connection, transforming standard landing pages into memorable storytelling experiences.",
-                "example": "Asymmetric multi-column hero sections featuring framed founder portraiture aligned with bold typography.",
-                "confidence": "high"
-            })
-        if "blur" in text_lower or "elevated" in text_lower or "overlay" in text_lower:
-            principles.append({
-                "principle": "Layered Blur and Frosted Glass Elevation",
-                "category": "layout",
-                "rule": "Layer soft backdrop-filter blur effects and frosted glass surfaces over background imagery to establish distinct spatial depth and visual elevation.",
-                "why": "Separates interactive foreground content from decorative background art while preserving ambient contextual illumination.",
-                "example": "Sticky glassmorphism navigation headers with `backdrop-filter: blur(12px)` over dynamic hero artwork.",
-                "confidence": "high"
-            })
-        if "cutout" in text_lower or "paper" in text_lower or "landscape" in text_lower:
-            principles.append({
-                "principle": "Tactile Collage and Asymmetric Layering",
-                "category": "layout",
-                "rule": "Combine tactile organic elements (such as simulated paper cutouts or organic masks) with expansive landscape compositions to break rigid digital flatness.",
-                "why": "Adds tactile authenticity and visual rhythm, encouraging prolonged exploration of editorial or portfolio pages.",
-                "example": "Card components featuring organic cutout masks overlapping adjacent content containers.",
-                "confidence": "medium"
-            })
-
-    # --- 3. Hierarchy & Typography Principles ---
-    if "hierarchy" in allowed_categories or "typography" in allowed_categories:
-        if "ascii" in text_lower or "story" in text_lower or "parts" in text_lower:
-            principles.append({
-                "principle": "Monospace and Visual Juxtaposition for Narrative Depth",
-                "category": "hierarchy",
-                "rule": "Juxtapose raw monospace/ASCII micro-elements alongside organic human visuals to convey an intentional tech-forward narrative.",
-                "why": "Creates an intriguing contrast between structured technical syntax and organic imagery, signaling precision engineering.",
-                "example": "Terminal-style code tags and status chips layered across product lifestyle imagery.",
-                "confidence": "high"
-            })
-
-    return principles
+    # No LLM configured at all — FAIL LOUDLY
+    raise RuntimeError(
+        "NO LLM API KEY CONFIGURED! Real LLM extraction is strictly required to prevent fabricating design principles.\n"
+        "Please configure one of the following environment variables or add them to your .env file:\n"
+        "  - ANTHROPIC_API_KEY (e.g. Claude 3.5 Sonnet / Haiku)\n"
+        "  - OPENAI_API_KEY    (e.g. GPT-4o / GPT-4o-mini)\n"
+        "  - GEMINI_API_KEY    (e.g. Gemini 3.5 Flash Lite)\n"
+        "  - GROQ_API_KEY      (e.g. Llama 3.3 70B on Groq)\n"
+        "  - OPENAI_BASE_URL   (Local Ollama / LM Studio endpoint)"
+    )
 
 
 def extract_principles_from_text(
@@ -230,43 +259,49 @@ def extract_principles_from_text(
     date: str,
     url: str,
     allowed_categories: list
-) -> list:
+) -> tuple:
     """
-    Extract structured principles from text using LLM if available or NLP fallback.
-    Guarantees copyright-safe paraphrasing and schema conformance.
+    Extract structured principles from text using genuine LLM analysis.
+    Returns (principles_list, provider_info).
     """
-    extracted = call_llm_for_extraction(text, allowed_categories)
-    if not extracted:
-        extracted = rule_based_fallback_extract(text, allowed_categories)
+    if not text or len(text.strip().split()) < 6:
+        return [], {"provider": "skipped_too_short", "model": "none"}
 
+    extracted, info = call_llm_for_extraction(text, categories=allowed_categories)
+
+    # Attach provenance sources and validate schema
     valid_principles = []
-    for item in (extracted or []):
+    for item in extracted:
         if not isinstance(item, dict):
             continue
-        principle_title = item.get("principle", "").strip()
-        category = item.get("category", "layout").strip().lower()
-        if category not in allowed_categories:
-            category = "layout"
+        cat = item.get("category", "layout").lower()
+        if allowed_categories and cat not in allowed_categories:
+            cat = "layout"
 
-        rule = item.get("rule", "").strip()
-        why = item.get("why", "").strip()
-        example = item.get("example", "None specified").strip()
-        confidence = item.get("confidence", "medium").lower()
+        p_name = (item.get("principle") or "Design Principle").strip()
+        rule = (item.get("rule") or "").strip()
+        why = (item.get("why") or "").strip()
+        example = (item.get("example") or "None specified").strip()
+        confidence = (item.get("confidence") or "medium").lower()
 
-        if principle_title and rule:
-            valid_principles.append({
-                "principle": principle_title,
-                "category": category,
-                "rule": rule,
-                "why": why or "Enhances cognitive processing and visual structure.",
-                "example": example or "Standard UI component implementation.",
-                "source_handle": handle,
-                "source_date": date,
-                "source_url": url,
-                "confidence": confidence
-            })
+        if not p_name or not rule:
+            continue
 
-    return valid_principles
+        valid_principles.append({
+            "principle": p_name,
+            "category": cat,
+            "rule": rule,
+            "why": why,
+            "example": example,
+            "confidence": confidence,
+            "sources": [{
+                "handle": handle,
+                "date": date,
+                "url": url
+            }]
+        })
+
+    return valid_principles, info
 
 
 def extract_principles(
@@ -274,23 +309,21 @@ def extract_principles(
     config_path: str = "config.yaml"
 ) -> list:
     """
-    Extract design principles from all classified posts for a given handle.
-    Saves extracted principles back to posts.json and returns combined list.
+    Load classified & transcribed posts, extract principles via LLM analysis,
+    and save creator-isolated output.
     """
     config = load_config(config_path)
     extract_cfg = config.get("extraction", {})
     paths_cfg = config.get("paths", {})
 
-    allowed_categories = extract_cfg.get(
-        "categories",
-        ["spacing", "color", "typography", "hierarchy", "motion", "accessibility", "layout"]
-    )
+    allowed_cats = extract_cfg.get("categories", [
+        "spacing", "color", "typography", "hierarchy", "motion", "accessibility", "layout"
+    ])
     output_dir = paths_cfg.get("output_dir", "output")
     raw_data_dir = paths_cfg.get("raw_data_dir", "data/raw")
 
     out_posts_file = Path(output_dir) / handle / "posts.json"
     raw_posts_file = Path(raw_data_dir) / handle / "posts.json"
-    out_principles_file = Path(output_dir) / handle / "principles.json"
 
     target_file = None
     if out_posts_file.exists():
@@ -298,67 +331,101 @@ def extract_principles(
     elif raw_posts_file.exists():
         target_file = raw_posts_file
     else:
-        logger.error(f"No posts.json found in {out_posts_file} or {raw_posts_file}.")
+        logger.error(f"No posts.json found for @{handle}.")
         return []
 
     with open(target_file, "r", encoding="utf-8") as f:
         posts = json.load(f)
 
     all_extracted = []
+    extraction_stats = {"llm_calls": 0, "principles_found": 0, "posts_analyzed": 0}
+    provider_used = "unknown"
 
-    for post in posts:
+    for idx, post in enumerate(posts, 1):
         classification = post.get("classification", {})
         path = classification.get("path")
+        shortcode = post.get("shortcode")
+        url = post.get("url")
+        date = post.get("date")
 
-        content_to_extract = None
+        # Determine source text (caption or transcript)
+        source_text = None
         if path == "caption":
-            content_to_extract = post.get("caption")
+            source_text = post.get("caption", "")
         elif path == "audio":
-            content_to_extract = post.get("transcript")
+            source_text = post.get("transcript", "")
+            if not source_text:
+                source_text = post.get("caption", "")
 
-        if content_to_extract:
-            logger.info(f"Extracting principles from {post.get('shortcode')} ({path} path)...")
-            principles = extract_principles_from_text(
-                text=content_to_extract,
+        if not source_text or len(source_text.strip().split()) < 6:
+            logger.debug(f"Post {shortcode}: No sufficient text for principle extraction.")
+            post["principles"] = []
+            continue
+
+        extraction_stats["posts_analyzed"] += 1
+        logger.info(f"Extracting principles via LLM [{extraction_stats['posts_analyzed']}]: Post {shortcode}...")
+
+        try:
+            principles, info = extract_principles_from_text(
+                source_text,
                 handle=handle,
-                date=post.get("date", ""),
-                url=post.get("url", ""),
-                allowed_categories=allowed_categories
+                date=date,
+                url=url,
+                allowed_categories=allowed_cats
             )
-            post["extracted_principles"] = principles
+            provider_used = f"{info.get('provider')}:{info.get('model')}"
+            extraction_stats["llm_calls"] += 1
+            extraction_stats["principles_found"] += len(principles)
+            post["principles"] = principles
+            post["extraction_metadata"] = {
+                "method": "llm",
+                "provider": info.get("provider"),
+                "model": info.get("model"),
+                "principles_count": len(principles)
+            }
             all_extracted.extend(principles)
-            logger.info(f"Extracted {len(principles)} principles from {post.get('shortcode')}")
-        else:
-            post["extracted_principles"] = []
+            logger.info(f"  -> Extracted {len(principles)} principle(s) from {shortcode} using {provider_used}")
+            import time
+            time.sleep(3)
+        except RuntimeError as e:
+            logger.error(str(e))
+            raise
+        except Exception as e:
+            logger.error(f"Error extracting principles for {shortcode}: {e}")
+            post["principles"] = []
 
-    # Save creator-specific principles.json
-    out_principles_file.parent.mkdir(parents=True, exist_ok=True)
-    with open(out_principles_file, "w", encoding="utf-8") as f:
-        json.dump(all_extracted, f, indent=2, ensure_ascii=False)
-
-    # Save updated posts.json to both locations
+    # Save updated posts.json with extraction data
     for pfile in [out_posts_file, raw_posts_file]:
         pfile.parent.mkdir(parents=True, exist_ok=True)
         with open(pfile, "w", encoding="utf-8") as f:
-            json.dump(posts, f, indent=2, ensure_ascii=False)
+            json.dump(posts, f, indent=2)
 
-    logger.info(f"Total principles extracted for @{handle}: {len(all_extracted)}")
-    logger.info(f"Saved creator principles store to {out_principles_file}")
-    return all_extracted
+    # Gather all principles across all posts for full source-of-truth integrity
+    full_principles_list = []
+    for post in posts:
+        for p in (post.get("principles", []) or post.get("extracted_principles", [])):
+            full_principles_list.append(p)
+
+    # Save creator-specific principles.json
+    out_principles_file = Path(output_dir) / handle / "principles.json"
+    out_principles_file.parent.mkdir(parents=True, exist_ok=True)
+    with open(out_principles_file, "w", encoding="utf-8") as f:
+        json.dump(full_principles_list, f, indent=2)
+
+    logger.info(
+        f"Extraction complete for @{handle}: {len(all_extracted)} new principle(s) extracted "
+        f"({len(full_principles_list)} total across {len(posts)} posts, Provider: {provider_used})."
+    )
+    return full_principles_list
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Stage 3: Extract structured design principles.")
-    parser.add_argument("--handle", required=True, help="Instagram username handle")
+    parser = argparse.ArgumentParser(description="Extract design principles via LLM analysis")
+    parser.add_argument("--handle", required=True, help="Instagram handle (without @)")
     parser.add_argument("--config", default="config.yaml", help="Path to config.yaml")
-    parser.add_argument("--verbose", "-v", action="store_true", help="Enable verbose debug logging")
 
     args = parser.parse_args()
-
-    logging.basicConfig(
-        level=logging.DEBUG if args.verbose else logging.INFO,
-        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
-    )
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 
     extract_principles(args.handle, config_path=args.config)
 

@@ -66,30 +66,58 @@ def save_principles_store(principles: list, store_path: str):
         json.dump(principles, f, indent=2, ensure_ascii=False)
 
 
-def find_matching_principle(new_p: dict, existing_list: list, threshold: float = 85.0) -> int:
+def find_matching_principle(new_p: dict, existing_list: list, threshold: float = 85.0) -> tuple:
     """
-    Find index of matching principle in existing_list using rapidfuzz token_sort_ratio.
-    Returns index if match score >= threshold, else -1.
+    Find matching principle in existing_list.
+    Returns (match_index, match_type) where match_type is 'same_category' or 'cross_category'.
+    Returns (-1, None) if no match found.
     """
     new_name = new_p.get("principle", "").lower().strip()
     new_cat = new_p.get("category", "").lower().strip()
+    new_rule = new_p.get("rule", "").lower().strip()
 
     best_idx = -1
     best_score = 0.0
+    best_type = None
 
+    # Step 1: Check same-category matches (Title >= threshold or Rule >= threshold)
     for idx, item in enumerate(existing_list):
         item_cat = item.get("category", "").lower().strip()
-        if item_cat != new_cat:
-            continue
-
         item_name = item.get("principle", "").lower().strip()
-        score = compute_similarity(new_name, item_name)
+        item_rule = item.get("rule", "").lower().strip()
 
-        if score > best_score and score >= threshold:
-            best_score = score
-            best_idx = idx
+        if item_cat == new_cat:
+            name_score = compute_similarity(new_name, item_name)
+            rule_score = compute_similarity(new_rule, item_rule) if (new_rule and item_rule) else 0.0
+            max_score = max(name_score, rule_score)
 
-    return best_idx
+            if max_score > best_score and max_score >= threshold:
+                best_score = max_score
+                best_idx = idx
+                best_type = "same_category"
+
+    if best_idx >= 0:
+        return best_idx, best_type
+
+    # Step 2: Check cross-category semantic matches (Rule similarity >= 80% or Title >= 88%)
+    for idx, item in enumerate(existing_list):
+        item_name = item.get("principle", "").lower().strip()
+        item_rule = item.get("rule", "").lower().strip()
+
+        rule_score = compute_similarity(new_rule, item_rule) if (new_rule and item_rule) else 0.0
+        name_score = compute_similarity(new_name, item_name)
+
+        if rule_score >= 80.0 or name_score >= 88.0:
+            score = max(rule_score, name_score)
+            if score > best_score:
+                best_score = score
+                best_idx = idx
+                best_type = "cross_category"
+
+    if best_idx >= 0:
+        return best_idx, best_type
+
+    return -1, None
 
 
 def merge_principles_list(
@@ -98,26 +126,34 @@ def merge_principles_list(
     threshold: float = 85.0
 ) -> list:
     """
-    Deduplicate and merge new principles into existing list.
+    Deduplicate and merge new principles into existing list (handling both same-category and cross-category merges).
     """
     merged = list(existing_principles)
 
     for new_p in new_principles:
-        match_idx = find_matching_principle(new_p, merged, threshold=threshold)
+        match_idx, match_type = find_matching_principle(new_p, merged, threshold=threshold)
 
-        # Normalize sources format
-        new_source = {
-            "handle": new_p.get("source_handle", ""),
-            "date": new_p.get("source_date", ""),
-            "url": new_p.get("source_url", "")
-        }
+        # Normalize sources list from new_p
+        incoming_sources = list(new_p.get("sources", []))
+        if not incoming_sources and new_p.get("source_url"):
+            incoming_sources.append({
+                "handle": new_p.get("source_handle", ""),
+                "date": new_p.get("source_date", ""),
+                "url": new_p.get("source_url", "")
+            })
 
         if match_idx >= 0:
             target = merged[match_idx]
-            logger.info(f"Duplicate found: '{new_p.get('principle')}' matches '{target.get('principle')}' -> Merging.")
+            if match_type == "cross_category":
+                logger.info(
+                    f"Cross-category duplicate found: '{new_p.get('principle')}' [{new_p.get('category')}] "
+                    f"matches '{target.get('principle')}' [{target.get('category')}] -> Merging."
+                )
+            else:
+                logger.info(f"Duplicate found: '{new_p.get('principle')}' matches '{target.get('principle')}' -> Merging.")
 
             # Ensure target has sources list
-            if "sources" not in target:
+            if "sources" not in target or not isinstance(target["sources"], list):
                 target["sources"] = []
                 if "source_url" in target:
                     target["sources"].append({
@@ -126,16 +162,25 @@ def merge_principles_list(
                         "url": target.get("source_url", "")
                     })
 
-            # Check if new source is already cited
-            existing_urls = {s.get("url") for s in target["sources"]}
-            if new_source.get("url") and new_source["url"] not in existing_urls:
-                target["sources"].append(new_source)
+            # Append any new unique sources
+            existing_urls = {s.get("url") for s in target["sources"] if s.get("url")}
+            for src in incoming_sources:
+                if src.get("url") and src["url"] not in existing_urls:
+                    target["sources"].append(src)
+                    existing_urls.add(src["url"])
 
-            # Enrich why/example if new one has more substance
+            # Enrich why/example if incoming has more detail
             if len(new_p.get("why", "")) > len(target.get("why", "")):
                 target["why"] = new_p["why"]
             if len(new_p.get("example", "")) > len(target.get("example", "")) and target.get("example") in ["None specified", ""]:
                 target["example"] = new_p["example"]
+
+            # Upgrade confidence if incoming principle has higher confidence
+            conf_rank = {"high": 3, "medium": 2, "low": 1}
+            new_conf = new_p.get("confidence", "medium").lower()
+            old_conf = target.get("confidence", "medium").lower()
+            if conf_rank.get(new_conf, 2) > conf_rank.get(old_conf, 2):
+                target["confidence"] = new_conf
 
         else:
             # Create new structured record
@@ -146,7 +191,7 @@ def merge_principles_list(
                 "why": new_p.get("why"),
                 "example": new_p.get("example"),
                 "confidence": new_p.get("confidence", "medium"),
-                "sources": [new_source] if new_source.get("url") else []
+                "sources": incoming_sources
             }
             merged.append(record)
             logger.info(f"Appended new principle: '{record['principle']}' [{record['category']}]")
@@ -300,6 +345,7 @@ def generate_creator_summary_markdown(
         f"| **Video Reels Transcribed** | `{transcribed_count}` / `{video_count}` |",
         f"| **Unique Design Principles** | `{len(principles)}` |",
         f"| **Active Categories** | `{sum(1 for c, n in cat_counts.items() if n > 0)}` / `{len(CATEGORIES_ORDER)}` |",
+        f"| **Extraction Engine** | `LLM Analysis (No Templates)` |",
         "",
         "### Category Distribution",
         "",
@@ -416,7 +462,8 @@ def merge_skill(
                     with open(pfile, "r", encoding="utf-8") as f:
                         creator_posts = json.load(f)
                         for post in creator_posts:
-                            for p in post.get("extracted_principles", []):
+                            post_principles = post.get("principles", []) or post.get("extracted_principles", [])
+                            for p in post_principles:
                                 creator_principles_raw.append(p)
                     break
                 except Exception as e:
@@ -456,7 +503,7 @@ def merge_skill(
     for base_dir in [Path(output_dir), Path(raw_data_dir)]:
         if base_dir.exists():
             for h_dir in base_dir.iterdir():
-                if h_dir.is_dir() and h_dir.name not in searched_handles:
+                if h_dir.is_dir() and not h_dir.name.startswith(".") and h_dir.name not in searched_handles:
                     searched_handles.add(h_dir.name)
                     pfile = h_dir / "posts.json"
                     if pfile.exists():
@@ -464,13 +511,13 @@ def merge_skill(
                             with open(pfile, "r", encoding="utf-8") as f:
                                 posts = json.load(f)
                                 for post in posts:
-                                    for p in post.get("extracted_principles", []):
+                                    post_principles = post.get("principles", []) or post.get("extracted_principles", [])
+                                    for p in post_principles:
                                         all_raw_principles.append(p)
                         except Exception as e:
-                            logger.warning(f"Error reading {pfile}: {e}")
+                            logger.warning(f"Error loading posts from {pfile}: {e}")
 
-    existing_global = load_principles_store(store_path)
-    global_merged = merge_principles_list(all_raw_principles, existing_global, threshold=threshold)
+    global_merged = merge_principles_list(all_raw_principles, [], threshold=threshold)
     save_principles_store(global_merged, store_path)
     generate_skill_markdown(global_merged, skill_output_path)
 

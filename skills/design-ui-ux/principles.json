@@ -1,551 +1,226 @@
 [
   {
-    "principle": "Editorial Grid with Hero Imagery",
-    "category": "layout",
-    "rule": "Structure layout frameworks around disciplined column grids integrated with high-impact hero portrait photography to achieve an editorial, magazine-grade composition.",
-    "why": "Imparts prestige and human connection, transforming standard landing pages into memorable storytelling experiences.",
-    "example": "Asymmetric multi-column hero sections featuring framed founder portraiture aligned with bold typography.",
+    "principle": "Earthy Olive and Tomato Red Contrast",
+    "category": "color",
+    "rule": "Pair muted olive green backgrounds or structural elements with high-saturation tomato red accents for focal elements.",
+    "why": "Balances a grounded, natural neutral tone with a vibrant, high-attention chromatic pop to direct user focus effectively.",
+    "example": "Using an olive green interface background with tomato red primary CTA buttons.",
     "confidence": "high",
     "sources": [
       {
-        "handle": "naomic.reate",
-        "date": "2026-08-24",
-        "url": "https://www.instagram.com/p/DccKVM2NWqK/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-24",
-        "url": "https://www.instagram.com/p/DcZ75Qks1RS/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-20",
-        "url": "https://www.instagram.com/p/DcR4fcUtqiV/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-21",
-        "url": "https://www.instagram.com/p/DcSJqOHskG_/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-23",
-        "url": "https://www.instagram.com/p/DcZk3heNq_I/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-23",
-        "url": "https://www.instagram.com/p/DcZg9xRt7aT/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-21",
-        "url": "https://www.instagram.com/p/DcSAqKPteou/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-22",
-        "url": "https://www.instagram.com/p/DcXBV3qtonz/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-21",
-        "url": "https://www.instagram.com/p/DcUYTYLtqVJ/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-15",
-        "url": "https://www.instagram.com/p/DcANMRXsY0I/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-13",
-        "url": "https://www.instagram.com/p/Db_1c0nNGXz/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-07",
-        "url": "https://www.instagram.com/p/Dbt8-BWjxl_/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-25",
-        "url": "https://www.instagram.com/p/Dce1RlWM1rd/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-25",
-        "url": "https://www.instagram.com/p/DceqrtJt_tl/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-25",
-        "url": "https://www.instagram.com/p/DccVsgfMXwt/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-13",
-        "url": "https://www.instagram.com/p/Db62JAksnOM/"
+        "handle": "createwithalena",
+        "date": "2026-08-18",
+        "url": "https://www.instagram.com/p/DcLuspGxuR0/"
       }
     ]
   },
   {
-    "principle": "Layered Blur and Frosted Glass Elevation",
-    "category": "layout",
-    "rule": "Layer soft backdrop-filter blur effects and frosted glass surfaces over background imagery to establish distinct spatial depth and visual elevation.",
-    "why": "Separates interactive foreground content from decorative background art while preserving ambient contextual illumination.",
-    "example": "Sticky glassmorphism navigation headers with `backdrop-filter: blur(12px)` over dynamic hero artwork.",
+    "principle": "Espresso and Baby Pink Palette Pairing",
+    "category": "color",
+    "rule": "Combine deep espresso brown neutrals with soft, desaturated baby pink for balanced surface-to-content contrast.",
+    "why": "Provides a high-contrast dark foundation while utilizing a delicate pastel accent to maintain visual softness and legibility.",
+    "example": "Applying an espresso brown container background with baby pink typography or badge elements.",
     "confidence": "high",
     "sources": [
       {
-        "handle": "naomic.reate",
-        "date": "2026-08-24",
-        "url": "https://www.instagram.com/p/DccKVM2NWqK/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-24",
-        "url": "https://www.instagram.com/p/DcZ75Qks1RS/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-20",
-        "url": "https://www.instagram.com/p/DcR4fcUtqiV/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-21",
-        "url": "https://www.instagram.com/p/DcSJqOHskG_/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-23",
-        "url": "https://www.instagram.com/p/DcZk3heNq_I/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-23",
-        "url": "https://www.instagram.com/p/DcZg9xRt7aT/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-21",
-        "url": "https://www.instagram.com/p/DcSAqKPteou/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-21",
-        "url": "https://www.instagram.com/p/DcUiAvhNUan/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-23",
-        "url": "https://www.instagram.com/p/DcXJmNJtf91/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-22",
-        "url": "https://www.instagram.com/p/DcXFyMfttWD/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-22",
-        "url": "https://www.instagram.com/p/DcXBV3qtonz/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-22",
-        "url": "https://www.instagram.com/p/DcUqMJSMmEE/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-21",
-        "url": "https://www.instagram.com/p/DcUYTYLtqVJ/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-15",
-        "url": "https://www.instagram.com/p/DcANMRXsY0I/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-13",
-        "url": "https://www.instagram.com/p/Db_1c0nNGXz/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-07",
-        "url": "https://www.instagram.com/p/Dbt8-BWjxl_/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-25",
-        "url": "https://www.instagram.com/p/Dce1RlWM1rd/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-25",
-        "url": "https://www.instagram.com/p/DceqrtJt_tl/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-25",
-        "url": "https://www.instagram.com/p/DccVsgfMXwt/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-25",
-        "url": "https://www.instagram.com/p/Dccd4dfMFIo/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-13",
-        "url": "https://www.instagram.com/p/Db62JAksnOM/"
-      },
-      {
-        "handle": "celfstudies",
-        "date": "2026-08-25",
-        "url": "https://www.instagram.com/p/DccJ5SVP9eD/"
-      },
-      {
-        "handle": "celfstudies",
-        "date": "2026-08-07",
-        "url": "https://www.instagram.com/p/DbvCg0VgE45/"
-      },
-      {
-        "handle": "celfstudies",
-        "date": "2026-07-31",
-        "url": "https://www.instagram.com/p/DbaPIhngYp0/"
-      },
-      {
-        "handle": "celfstudies",
-        "date": "2026-07-25",
-        "url": "https://www.instagram.com/p/DbH5St2gzbV/"
+        "handle": "createwithalena",
+        "date": "2026-08-18",
+        "url": "https://www.instagram.com/p/DcLuspGxuR0/"
       }
     ]
   },
   {
-    "principle": "Monospace and Visual Juxtaposition for Narrative Depth",
+    "principle": "Bright Yellow and Royal Blue Complementary Pairing",
+    "category": "color",
+    "rule": "Pair high-luminance bright yellow alongside deep royal blue to maximize chromatic contrast and visual impact.",
+    "why": "Leverages opposing chromatic temperatures and extreme value differences to create energetic, highly memorable focal zones.",
+    "example": "Highlighting key notification badges in bright yellow against a solid royal blue navigation bar.",
+    "confidence": "high",
+    "sources": [
+      {
+        "handle": "createwithalena",
+        "date": "2026-08-18",
+        "url": "https://www.instagram.com/p/DcLuspGxuR0/"
+      }
+    ]
+  },
+  {
+    "principle": "X-Ray Outline Mode for Occluded Canvas Elements",
     "category": "hierarchy",
-    "rule": "Juxtapose raw monospace/ASCII micro-elements alongside organic human visuals to convey an intentional tech-forward narrative.",
-    "why": "Creates an intriguing contrast between structured technical syntax and organic imagery, signaling precision engineering.",
-    "example": "Terminal-style code tags and status chips layered across product lifestyle imagery.",
-    "confidence": "high",
+    "rule": "Implement a toggleable wireframe or outline rendering mode in canvas-based editing interfaces to expose and allow direct selection of occluded, clipped, or nested layers.",
+    "why": "Prevents foreground elements from blocking interaction with background elements, reducing the interaction cost of selecting deeply nested or hidden layers without altering the layer stack.",
+    "example": "In a graphic editor, a background vector shape is completely covered by a text box. Instead of manually hiding the text box in the layers panel, the user toggles outline mode to click and select the background shape directly on the canvas.",
+    "confidence": "medium",
     "sources": [
       {
-        "handle": "naomic.reate",
-        "date": "2026-08-24",
-        "url": "https://www.instagram.com/p/DccKVM2NWqK/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-24",
-        "url": "https://www.instagram.com/p/DcZ75Qks1RS/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-20",
-        "url": "https://www.instagram.com/p/DcR4fcUtqiV/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-21",
-        "url": "https://www.instagram.com/p/DcSJqOHskG_/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-23",
-        "url": "https://www.instagram.com/p/DcZk3heNq_I/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-23",
-        "url": "https://www.instagram.com/p/DcZg9xRt7aT/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-21",
-        "url": "https://www.instagram.com/p/DcSAqKPteou/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-22",
-        "url": "https://www.instagram.com/p/DcXBV3qtonz/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-21",
-        "url": "https://www.instagram.com/p/DcUYTYLtqVJ/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-15",
-        "url": "https://www.instagram.com/p/DcANMRXsY0I/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-13",
-        "url": "https://www.instagram.com/p/Db_1c0nNGXz/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-07",
-        "url": "https://www.instagram.com/p/Dbt8-BWjxl_/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-25",
-        "url": "https://www.instagram.com/p/Dce1RlWM1rd/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-25",
-        "url": "https://www.instagram.com/p/DceqrtJt_tl/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-25",
-        "url": "https://www.instagram.com/p/DccVsgfMXwt/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-13",
-        "url": "https://www.instagram.com/p/Db62JAksnOM/"
+        "handle": "designcode.io",
+        "date": "2024-04-21",
+        "url": "https://www.instagram.com/p/C6BkH0IIysY/"
       }
     ]
   },
   {
-    "principle": "Tactile Collage and Asymmetric Layering",
+    "principle": "Fluid Component Resizing via Parent-Child Constraints",
     "category": "layout",
-    "rule": "Combine tactile organic elements (such as simulated paper cutouts or organic masks) with expansive landscape compositions to break rigid digital flatness.",
-    "why": "Adds tactile authenticity and visual rhythm, encouraging prolonged exploration of editorial or portfolio pages.",
-    "example": "Card components featuring organic cutout masks overlapping adjacent content containers.",
+    "rule": "Configure parent containers to dynamically wrap child elements using 'hug contents' while setting nested content layers to 'fill container' to ensure components scale fluidly across varying viewport widths.",
+    "why": "Eliminates rigid, fixed-pixel dimensions that cause layout breakage, allowing components to automatically adapt to dynamic content lengths and screen sizes.",
+    "example": "A button component with horizontal padding of 16px set to 'hug contents' automatically expands or contracts its width based on the length of the button label text.",
+    "confidence": "high",
+    "sources": [
+      {
+        "handle": "designcode.io",
+        "date": "2024-04-14",
+        "url": "https://www.instagram.com/p/C5vilGoN3iN/"
+      }
+    ]
+  },
+  {
+    "principle": "Ellipsis-Based Text Truncation for Grid Preservation",
+    "category": "typography",
+    "rule": "Implement single-line or multi-line text truncation with an ellipsis (...) on dynamic text elements when they exceed the maximum width of their parent container.",
+    "why": "Prevents unexpected text wrapping from pushing down adjacent UI elements, preserving the vertical rhythm and visual alignment of the layout.",
+    "example": "A dashboard data table cell with a fixed width of 150px truncates a long product name like 'Premium Wireless Noise-Canceling Headphones' to 'Premium Wireless Noise-Can...' to keep the row height uniform.",
+    "confidence": "high",
+    "sources": [
+      {
+        "handle": "designcode.io",
+        "date": "2024-04-14",
+        "url": "https://www.instagram.com/p/C5vilGoN3iN/"
+      }
+    ]
+  },
+  {
+    "principle": "Ambient Background Particle Motion",
+    "category": "motion",
+    "rule": "Configure ambient UI particle animations with a low gravity scale (0.20), slow speed, and linear fade-out over a sustained lifetime (6 seconds) to maintain a non-distracting background layer.",
+    "why": "Rapidly moving or abruptly disappearing elements draw involuntary user attention away from primary call-to-actions, whereas slow, fading, low-gravity motion preserves visual hierarchy.",
+    "example": "A landing page hero section utilizing a subtle, floating sphere particle system with magenta-to-blue randomized coloring instead of a static, high-contrast background image.",
     "confidence": "medium",
     "sources": [
       {
-        "handle": "naomic.reate",
-        "date": "2026-08-20",
-        "url": "https://www.instagram.com/p/DcR4fcUtqiV/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-21",
-        "url": "https://www.instagram.com/p/DcSJqOHskG_/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-23",
-        "url": "https://www.instagram.com/p/DcZk3heNq_I/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-23",
-        "url": "https://www.instagram.com/p/DcZg9xRt7aT/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-21",
-        "url": "https://www.instagram.com/p/DcSAqKPteou/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-22",
-        "url": "https://www.instagram.com/p/DcXBV3qtonz/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-21",
-        "url": "https://www.instagram.com/p/DcUYTYLtqVJ/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-15",
-        "url": "https://www.instagram.com/p/DcANMRXsY0I/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-13",
-        "url": "https://www.instagram.com/p/Db_1c0nNGXz/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-07",
-        "url": "https://www.instagram.com/p/Dbt8-BWjxl_/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-25",
-        "url": "https://www.instagram.com/p/Dce1RlWM1rd/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-25",
-        "url": "https://www.instagram.com/p/DceqrtJt_tl/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-25",
-        "url": "https://www.instagram.com/p/DccVsgfMXwt/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-13",
-        "url": "https://www.instagram.com/p/Db62JAksnOM/"
+        "handle": "designcode.io",
+        "date": "2024-04-13",
+        "url": "https://www.instagram.com/p/C5s9_8tiV29/"
       }
     ]
   },
   {
-    "principle": "Warm Earth and Cool Accent Color Contrast",
-    "category": "color",
-    "rule": "Pair warm earthy base tones (such as rich terracotta or dark brown) with saturated cool blue accents to generate vibrant visual contrast while preserving organic warmth.",
-    "why": "Breaks the monotony of monochromatic neutral palettes by using temperature contrast to guide user gaze toward focal interaction points.",
-    "example": "Applying slate/royal blue to call-to-action buttons against a warm espresso card background.",
+    "principle": "Dual-Trigger Access for Power Utilities",
+    "category": "accessibility",
+    "rule": "Integrate a dual-trigger access pattern for complex utility modals, combining a right-click context menu action with a standardized keyboard shortcut (such as Cmd + R) to accommodate diverse user physical abilities and workflow speeds.",
+    "why": "Providing both mouse-driven and keyboard-driven pathways reduces motor load, accommodates users with different accessibility needs, and accelerates high-frequency repetitive tasks for power users.",
+    "example": "A layer list component where right-clicking a layer displays a 'Rename' option, which can also be instantly opened by pressing Cmd + R when the layer is focused.",
     "confidence": "high",
     "sources": [
       {
-        "handle": "naomic.reate",
-        "date": "2026-08-21",
-        "url": "https://www.instagram.com/p/DcUiAvhNUan/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-23",
-        "url": "https://www.instagram.com/p/DcXJmNJtf91/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-22",
-        "url": "https://www.instagram.com/p/DcXFyMfttWD/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-22",
-        "url": "https://www.instagram.com/p/DcUqMJSMmEE/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-25",
-        "url": "https://www.instagram.com/p/Dccd4dfMFIo/"
+        "handle": "designcode.io",
+        "date": "2024-04-12",
+        "url": "https://www.instagram.com/p/C5qZEakL_SP/"
       }
     ]
   },
   {
-    "principle": "High-Energy Navy and Crimson Accent Hierarchy",
-    "category": "color",
-    "rule": "Accent deep navy foundations with vibrant crimson or coral red highlights rather than relying solely on low-contrast monochromes.",
-    "why": "Deep blue establishes an authoritative base structure, while energetic red accents provide unmistakable visual prominence for key metrics and alerts.",
-    "example": "Using vibrant red notification badges or urgent status indicators on dark navy navigation bars.",
-    "confidence": "high",
-    "sources": [
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-21",
-        "url": "https://www.instagram.com/p/DcUiAvhNUan/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-23",
-        "url": "https://www.instagram.com/p/DcXJmNJtf91/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-22",
-        "url": "https://www.instagram.com/p/DcXFyMfttWD/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-22",
-        "url": "https://www.instagram.com/p/DcUqMJSMmEE/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-25",
-        "url": "https://www.instagram.com/p/Dccd4dfMFIo/"
-      }
-    ]
-  },
-  {
-    "principle": "Slate Gray and Cool Blue Modern Minimalism",
-    "category": "color",
-    "rule": "Anchor interfaces with subtle slate gray neutral surfaces and use precise cool blue highlights for active states and links.",
-    "why": "Reduces visual fatigue and clutter, giving dashboards and SaaS tools a clean, scannable, and modern aesthetic.",
-    "example": "Light gray secondary panels paired with cobalt blue primary actions and focus rings.",
-    "confidence": "high",
-    "sources": [
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-21",
-        "url": "https://www.instagram.com/p/DcUiAvhNUan/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-23",
-        "url": "https://www.instagram.com/p/DcXJmNJtf91/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-22",
-        "url": "https://www.instagram.com/p/DcXFyMfttWD/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-22",
-        "url": "https://www.instagram.com/p/DcUqMJSMmEE/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-25",
-        "url": "https://www.instagram.com/p/Dccd4dfMFIo/"
-      }
-    ]
-  },
-  {
-    "principle": "Strategic Complementary Color Accents",
-    "category": "color",
-    "rule": "Utilize complementary color pairings (such as forest green and warm red) with distinct luminance levels to make critical status distinctions stand out instantly.",
-    "why": "Complementary hues create maximum chromatic vibration and instant differentiation when calibrated for proper contrast ratios.",
-    "example": "Positive vs. negative comparative indicators in financial analytics and comparison tables.",
-    "confidence": "high",
-    "sources": [
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-21",
-        "url": "https://www.instagram.com/p/DcUiAvhNUan/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-23",
-        "url": "https://www.instagram.com/p/DcXJmNJtf91/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-22",
-        "url": "https://www.instagram.com/p/DcXFyMfttWD/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-22",
-        "url": "https://www.instagram.com/p/DcUqMJSMmEE/"
-      },
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-25",
-        "url": "https://www.instagram.com/p/Dccd4dfMFIo/"
-      }
-    ]
-  },
-  {
-    "principle": "Color System Harmonization",
-    "category": "color",
-    "rule": "Structure UI elements using systematic color rules to maintain visual rhythm, clarity, and interface predictability.",
-    "why": "Minimizes cognitive friction and streamlines user scanning by providing reliable visual cues.",
-    "example": "Implemented across responsive containers and core interactive controls.",
+    "principle": "Tokenized Dynamic Input Fields",
+    "category": "layout",
+    "rule": "Design batch-processing text inputs with adjacent, clickable variable tokens (such as original name or ascending/descending numbers) that inject dynamic placeholders directly into the input field at the current cursor position.",
+    "why": "This layout pattern eliminates the need for users to memorize syntax or regular expressions, reducing input errors and cognitive friction during complex string formatting.",
+    "example": "A batch-export modal featuring a text input for file naming, accompanied by a row of pill buttons labeled 'Date', 'Sequence', and 'Project Name' that insert dynamic variables into the input field when clicked.",
     "confidence": "medium",
     "sources": [
       {
-        "handle": "naomic.reate",
-        "date": "2026-08-15",
-        "url": "https://www.instagram.com/p/DcAMWXGMvqG/"
+        "handle": "designcode.io",
+        "date": "2024-04-12",
+        "url": "https://www.instagram.com/p/C5qZEakL_SP/"
+      }
+    ]
+  },
+  {
+    "principle": "Master-Template Card Grid Layout",
+    "category": "layout",
+    "rule": "Standardize dynamic content feeds by designing a single master card template with fixed image aspect ratios and explicit text container constraints to maintain layout consistency across variable database inputs.",
+    "why": "Ensures visual uniformity and prevents layout breaking or uneven card heights when dynamic content of varying lengths is loaded from a database.",
+    "example": "A blog post repeater grid where every card maintains a strict 1:1 image aspect ratio, 16px internal padding, and a 2-line truncation limit for titles, ensuring all cards in the row align perfectly at the bottom.",
+    "confidence": "medium",
+    "sources": [
+      {
+        "handle": "designcode.io",
+        "date": "2024-03-15",
+        "url": "https://www.instagram.com/p/C4hSKaWtaV7/"
+      }
+    ]
+  },
+  {
+    "principle": "Confirmation Modal Structure and Text Alignment",
+    "category": "layout",
+    "rule": "Organize confirmation modals into three distinct content blocks with left-aligned text to optimize scannability and readability.",
+    "why": "Left-aligned text patterns align with natural reading habits, allowing users to process critical warning and action details faster than centered layouts.",
+    "example": "A deletion warning modal structured with a top header containing a close icon, a left-aligned body containing a concise warning, and a bottom row for primary and secondary actions.",
+    "confidence": "high",
+    "sources": [
+      {
+        "handle": "zanderwhitehurst",
+        "date": "2024-09-23",
+        "url": "https://www.instagram.com/p/DAQf2QEAT7Z/"
+      }
+    ]
+  },
+  {
+    "principle": "Action-Oriented Modal Copywriting",
+    "category": "typography",
+    "rule": "Replace vague interrogative titles with a direct verb-noun pairing (e.g., 'Delete folder') and clarify consequences using concise factual statements.",
+    "why": "Explicit verb-noun headings and direct statements eliminate ambiguity about the exact system state change and its irreversibility.",
+    "example": "Changing a modal header from 'Are you sure?' to 'Delete folder' accompanied by a subtext stating 'This action is irreversible.'",
+    "confidence": "high",
+    "sources": [
+      {
+        "handle": "zanderwhitehurst",
+        "date": "2024-09-23",
+        "url": "https://www.instagram.com/p/DAQf2QEAT7Z/"
+      }
+    ]
+  },
+  {
+    "principle": "Modal Action Button Labeling and Hierarchy",
+    "category": "hierarchy",
+    "rule": "Implement exactly two distinct actions using uncapitalized simple verb text for the primary confirm button and 'Cancel' for the secondary action.",
+    "why": "Clear, standard button labels reduce cognitive load and prevent accidental destructive inputs by establishing unambiguous pathways to proceed or abort.",
+    "example": "A button group featuring a solid-fill primary button labeled 'delete' next to an outline or ghost secondary button labeled 'cancel'.",
+    "confidence": "high",
+    "sources": [
+      {
+        "handle": "zanderwhitehurst",
+        "date": "2024-09-23",
+        "url": "https://www.instagram.com/p/DAQf2QEAT7Z/"
+      }
+    ]
+  },
+  {
+    "principle": "Left-Aligned Typography for Single Alignment Anchors",
+    "category": "layout",
+    "rule": "Left-align multi-line blocks of text and UI elements to establish a single vertical alignment anchor instead of using center-aligned text.",
+    "why": "Center-aligned text creates multiple shifting alignment anchors across lines, forcing the user's eye to jump horizontally and increasing cognitive load during reading.",
+    "example": "A product card featuring a center-aligned title, description, and price is updated to have all text elements left-aligned to a single vertical margin.",
+    "confidence": "high",
+    "sources": [
+      {
+        "handle": "zanderwhitehurst",
+        "date": "2026-08-19",
+        "url": "https://www.instagram.com/p/DcN2nJEu9L2/"
+      }
+    ]
+  },
+  {
+    "principle": "Whitespace Over Line Borders for Layout Separation",
+    "category": "layout",
+    "rule": "Eliminate structural border lines between content containers and rely exclusively on negative space to establish grouping and hierarchy.",
+    "why": "Removing visual clutter prevents interfaces from looking overly dense or resembling spreadsheets, reducing cognitive load and improving scannability.",
+    "example": "Replacing card component borders and internal divider lines with uniform padding and generous margins.",
+    "confidence": "high",
+    "sources": [
+      {
+        "handle": "zanderwhitehurst",
+        "date": "2026-07-21",
+        "url": "https://www.instagram.com/p/DbDaptQscRR/"
       }
     ]
   }

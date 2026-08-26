@@ -283,6 +283,63 @@ def fetch_posts_direct_api(
     return fetched_posts
 
 
+def fetch_posts_instaloader(
+    handle: str,
+    limit: int = 50,
+    cookies_file: str = None,
+    request_delay: int = 3,
+    processed_ids: set = None
+) -> list:
+    """
+    Fallback metadata fetcher using instaloader.
+    Never downloads or persists media files.
+    """
+    if processed_ids is None:
+        processed_ids = set()
+
+    loader = setup_instaloader(cookies_file)
+    fetched_posts = []
+
+    try:
+        profile = instaloader.Profile.from_username(loader.context, handle)
+        logger.info(f"Instaloader resolved profile: @{handle} ({profile.mediacount} total posts)")
+
+        for post in profile.get_posts():
+            if len(fetched_posts) >= limit:
+                break
+
+            post_id = str(post.mediaid)
+            if post_id in processed_ids:
+                logger.debug(f"Skipping already-processed post ID: {post_id}")
+                continue
+
+            caption = post.caption or ""
+            date_str = post.date_utc.strftime("%Y-%m-%d") if post.date_utc else ""
+            is_video = post.is_video
+            video_url = post.video_url if is_video else None
+
+            post_data = {
+                "post_id": post_id,
+                "shortcode": post.shortcode,
+                "url": f"https://www.instagram.com/p/{post.shortcode}/",
+                "date": date_str,
+                "caption": caption,
+                "is_video": is_video,
+                "video_url": video_url,
+                "like_count": post.likes
+            }
+
+            fetched_posts.append(post_data)
+            logger.info(f"Fetched post via Instaloader [{len(fetched_posts)}/{limit}]: {post.shortcode} ({'video' if is_video else 'image'})")
+
+            time.sleep(request_delay)
+
+    except Exception as e:
+        logger.error(f"Instaloader fetch failed: {e}")
+
+    return fetched_posts
+
+
 def fetch_posts(
     handle: str,
     limit: int = 50,
@@ -330,13 +387,30 @@ def fetch_posts(
                 logger.warning(f"Error reading existing posts from {pfile}: {e}")
 
     logger.info(f"Querying profile and posts for @{handle}...")
-    new_posts = fetch_posts_direct_api(
-        handle=handle,
-        limit=limit,
-        cookies_file=cookies_file,
-        request_delay=request_delay,
-        processed_ids=processed_ids.union(existing_post_ids)
-    )
+    new_posts = []
+    
+    # Primary attempt: Direct authenticated API
+    try:
+        new_posts = fetch_posts_direct_api(
+            handle=handle,
+            limit=limit,
+            cookies_file=cookies_file,
+            request_delay=request_delay,
+            processed_ids=processed_ids.union(existing_post_ids)
+        )
+    except Exception as e:
+        logger.warning(f"Direct API fetch failed ({e}). Attempting Instaloader fallback...")
+
+    # Fallback attempt: Instaloader if direct API yielded no new posts
+    if not new_posts and len(existing_posts) == 0:
+        logger.info("Direct API yielded 0 posts. Running Instaloader fallback...")
+        new_posts = fetch_posts_instaloader(
+            handle=handle,
+            limit=limit,
+            cookies_file=cookies_file,
+            request_delay=request_delay,
+            processed_ids=processed_ids.union(existing_post_ids)
+        )
 
     all_posts = existing_posts + new_posts
     

@@ -1,6 +1,6 @@
 ---
 name: design-ui-ux
-description: "Actionable UI/UX design style guide covering Color, Hierarchy, Layout. Use this skill whenever creating, reshaping, critiquing, or reviewing UI/UX interfaces — including landing pages, dashboards, hero layouts, typography hierarchy, dark/light color palettes, interactive cards, navigation headers, and modal states — even if the user does not explicitly request 'design principles.'"
+description: "Actionable UI/UX design style guide covering Accessibility, Color, Hierarchy, Layout, Motion, Typography. Use this skill whenever creating, reshaping, critiquing, or reviewing UI/UX interfaces — including landing pages, dashboards, hero layouts, typography hierarchy, dark/light color palettes, interactive cards, navigation headers, and modal states — even if the user does not explicitly request 'design principles.'"
 ---
 
 # UI/UX Design Skill
@@ -14,81 +14,117 @@ _(none yet)_
 
 ## Color
 
-### Color System Harmonization
-- **Rule**: Structure UI elements using systematic color rules to maintain visual rhythm, clarity, and interface predictability.
-- **Why**: Minimizes cognitive friction and streamlines user scanning by providing reliable visual cues.
-- **Example**: Implemented across responsive containers and core interactive controls.
-- **Consensus**: 🎯 **Creator Pattern** (Verified across 1 post(s) by @naomic.reate)
-- **Sources**: 1 post(s) (latest: 2026-08-15) — [@naomic.reate](https://www.instagram.com/p/DcAMWXGMvqG/)
+### Bright Yellow and Royal Blue Complementary Pairing
+- **Rule**: Pair high-luminance bright yellow alongside deep royal blue to maximize chromatic contrast and visual impact.
+- **Why**: Leverages opposing chromatic temperatures and extreme value differences to create energetic, highly memorable focal zones.
+- **Example**: Highlighting key notification badges in bright yellow against a solid royal blue navigation bar.
+- **Consensus**: 🎯 **Creator Pattern** (Verified across 1 post(s) by @createwithalena)
+- **Sources**: 1 post(s) (latest: 2026-08-18) — [@createwithalena](https://www.instagram.com/p/DcLuspGxuR0/)
 
-### High-Energy Navy and Crimson Accent Hierarchy
-- **Rule**: Accent deep navy foundations with vibrant crimson or coral red highlights rather than relying solely on low-contrast monochromes.
-- **Why**: Deep blue establishes an authoritative base structure, while energetic red accents provide unmistakable visual prominence for key metrics and alerts.
-- **Example**: Using vibrant red notification badges or urgent status indicators on dark navy navigation bars.
-- **Consensus**: 🎯 **Creator Pattern** (Verified across 5 post(s) by @naomic.reate)
-- **Sources**: 5 post(s) (latest: 2026-08-25) — [@naomic.reate](https://www.instagram.com/p/DcUiAvhNUan/), [@naomic.reate](https://www.instagram.com/p/DcXJmNJtf91/), [@naomic.reate](https://www.instagram.com/p/DcXFyMfttWD/), [@naomic.reate](https://www.instagram.com/p/DcUqMJSMmEE/), [@naomic.reate](https://www.instagram.com/p/Dccd4dfMFIo/)
+### Earthy Olive and Tomato Red Contrast
+- **Rule**: Pair muted olive green backgrounds or structural elements with high-saturation tomato red accents for focal elements.
+- **Why**: Balances a grounded, natural neutral tone with a vibrant, high-attention chromatic pop to direct user focus effectively.
+- **Example**: Using an olive green interface background with tomato red primary CTA buttons.
+- **Consensus**: 🎯 **Creator Pattern** (Verified across 1 post(s) by @createwithalena)
+- **Sources**: 1 post(s) (latest: 2026-08-18) — [@createwithalena](https://www.instagram.com/p/DcLuspGxuR0/)
 
-### Slate Gray and Cool Blue Modern Minimalism
-- **Rule**: Anchor interfaces with subtle slate gray neutral surfaces and use precise cool blue highlights for active states and links.
-- **Why**: Reduces visual fatigue and clutter, giving dashboards and SaaS tools a clean, scannable, and modern aesthetic.
-- **Example**: Light gray secondary panels paired with cobalt blue primary actions and focus rings.
-- **Consensus**: 🎯 **Creator Pattern** (Verified across 5 post(s) by @naomic.reate)
-- **Sources**: 5 post(s) (latest: 2026-08-25) — [@naomic.reate](https://www.instagram.com/p/DcUiAvhNUan/), [@naomic.reate](https://www.instagram.com/p/DcXJmNJtf91/), [@naomic.reate](https://www.instagram.com/p/DcXFyMfttWD/), [@naomic.reate](https://www.instagram.com/p/DcUqMJSMmEE/), [@naomic.reate](https://www.instagram.com/p/Dccd4dfMFIo/)
-
-### Strategic Complementary Color Accents
-- **Rule**: Utilize complementary color pairings (such as forest green and warm red) with distinct luminance levels to make critical status distinctions stand out instantly.
-- **Why**: Complementary hues create maximum chromatic vibration and instant differentiation when calibrated for proper contrast ratios.
-- **Example**: Positive vs. negative comparative indicators in financial analytics and comparison tables.
-- **Consensus**: 🎯 **Creator Pattern** (Verified across 5 post(s) by @naomic.reate)
-- **Sources**: 5 post(s) (latest: 2026-08-25) — [@naomic.reate](https://www.instagram.com/p/DcUiAvhNUan/), [@naomic.reate](https://www.instagram.com/p/DcXJmNJtf91/), [@naomic.reate](https://www.instagram.com/p/DcXFyMfttWD/), [@naomic.reate](https://www.instagram.com/p/DcUqMJSMmEE/), [@naomic.reate](https://www.instagram.com/p/Dccd4dfMFIo/)
-
-### Warm Earth and Cool Accent Color Contrast
-- **Rule**: Pair warm earthy base tones (such as rich terracotta or dark brown) with saturated cool blue accents to generate vibrant visual contrast while preserving organic warmth.
-- **Why**: Breaks the monotony of monochromatic neutral palettes by using temperature contrast to guide user gaze toward focal interaction points.
-- **Example**: Applying slate/royal blue to call-to-action buttons against a warm espresso card background.
-- **Consensus**: 🎯 **Creator Pattern** (Verified across 5 post(s) by @naomic.reate)
-- **Sources**: 5 post(s) (latest: 2026-08-25) — [@naomic.reate](https://www.instagram.com/p/DcUiAvhNUan/), [@naomic.reate](https://www.instagram.com/p/DcXJmNJtf91/), [@naomic.reate](https://www.instagram.com/p/DcXFyMfttWD/), [@naomic.reate](https://www.instagram.com/p/DcUqMJSMmEE/), [@naomic.reate](https://www.instagram.com/p/Dccd4dfMFIo/)
+### Espresso and Baby Pink Palette Pairing
+- **Rule**: Combine deep espresso brown neutrals with soft, desaturated baby pink for balanced surface-to-content contrast.
+- **Why**: Provides a high-contrast dark foundation while utilizing a delicate pastel accent to maintain visual softness and legibility.
+- **Example**: Applying an espresso brown container background with baby pink typography or badge elements.
+- **Consensus**: 🎯 **Creator Pattern** (Verified across 1 post(s) by @createwithalena)
+- **Sources**: 1 post(s) (latest: 2026-08-18) — [@createwithalena](https://www.instagram.com/p/DcLuspGxuR0/)
 
 ## Typography
 
-_(none yet)_
+### Action-Oriented Modal Copywriting
+- **Rule**: Replace vague interrogative titles with a direct verb-noun pairing (e.g., 'Delete folder') and clarify consequences using concise factual statements.
+- **Why**: Explicit verb-noun headings and direct statements eliminate ambiguity about the exact system state change and its irreversibility.
+- **Example**: Changing a modal header from 'Are you sure?' to 'Delete folder' accompanied by a subtext stating 'This action is irreversible.'
+- **Consensus**: 🎯 **Creator Pattern** (Verified across 1 post(s) by @zanderwhitehurst)
+- **Sources**: 1 post(s) (latest: 2024-09-23) — [@zanderwhitehurst](https://www.instagram.com/p/DAQf2QEAT7Z/)
+
+### Ellipsis-Based Text Truncation for Grid Preservation
+- **Rule**: Implement single-line or multi-line text truncation with an ellipsis (...) on dynamic text elements when they exceed the maximum width of their parent container.
+- **Why**: Prevents unexpected text wrapping from pushing down adjacent UI elements, preserving the vertical rhythm and visual alignment of the layout.
+- **Example**: A dashboard data table cell with a fixed width of 150px truncates a long product name like 'Premium Wireless Noise-Canceling Headphones' to 'Premium Wireless Noise-Can...' to keep the row height uniform.
+- **Consensus**: 🎯 **Creator Pattern** (Verified across 1 post(s) by @designcode.io)
+- **Sources**: 1 post(s) (latest: 2024-04-14) — [@designcode.io](https://www.instagram.com/p/C5vilGoN3iN/)
 
 ## Hierarchy
 
-### Monospace and Visual Juxtaposition for Narrative Depth
-- **Rule**: Juxtapose raw monospace/ASCII micro-elements alongside organic human visuals to convey an intentional tech-forward narrative.
-- **Why**: Creates an intriguing contrast between structured technical syntax and organic imagery, signaling precision engineering.
-- **Example**: Terminal-style code tags and status chips layered across product lifestyle imagery.
-- **Consensus**: 🎯 **Creator Pattern** (Verified across 16 post(s) by @naomic.reate)
-- **Sources**: 16 post(s) (latest: 2026-08-25) — [@naomic.reate](https://www.instagram.com/p/DccKVM2NWqK/), [@naomic.reate](https://www.instagram.com/p/DcZ75Qks1RS/), [@naomic.reate](https://www.instagram.com/p/DcR4fcUtqiV/), [@naomic.reate](https://www.instagram.com/p/DcSJqOHskG_/), [@naomic.reate](https://www.instagram.com/p/DcZk3heNq_I/), [@naomic.reate](https://www.instagram.com/p/DcZg9xRt7aT/), [@naomic.reate](https://www.instagram.com/p/DcSAqKPteou/), [@naomic.reate](https://www.instagram.com/p/DcXBV3qtonz/), [@naomic.reate](https://www.instagram.com/p/DcUYTYLtqVJ/), [@naomic.reate](https://www.instagram.com/p/DcANMRXsY0I/), [@naomic.reate](https://www.instagram.com/p/Db_1c0nNGXz/), [@naomic.reate](https://www.instagram.com/p/Dbt8-BWjxl_/), [@naomic.reate](https://www.instagram.com/p/Dce1RlWM1rd/), [@naomic.reate](https://www.instagram.com/p/DceqrtJt_tl/), [@naomic.reate](https://www.instagram.com/p/DccVsgfMXwt/), [@naomic.reate](https://www.instagram.com/p/Db62JAksnOM/)
+### Modal Action Button Labeling and Hierarchy
+- **Rule**: Implement exactly two distinct actions using uncapitalized simple verb text for the primary confirm button and 'Cancel' for the secondary action.
+- **Why**: Clear, standard button labels reduce cognitive load and prevent accidental destructive inputs by establishing unambiguous pathways to proceed or abort.
+- **Example**: A button group featuring a solid-fill primary button labeled 'delete' next to an outline or ghost secondary button labeled 'cancel'.
+- **Consensus**: 🎯 **Creator Pattern** (Verified across 1 post(s) by @zanderwhitehurst)
+- **Sources**: 1 post(s) (latest: 2024-09-23) — [@zanderwhitehurst](https://www.instagram.com/p/DAQf2QEAT7Z/)
+
+### X-Ray Outline Mode for Occluded Canvas Elements
+- **Rule**: Implement a toggleable wireframe or outline rendering mode in canvas-based editing interfaces to expose and allow direct selection of occluded, clipped, or nested layers.
+- **Why**: Prevents foreground elements from blocking interaction with background elements, reducing the interaction cost of selecting deeply nested or hidden layers without altering the layer stack.
+- **Example**: In a graphic editor, a background vector shape is completely covered by a text box. Instead of manually hiding the text box in the layers panel, the user toggles outline mode to click and select the background shape directly on the canvas.
+- **Consensus**: 🎯 **Creator Pattern** (Verified across 1 post(s) by @designcode.io)
+- **Sources**: 1 post(s) (latest: 2024-04-21) — [@designcode.io](https://www.instagram.com/p/C6BkH0IIysY/)
 
 ## Motion
 
-_(none yet)_
+### Ambient Background Particle Motion
+- **Rule**: Configure ambient UI particle animations with a low gravity scale (0.20), slow speed, and linear fade-out over a sustained lifetime (6 seconds) to maintain a non-distracting background layer.
+- **Why**: Rapidly moving or abruptly disappearing elements draw involuntary user attention away from primary call-to-actions, whereas slow, fading, low-gravity motion preserves visual hierarchy.
+- **Example**: A landing page hero section utilizing a subtle, floating sphere particle system with magenta-to-blue randomized coloring instead of a static, high-contrast background image.
+- **Consensus**: 🎯 **Creator Pattern** (Verified across 1 post(s) by @designcode.io)
+- **Sources**: 1 post(s) (latest: 2024-04-13) — [@designcode.io](https://www.instagram.com/p/C5s9_8tiV29/)
 
 ## Accessibility
 
-_(none yet)_
+### Dual-Trigger Access for Power Utilities
+- **Rule**: Integrate a dual-trigger access pattern for complex utility modals, combining a right-click context menu action with a standardized keyboard shortcut (such as Cmd + R) to accommodate diverse user physical abilities and workflow speeds.
+- **Why**: Providing both mouse-driven and keyboard-driven pathways reduces motor load, accommodates users with different accessibility needs, and accelerates high-frequency repetitive tasks for power users.
+- **Example**: A layer list component where right-clicking a layer displays a 'Rename' option, which can also be instantly opened by pressing Cmd + R when the layer is focused.
+- **Consensus**: 🎯 **Creator Pattern** (Verified across 1 post(s) by @designcode.io)
+- **Sources**: 1 post(s) (latest: 2024-04-12) — [@designcode.io](https://www.instagram.com/p/C5qZEakL_SP/)
 
 ## Layout
 
-### Editorial Grid with Hero Imagery
-- **Rule**: Structure layout frameworks around disciplined column grids integrated with high-impact hero portrait photography to achieve an editorial, magazine-grade composition.
-- **Why**: Imparts prestige and human connection, transforming standard landing pages into memorable storytelling experiences.
-- **Example**: Asymmetric multi-column hero sections featuring framed founder portraiture aligned with bold typography.
-- **Consensus**: 🎯 **Creator Pattern** (Verified across 16 post(s) by @naomic.reate)
-- **Sources**: 16 post(s) (latest: 2026-08-25) — [@naomic.reate](https://www.instagram.com/p/DccKVM2NWqK/), [@naomic.reate](https://www.instagram.com/p/DcZ75Qks1RS/), [@naomic.reate](https://www.instagram.com/p/DcR4fcUtqiV/), [@naomic.reate](https://www.instagram.com/p/DcSJqOHskG_/), [@naomic.reate](https://www.instagram.com/p/DcZk3heNq_I/), [@naomic.reate](https://www.instagram.com/p/DcZg9xRt7aT/), [@naomic.reate](https://www.instagram.com/p/DcSAqKPteou/), [@naomic.reate](https://www.instagram.com/p/DcXBV3qtonz/), [@naomic.reate](https://www.instagram.com/p/DcUYTYLtqVJ/), [@naomic.reate](https://www.instagram.com/p/DcANMRXsY0I/), [@naomic.reate](https://www.instagram.com/p/Db_1c0nNGXz/), [@naomic.reate](https://www.instagram.com/p/Dbt8-BWjxl_/), [@naomic.reate](https://www.instagram.com/p/Dce1RlWM1rd/), [@naomic.reate](https://www.instagram.com/p/DceqrtJt_tl/), [@naomic.reate](https://www.instagram.com/p/DccVsgfMXwt/), [@naomic.reate](https://www.instagram.com/p/Db62JAksnOM/)
+### Confirmation Modal Structure and Text Alignment
+- **Rule**: Organize confirmation modals into three distinct content blocks with left-aligned text to optimize scannability and readability.
+- **Why**: Left-aligned text patterns align with natural reading habits, allowing users to process critical warning and action details faster than centered layouts.
+- **Example**: A deletion warning modal structured with a top header containing a close icon, a left-aligned body containing a concise warning, and a bottom row for primary and secondary actions.
+- **Consensus**: 🎯 **Creator Pattern** (Verified across 1 post(s) by @zanderwhitehurst)
+- **Sources**: 1 post(s) (latest: 2024-09-23) — [@zanderwhitehurst](https://www.instagram.com/p/DAQf2QEAT7Z/)
 
-### Layered Blur and Frosted Glass Elevation
-- **Rule**: Layer soft backdrop-filter blur effects and frosted glass surfaces over background imagery to establish distinct spatial depth and visual elevation.
-- **Why**: Separates interactive foreground content from decorative background art while preserving ambient contextual illumination.
-- **Example**: Sticky glassmorphism navigation headers with `backdrop-filter: blur(12px)` over dynamic hero artwork.
-- **Consensus**: ⭐ **Industry Standard** (Cross-validated across 2 creators: @celfstudies, @naomic.reate)
-- **Sources**: 25 post(s) (latest: 2026-08-25) — [@naomic.reate](https://www.instagram.com/p/DccKVM2NWqK/), [@naomic.reate](https://www.instagram.com/p/DcZ75Qks1RS/), [@naomic.reate](https://www.instagram.com/p/DcR4fcUtqiV/), [@naomic.reate](https://www.instagram.com/p/DcSJqOHskG_/), [@naomic.reate](https://www.instagram.com/p/DcZk3heNq_I/), [@naomic.reate](https://www.instagram.com/p/DcZg9xRt7aT/), [@naomic.reate](https://www.instagram.com/p/DcSAqKPteou/), [@naomic.reate](https://www.instagram.com/p/DcUiAvhNUan/), [@naomic.reate](https://www.instagram.com/p/DcXJmNJtf91/), [@naomic.reate](https://www.instagram.com/p/DcXFyMfttWD/), [@naomic.reate](https://www.instagram.com/p/DcXBV3qtonz/), [@naomic.reate](https://www.instagram.com/p/DcUqMJSMmEE/), [@naomic.reate](https://www.instagram.com/p/DcUYTYLtqVJ/), [@naomic.reate](https://www.instagram.com/p/DcANMRXsY0I/), [@naomic.reate](https://www.instagram.com/p/Db_1c0nNGXz/), [@naomic.reate](https://www.instagram.com/p/Dbt8-BWjxl_/), [@naomic.reate](https://www.instagram.com/p/Dce1RlWM1rd/), [@naomic.reate](https://www.instagram.com/p/DceqrtJt_tl/), [@naomic.reate](https://www.instagram.com/p/DccVsgfMXwt/), [@naomic.reate](https://www.instagram.com/p/Dccd4dfMFIo/), [@naomic.reate](https://www.instagram.com/p/Db62JAksnOM/), [@celfstudies](https://www.instagram.com/p/DccJ5SVP9eD/), [@celfstudies](https://www.instagram.com/p/DbvCg0VgE45/), [@celfstudies](https://www.instagram.com/p/DbaPIhngYp0/), [@celfstudies](https://www.instagram.com/p/DbH5St2gzbV/)
+### Fluid Component Resizing via Parent-Child Constraints
+- **Rule**: Configure parent containers to dynamically wrap child elements using 'hug contents' while setting nested content layers to 'fill container' to ensure components scale fluidly across varying viewport widths.
+- **Why**: Eliminates rigid, fixed-pixel dimensions that cause layout breakage, allowing components to automatically adapt to dynamic content lengths and screen sizes.
+- **Example**: A button component with horizontal padding of 16px set to 'hug contents' automatically expands or contracts its width based on the length of the button label text.
+- **Consensus**: 🎯 **Creator Pattern** (Verified across 1 post(s) by @designcode.io)
+- **Sources**: 1 post(s) (latest: 2024-04-14) — [@designcode.io](https://www.instagram.com/p/C5vilGoN3iN/)
 
-### Tactile Collage and Asymmetric Layering
-- **Rule**: Combine tactile organic elements (such as simulated paper cutouts or organic masks) with expansive landscape compositions to break rigid digital flatness.
-- **Why**: Adds tactile authenticity and visual rhythm, encouraging prolonged exploration of editorial or portfolio pages.
-- **Example**: Card components featuring organic cutout masks overlapping adjacent content containers.
-- **Consensus**: 🎯 **Creator Pattern** (Verified across 14 post(s) by @naomic.reate)
-- **Sources**: 14 post(s) (latest: 2026-08-25) — [@naomic.reate](https://www.instagram.com/p/DcR4fcUtqiV/), [@naomic.reate](https://www.instagram.com/p/DcSJqOHskG_/), [@naomic.reate](https://www.instagram.com/p/DcZk3heNq_I/), [@naomic.reate](https://www.instagram.com/p/DcZg9xRt7aT/), [@naomic.reate](https://www.instagram.com/p/DcSAqKPteou/), [@naomic.reate](https://www.instagram.com/p/DcXBV3qtonz/), [@naomic.reate](https://www.instagram.com/p/DcUYTYLtqVJ/), [@naomic.reate](https://www.instagram.com/p/DcANMRXsY0I/), [@naomic.reate](https://www.instagram.com/p/Db_1c0nNGXz/), [@naomic.reate](https://www.instagram.com/p/Dbt8-BWjxl_/), [@naomic.reate](https://www.instagram.com/p/Dce1RlWM1rd/), [@naomic.reate](https://www.instagram.com/p/DceqrtJt_tl/), [@naomic.reate](https://www.instagram.com/p/DccVsgfMXwt/), [@naomic.reate](https://www.instagram.com/p/Db62JAksnOM/)
+### Left-Aligned Typography for Single Alignment Anchors
+- **Rule**: Left-align multi-line blocks of text and UI elements to establish a single vertical alignment anchor instead of using center-aligned text.
+- **Why**: Center-aligned text creates multiple shifting alignment anchors across lines, forcing the user's eye to jump horizontally and increasing cognitive load during reading.
+- **Example**: A product card featuring a center-aligned title, description, and price is updated to have all text elements left-aligned to a single vertical margin.
+- **Consensus**: 🎯 **Creator Pattern** (Verified across 1 post(s) by @zanderwhitehurst)
+- **Sources**: 1 post(s) (latest: 2026-08-19) — [@zanderwhitehurst](https://www.instagram.com/p/DcN2nJEu9L2/)
+
+### Master-Template Card Grid Layout
+- **Rule**: Standardize dynamic content feeds by designing a single master card template with fixed image aspect ratios and explicit text container constraints to maintain layout consistency across variable database inputs.
+- **Why**: Ensures visual uniformity and prevents layout breaking or uneven card heights when dynamic content of varying lengths is loaded from a database.
+- **Example**: A blog post repeater grid where every card maintains a strict 1:1 image aspect ratio, 16px internal padding, and a 2-line truncation limit for titles, ensuring all cards in the row align perfectly at the bottom.
+- **Consensus**: 🎯 **Creator Pattern** (Verified across 1 post(s) by @designcode.io)
+- **Sources**: 1 post(s) (latest: 2024-03-15) — [@designcode.io](https://www.instagram.com/p/C4hSKaWtaV7/)
+
+### Tokenized Dynamic Input Fields
+- **Rule**: Design batch-processing text inputs with adjacent, clickable variable tokens (such as original name or ascending/descending numbers) that inject dynamic placeholders directly into the input field at the current cursor position.
+- **Why**: This layout pattern eliminates the need for users to memorize syntax or regular expressions, reducing input errors and cognitive friction during complex string formatting.
+- **Example**: A batch-export modal featuring a text input for file naming, accompanied by a row of pill buttons labeled 'Date', 'Sequence', and 'Project Name' that insert dynamic variables into the input field when clicked.
+- **Consensus**: 🎯 **Creator Pattern** (Verified across 1 post(s) by @designcode.io)
+- **Sources**: 1 post(s) (latest: 2024-04-12) — [@designcode.io](https://www.instagram.com/p/C5qZEakL_SP/)
+
+### Whitespace Over Line Borders for Layout Separation
+- **Rule**: Eliminate structural border lines between content containers and rely exclusively on negative space to establish grouping and hierarchy.
+- **Why**: Removing visual clutter prevents interfaces from looking overly dense or resembling spreadsheets, reducing cognitive load and improving scannability.
+- **Example**: Replacing card component borders and internal divider lines with uniform padding and generous margins.
+- **Consensus**: 🎯 **Creator Pattern** (Verified across 1 post(s) by @zanderwhitehurst)
+- **Sources**: 1 post(s) (latest: 2026-07-21) — [@zanderwhitehurst](https://www.instagram.com/p/DbDaptQscRR/)

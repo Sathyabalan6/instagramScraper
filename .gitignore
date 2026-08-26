@@ -1,6 +1,8 @@
 # Secrets - never commit
 cookies/
 *.txt.cookies
+.env
+*.env
 
 # Scratch / generated data
 data/raw/

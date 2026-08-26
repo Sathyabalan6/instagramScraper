@@ -1,0 +1,573 @@
+[
+  {
+    "post_id": "3351118464422193944",
+    "shortcode": "C6BkH0IIysY",
+    "url": "https://www.instagram.com/p/C6BkH0IIysY/",
+    "date": "2024-04-21",
+    "caption": "View Layout Outlines helps with the visual hierarchy of your design #figma #figmatips #uidesign",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m82/AQMzmV8rpfkXI_viaWob2qUzc7vKnbqYt8kZshCW_fLgMc7ll3qtVzfQakdwpCP7QVDfRzeb0Uw1wqdK7TEGXmXZzLzEZP_lfxhI6iQ.mp4?_nc_cat=109&_nc_oc=Ado-EKskZUukdHTeu_qwzw_yruHYhwPQSzYsMWHoRr3P5coTr_qw09-t8N2C4srTeP456AFFG3KYoGyAe8ijONLl&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=ptJma0VgTusQ7kNvwGuAguc&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzE4LmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6NDA4NDg4OTY4NTU5MTA0LCJhc3NldF9hZ2VfZGF5cyI6ODU2LCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6NTksInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=8f4f40ca2b61b24c&_nc_vs=HBksFQIYT2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfcHJvZC8yMjRDQjA0QTZGNUIwN0YyQ0RCNzZDNThDODAyQThBMF92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HQXdZX3hsVWVDWWYwcE1HQURxM0RkazB4SEZwYnFfRUFBQUYVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAmgOjs_ZfhuQEVAigCQzMsF0BN92yLQ5WBGBJkYXNoX2Jhc2VsaW5lXzFfdjERAHX-B2XmnQEA&_nc_gid=4-qgBMDF5wvKPT4ag3EOVQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQH3AnUzmaiiFhgJGevAJlxCT2Mn1SWXDBhOPoM6bQM7wA&oe=6A90767E",
+    "like_count": 25,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 14,
+      "matched_keywords": [
+        "hierarchy",
+        "figma"
+      ]
+    },
+    "transcript": "Do you have a complex design and need to understand the hierarchy of your layers? The View Layer Outlines feature allows you to see how many layers each object contains, or how many objects are nested within another object. To display the outlines, click on the View Options menu in the left corner of the toolbar where the Figma icon is located. Select Outlines, then Show Outlines, and optionally choose to include hidden layers and object boundaries. Alternatively, you can activate the outline view quickly by pressing Command Shift plus O as a keyboard shortcut. The Show Outlines feature in Figma enables you to view the structure of your design by displaying the hierarchy of layers within your file. It can help inspect, select, and adjust layers that may be hidden or nested within other layers. Also, you can view and select objects on the canvas that are hidden, clipped, or positioned behind different layers. This feature also allows you to see stroke details, outer placements, and view all components of a Boolean operation.",
+    "principles": [
+      {
+        "principle": "X-Ray Outline Mode for Occluded Canvas Elements",
+        "category": "hierarchy",
+        "rule": "Implement a toggleable wireframe or outline rendering mode in canvas-based editing interfaces to expose and allow direct selection of occluded, clipped, or nested layers.",
+        "why": "Prevents foreground elements from blocking interaction with background elements, reducing the interaction cost of selecting deeply nested or hidden layers without altering the layer stack.",
+        "example": "In a graphic editor, a background vector shape is completely covered by a text box. Instead of manually hiding the text box in the layers panel, the user toggles outline mode to click and select the background shape directly on the canvas.",
+        "confidence": "medium",
+        "sources": [
+          {
+            "handle": "designcode.io",
+            "date": "2024-04-21",
+            "url": "https://www.instagram.com/p/C6BkH0IIysY/"
+          }
+        ]
+      }
+    ],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash",
+      "principles_count": 1
+    }
+  },
+  {
+    "post_id": "3346770106682453632",
+    "shortcode": "C5yHa4ZtC6A",
+    "url": "https://www.instagram.com/p/C5yHa4ZtC6A/",
+    "date": "2024-04-15",
+    "caption": "Design tip: use placeholder UI and content generator plugins to speed up design in Figma\n\n#figmaappdesign #figmadesign #figmadesigntemplate #figmadesigntips #figmadesign #figmatemplate #figmaforbeginner #figmatutorial #howtousefigma #uidesign #uibucket #uidesginer #uiuxdesign #uiuxinspiration #interfacedesign",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m82/AQNof-J2CUT94-XGf4Lo2sWWAl2y0ym2WrTUK2WKVTtMLbnkFQh47sXwiQxVLrGBxSq5Pjc16ZukBtrjrJz44I6E1y8-YhaXWBr9soA.mp4?_nc_cat=106&_nc_oc=AdqTge5KCDFG7y5zv_CRSUhEoldhvnSw9j120p0QfM6XCALsbTNw3CqBfqTrc3X6m98iyNC-V1Tb3RBfXTu1ccz4&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=EygBs9e1FjMQ7kNvwHi_YER&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzE4LmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTQ0NDk4MjgzNjM4Nzc5NywiYXNzZXRfYWdlX2RheXMiOjg2MiwidmlfdXNlY2FzZV9pZCI6MTAwOTksImR1cmF0aW9uX3MiOjU0LCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&vs=b01b6fbd46c3846f&_nc_vs=HBksFQIYT2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfcHJvZC83MTQ2QTA3QUE1NEU0MTY0NUVENjVFOEZFNDBDQzdBOF92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HRmJORmhwMzk3R2s2V2dCQU5Xd1dDckkyUGM5YnFfRUFBQUYVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAmqv_aiomNkQUVAigCQzMsF0BLDMzMzMzNGBJkYXNoX2Jhc2VsaW5lXzFfdjERAHX-B2XmnQEA&_nc_gid=4-qgBMDF5wvKPT4ag3EOVQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQH1UHen6dbEH-LuwptGc6cgtFQjfPn2DjlR5HWSjlD1xQ&oe=6A908D27",
+    "like_count": 17,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 30,
+      "matched_keywords": [
+        "tip",
+        "ui",
+        "figma"
+      ]
+    },
+    "transcript": "A placeholder is a temporary element used for design visualization. Typically, this element serves as a temporary stand-in, not intended as a final component within the UI. Use plugins to streamline the creation of placeholders. The ContentReal plugin allows for the effortless insertion of text, icons, logos, and images. Unsplash is the top choice for inserting high-quality images seamlessly into your design. Start with a wireframe of an application's user interface. To populate the shapes with temporary content like images or logos, you can utilize the ContentReal plugin. For text, use the text tool to create a text box on the placeholder and add temporary content such as LORAM Ipsum text. When you are ready to implement the design or functionality represented by the placeholder, select it and change it with the actual content.",
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3346045131478759565",
+    "shortcode": "C5vilGoN3iN",
+    "url": "https://www.instagram.com/p/C5vilGoN3iN/",
+    "date": "2024-04-14",
+    "caption": "Hug content and resizing in Figma design tips\n\n#figmaappdesign #figmadesign #figmadesigntemplate #figmadesigntips #figmadesign #figmatemplate #figmaforbeginner #figmatutorial #howtousefigma #uidesign #uibucket #uidesginer #uiuxdesign #uiuxinspiration #interfacedesign",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m82/AQNFA2omYbh8Ge0pZnb5FY1GWS3oRrEZS4kGA378D3enuuwQyg28BuTmS9JRIzL3a-Rctbbiw6JSP-4Lg5UX9YOsjd53UrZtOheXPVY.mp4?_nc_cat=110&_nc_oc=AdqiNycX3a8n8-3HW-kUL4vLKwklDxCpNpR5a8CxWpBVQgQDUYkBjI9XU9nTTGs632Cw5wVp1CjlXfTwpJeBX6KG&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=9dS921atGVcQ7kNvwEdZCWP&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuMTI4MC5kYXNoX2Jhc2VsaW5lXzFfdjEiLCJ4cHZfYXNzZXRfaWQiOjExNDcwNDE0MTY0ODMzMDYsImFzc2V0X2FnZV9kYXlzIjo4NjMsInZpX3VzZWNhc2VfaWQiOjEwMDk5LCJkdXJhdGlvbl9zIjo1MywidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=c2403b5b9aae1e3d&_nc_vs=HBksFQIYT2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfcHJvZC82RDQzQjcyOUY4QjJGMDcyQjIzNkY2Nzg4MDA3MkU5Q192aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HRTZtSlJxd1pGNG1iZE1DQU9vXzU5aUJoaGMxYnFfRUFBQUYVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAm1MfgwszOiQQVAigCQzMsF0BKyHKwIMScGBJkYXNoX2Jhc2VsaW5lXzFfdjERAHX-B2XmnQEA&_nc_gid=4-qgBMDF5wvKPT4ag3EOVQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQGN5F1ey6dP2qSSy8XBhxvNwlY7zKCbAkNOQ7W_ix4oqw&oe=6A907997",
+    "like_count": 12,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 23,
+      "matched_keywords": [
+        "figma"
+      ]
+    },
+    "transcript": "Learn how to resize designs dynamically by using Figma's Auto Layout system. When an Auto Layout frame is set to fixed width or height, the values of the frame's dimensions remain the same regardless of the content within them. The hug contents will resize to be as small as possible to surround all of its children, only leaving space for padding. The dimensions of the parent frame are determined by the size of the nested items. You can use the Auto Layout fill container to make sure that the size of your object is always the same as its parent frame. As you resize the frame, the nested items adjust to fill any new space and accommodate the dimensions. When the text exceeds the boundaries of its container, text truncation ensures that the layout remains clean and visually coherent by shortening the text and ending it with an ellipsis. This indicates to the viewer that there is more text than what is currently visible.",
+    "principles": [
+      {
+        "principle": "Fluid Component Resizing via Parent-Child Constraints",
+        "category": "layout",
+        "rule": "Configure parent containers to dynamically wrap child elements using 'hug contents' while setting nested content layers to 'fill container' to ensure components scale fluidly across varying viewport widths.",
+        "why": "Eliminates rigid, fixed-pixel dimensions that cause layout breakage, allowing components to automatically adapt to dynamic content lengths and screen sizes.",
+        "example": "A button component with horizontal padding of 16px set to 'hug contents' automatically expands or contracts its width based on the length of the button label text.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "designcode.io",
+            "date": "2024-04-14",
+            "url": "https://www.instagram.com/p/C5vilGoN3iN/"
+          }
+        ]
+      },
+      {
+        "principle": "Ellipsis-Based Text Truncation for Grid Preservation",
+        "category": "typography",
+        "rule": "Implement single-line or multi-line text truncation with an ellipsis (...) on dynamic text elements when they exceed the maximum width of their parent container.",
+        "why": "Prevents unexpected text wrapping from pushing down adjacent UI elements, preserving the vertical rhythm and visual alignment of the layout.",
+        "example": "A dashboard data table cell with a fixed width of 150px truncates a long product name like 'Premium Wireless Noise-Canceling Headphones' to 'Premium Wireless Noise-Can...' to keep the row height uniform.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "designcode.io",
+            "date": "2024-04-14",
+            "url": "https://www.instagram.com/p/C5vilGoN3iN/"
+          }
+        ]
+      }
+    ],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash",
+      "principles_count": 2
+    }
+  },
+  {
+    "post_id": "3345321298582134205",
+    "shortcode": "C5s9_8tiV29",
+    "url": "https://www.instagram.com/p/C5s9_8tiV29/",
+    "date": "2024-04-13",
+    "caption": "How to create particles in Spline tool \n\n#3danimation #interactiondesign #spline #splinetool #uiinteraction #interactivedesign #particles",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m82/AQPBrRfQGCpU6oVh4yOjz-mf-7Eg93csKbS3nPmU6_xmMqUmAivD6f2quZnEA6escqeGMI7lSQ39uOjWqwNiGWOC8GO4BLSPQFVBKU8.mp4?_nc_cat=104&_nc_oc=Adrd-j1RgXY5jWRNYGmJo8BB1FEw1XYymqXcc-priio2WFsV1RL3np5E6ONLq7J3DUqeKWMgoXQauDkDkG7O_O-k&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=5xGqLXVv8bUQ7kNvwF0YDQ4&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6OTMzMjYyNTM4NDkxNjUwLCJhc3NldF9hZ2VfZGF5cyI6ODY0LCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6NjAsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=232cef98e42c0724&_nc_vs=HBksFQIYT2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfcHJvZC82ODQ3QURFQzU3MUFFMERFQjA5NjJFMkZBM0U5OTk5RF92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HRVJBRGhxVkhxQ3dmYmtDQUlsWXloSUFXRVpaYnFfRUFBQUYVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAmhJy24YOzqAMVAigCQzMsF0BON2yLQ5WBGBJkYXNoX2Jhc2VsaW5lXzFfdjERAHX-B2XmnQEA&_nc_gid=4-qgBMDF5wvKPT4ag3EOVQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQHfk1_aJfoumLbiuo2QChrwH1CFwziR-4pUGek1erxrRw&oe=6A90A099",
+    "like_count": 14,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 14,
+      "matched_keywords": []
+    },
+    "transcript": "Learn to create this particle animation in just one minute. Select particle emitter from toolbar. Let's customize particle shape. Choose sphere. Set the size to 2 on 24. Next, set color A to magenta and B to blue. Choose random for coloring mode. Size, slide to 2. Rotation, slide to 1. Birth rate, slide to 2000. Lifetime set to 6. Fading opt to linear fade out. Speed, slide to 5. Orientation set to surface. Image opt to dot sharp. Move on to particle force. Gravity, slide to 0.20. Collider, none. Finally, customize particle noise. Types opt to curl, scale, slide to 6. Variations slide to 10. Seed set to 100. And that's it.",
+    "principles": [
+      {
+        "principle": "Ambient Background Particle Motion",
+        "category": "motion",
+        "rule": "Configure ambient UI particle animations with a low gravity scale (0.20), slow speed, and linear fade-out over a sustained lifetime (6 seconds) to maintain a non-distracting background layer.",
+        "why": "Rapidly moving or abruptly disappearing elements draw involuntary user attention away from primary call-to-actions, whereas slow, fading, low-gravity motion preserves visual hierarchy.",
+        "example": "A landing page hero section utilizing a subtle, floating sphere particle system with magenta-to-blue randomized coloring instead of a static, high-contrast background image.",
+        "confidence": "medium",
+        "sources": [
+          {
+            "handle": "designcode.io",
+            "date": "2024-04-13",
+            "url": "https://www.instagram.com/p/C5s9_8tiV29/"
+          }
+        ]
+      }
+    ],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash",
+      "principles_count": 1
+    }
+  },
+  {
+    "post_id": "3344595927841109135",
+    "shortcode": "C5qZEakL_SP",
+    "url": "https://www.instagram.com/p/C5qZEakL_SP/",
+    "date": "2024-04-12",
+    "caption": "Rename all layers at once in Figma + tricks \n\n#figmaappdesign #figmadesign #figmadesigntemplate #figmadesigntips #figmadesign #figmatemplate #figmaforbeginner #figmatutorial #howtousefigma #uidesign #uibucket #uidesginer #uiuxdesign #uiuxinspiration #interfacedesign",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m82/AQOgFQonHhZyVL1ccKFzOjaE9cCS6VKa1rUKV3DzQzZnjWn2Bj4LBic0mnlWpuLTxJDF-ihVv9pLF57BgLeGnRAIktr5dWZrXtQWlJc.mp4?_nc_cat=105&_nc_oc=Adow2mCUL4UHh9kpLhX5rZFM9ZoBl2KrZ2AHSnJOez4UYfpTC2ZPQvRHfuKcUhLmpnIBt0e9FHi-8XTTf20Fz-Al&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=8gMMJd9XrK4Q7kNvwGF6qB0&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzE4LmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6NzQ3ODI2NDExNTU3MTAzMiwiYXNzZXRfYWdlX2RheXMiOjg2NSwidmlfdXNlY2FzZV9pZCI6MTAwOTksImR1cmF0aW9uX3MiOjU2LCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&vs=54bb7f4befe8a1ae&_nc_vs=HBksFQIYT2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfcHJvZC9GMjRBRjdBODI3QjYzRTZCODhDNUM0QUJENkI5OEM4OV92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HQjFEQkJwR3Jwdk1CeEFNQUVRcVRFbXFJdDlLYnFfRUFBQUYVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAmsKWpwqHcyBoVAigCQzMsF0BMMzMzMzMzGBJkYXNoX2Jhc2VsaW5lXzFfdjERAHX-B2XmnQEA&_nc_gid=4-qgBMDF5wvKPT4ag3EOVQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQHLG1AfYjEnqaXm35I-u5r2hvI6vDyddG9uFxq-B7pPFg&oe=6A908FEE",
+    "like_count": 10,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 23,
+      "matched_keywords": [
+        "figma"
+      ]
+    },
+    "transcript": "Figma has a variety of features, including the ability to batch rename multiple layers or objects within a design file. To access the rename layers modal, right-click on the Layers panel and select Rename or use the keyboard shortcut command plus R. You can add a prefix to the existing name. In the Rename window, enter the prefix you'd like to add to the field and you can separate it with a forward slash if you wish. Then click on the Current Name button to add the current layer name after the prefix. To redesignate all selected layers to the same name, just enter the desired choice in the field and click on the button. You can add a number to the end or beginning of the layer's name. Click the number up or number down button to add a code to the name. This instructs Figma to append a unique number to the end of each layer's name. For further customization, you can use the Start Ascending From or Stop Descending at Fields to adjust the numbering sequence.",
+    "principles": [
+      {
+        "principle": "Dual-Trigger Access for Power Utilities",
+        "category": "accessibility",
+        "rule": "Integrate a dual-trigger access pattern for complex utility modals, combining a right-click context menu action with a standardized keyboard shortcut (such as Cmd + R) to accommodate diverse user physical abilities and workflow speeds.",
+        "why": "Providing both mouse-driven and keyboard-driven pathways reduces motor load, accommodates users with different accessibility needs, and accelerates high-frequency repetitive tasks for power users.",
+        "example": "A layer list component where right-clicking a layer displays a 'Rename' option, which can also be instantly opened by pressing Cmd + R when the layer is focused.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "designcode.io",
+            "date": "2024-04-12",
+            "url": "https://www.instagram.com/p/C5qZEakL_SP/"
+          }
+        ]
+      },
+      {
+        "principle": "Tokenized Dynamic Input Fields",
+        "category": "layout",
+        "rule": "Design batch-processing text inputs with adjacent, clickable variable tokens (such as original name or ascending/descending numbers) that inject dynamic placeholders directly into the input field at the current cursor position.",
+        "why": "This layout pattern eliminates the need for users to memorize syntax or regular expressions, reducing input errors and cognitive friction during complex string formatting.",
+        "example": "A batch-export modal featuring a text input for file naming, accompanied by a row of pill buttons labeled 'Date', 'Sequence', and 'Project Name' that insert dynamic variables into the input field when clicked.",
+        "confidence": "medium",
+        "sources": [
+          {
+            "handle": "designcode.io",
+            "date": "2024-04-12",
+            "url": "https://www.instagram.com/p/C5qZEakL_SP/"
+          }
+        ]
+      }
+    ],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash",
+      "principles_count": 2
+    }
+  },
+  {
+    "post_id": "3343146312566833099",
+    "shortcode": "C5lPdvIs__L",
+    "url": "https://www.instagram.com/p/C5lPdvIs__L/",
+    "date": "2024-04-10",
+    "caption": "Using a design system can speed up your designs and allow enough flexibility to create something unique\n\nThis is using our ui kit: http://designcodeui.com \n\n#figmaappdesign #figmadesign #figmadesigntemplate #figmadesigntips #figmadesign #figmatemplate #figmaforbeginner #figmatutorial #howtousefigma #uidesign #uibucket #uidesginer #uiuxdesign #uiuxinspiration #interfacedesign",
+    "is_video": false,
+    "video_url": null,
+    "like_count": 15,
+    "classification": {
+      "path": "caption",
+      "reason": "Detailed caption (41 words) with design keywords: ui, system",
+      "word_count": 41,
+      "matched_keywords": [
+        "ui",
+        "system"
+      ]
+    },
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3342103505722986407",
+    "shortcode": "C5hiW5lNM-n",
+    "url": "https://www.instagram.com/p/C5hiW5lNM-n/",
+    "date": "2024-04-09",
+    "caption": "Tesla desktop app concept \ud83d\udc40 \n\n#figmaappdesign #figmadesign #figmadesigntemplate #figmadesigntips #figmadesign #figmatemplate #figmaforbeginner #figmatutorial #howtousefigma #uidesign #uibucket #uidesginer #uiuxdesign #uiuxinspiration #interfacedesign",
+    "is_video": false,
+    "video_url": null,
+    "like_count": 28,
+    "classification": {
+      "path": "skip",
+      "reason": "Static image without substantial design caption (19 words, 0 keywords)",
+      "word_count": 19,
+      "matched_keywords": []
+    },
+    "principles": []
+  },
+  {
+    "post_id": "3341032402963379639",
+    "shortcode": "C5du0TZs7W3",
+    "url": "https://www.instagram.com/p/C5du0TZs7W3/",
+    "date": "2024-04-07",
+    "caption": "Spice up your designs with a dash of 3D elements! \ud83c\udf1f Full course: https://designcode.io/spline-ios \n\n#figmaappdesign #figmadesign #figmadesigntemplate #figmadesigntips #figmadesign #figmatemplate #figmaforbeginner #figmatutorial #howtousefigma #uidesign #uibucket #uidesginer #uiuxdesign #uiuxinspiration #interfacedesign #uiinteraction #interactivedesign",
+    "is_video": false,
+    "video_url": null,
+    "like_count": 35,
+    "classification": {
+      "path": "skip",
+      "reason": "Static image without substantial design caption (34 words, 0 keywords)",
+      "word_count": 34,
+      "matched_keywords": []
+    },
+    "principles": []
+  },
+  {
+    "post_id": "3332681432634355541",
+    "shortcode": "C5AEBsNte9V",
+    "url": "https://www.instagram.com/p/C5AEBsNte9V/",
+    "date": "2024-03-27",
+    "caption": "Create this realistic UI from scratch in Figma: https://buff.ly/3PyKxXp\n\n- From UI pattern to wireframe to fully fleshed UI\n- Use the Arc tool for the knob design\n- Draw complex shapes for rings and charts\n- Work with gradients, advanced strokes and auto layout\n\nFree 41-min tutorial\n\n#figmaappdesign #figmadesign #figmadesigntemplate #figmadesigntips #figmadesign #figmatemplate #figmaforbeginner #figmatutorial #howtousefigma #uiinteraction #interactivedesign #uidesign #uibucket #uidesginer #uiuxdesign #uiuxinspiration #interfacedesign",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m82/AQP5-aYgKQei7FBca5kFvhESLgl2RSaidYo0P6-mQ1xS-uEWjaG4fMmR9NdbGwBlLrv8xaerG-u4xZ1AIWth8DBNuOOK5zGkMKtasz4.mp4?_nc_cat=100&_nc_oc=AdoZjknSwIXTtyyaqMK_avj5AIs5VsbV56Hq0knZDGVK6gmaDerUdSiYSeQ8TS4x-ruq0TAr076jkCG5gUy3E2Bh&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=G5Oj4lJ6zEAQ7kNvwGT7J3k&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6Mzg2NDkxMjI3NTA3NDcyLCJhc3NldF9hZ2VfZGF5cyI6ODgyLCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6NDAsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=99aaee04cb6187fd&_nc_vs=HBksFQIYT2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfcHJvZC8wRTQ5NDY3NTA2MjJGMEE5QzUzODZBRkYzRTE4RkJCOV92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HUHJmNUJsSDM0QXJ4RDhIQVBzUU8xVkZJQXRlYnFfRUFBQUYVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAmoKyYheDgrwEVAigCQzMsF0BERDlYEGJOGBJkYXNoX2Jhc2VsaW5lXzFfdjERAHX-B2XmnQEA&_nc_gid=4-qgBMDF5wvKPT4ag3EOVQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQHvLiHbskm1_C1b9H2bntxA-IQDU4-XQ28yTXw-O6OxqQ&oe=6A909521",
+    "like_count": 22,
+    "classification": {
+      "path": "caption",
+      "reason": "Detailed caption (65 words) with design keywords: ui, wireframe, figma",
+      "word_count": 65,
+      "matched_keywords": [
+        "ui",
+        "wireframe",
+        "figma"
+      ]
+    },
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3328552764148110320",
+    "shortcode": "C4xZRqDMVPw",
+    "url": "https://www.instagram.com/p/C4xZRqDMVPw/",
+    "date": "2024-03-21",
+    "caption": "E-commerce web app design. Learn to design this UI: https://youtu.be/u6quiPYzFtI \n\n#figmaappdesign #figmadesign #figmadesigntemplate #figmadesigntips #figmadesign #figmatemplate #figmaforbeginner #figmatutorial #howtousefigma #webdesigncourse #webdesign #webdesigncourse #webbuilder #webdesigntips #webdesigntutorial #webdesigninspiration #websitedevelopment #websitedesigntips #webbuilder #webdesigntutorial #webdeveloper #websitedesign #websitedesigners #websitebuilder #websitebuilders",
+    "is_video": false,
+    "video_url": null,
+    "like_count": 15,
+    "classification": {
+      "path": "skip",
+      "reason": "Static image without substantial design caption (39 words, 1 keywords)",
+      "word_count": 39,
+      "matched_keywords": [
+        "ui"
+      ]
+    },
+    "principles": []
+  },
+  {
+    "post_id": "3327608015828786675",
+    "shortcode": "C4uCdwnN53z",
+    "url": "https://www.instagram.com/p/C4uCdwnN53z/",
+    "date": "2024-03-20",
+    "caption": "Midjourney UI design workflow. full course: https://designcode.io/midjourney-apps \n\nA comprehensive course on transforming Midjourney concepts into interactive prototypes using essential design techniques and AI tools \n\n#figmaappdesign #figmadesign #figmadesigntemplate #figmadesigntips #figmadesign #figmatemplate #figmaforbeginner #figmatutorial #howtousefigma #uidesign #uibucket #uidesginer #uiuxdesign #uiuxinspiration #interfacedesign #midjourney",
+    "is_video": false,
+    "video_url": null,
+    "like_count": 14,
+    "classification": {
+      "path": "caption",
+      "reason": "Detailed caption (44 words) with design keywords: ui",
+      "word_count": 44,
+      "matched_keywords": [
+        "ui"
+      ]
+    },
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3327103185087684473",
+    "shortcode": "C4sPrgWON95",
+    "url": "https://www.instagram.com/p/C4sPrgWON95/",
+    "date": "2024-03-19",
+    "caption": "A very shiny card in SwiftUI\n\n#appdevelopment #appdeveloper #xcode #swiftios #swiftui #swiftuiappdevelopment #swiftuideveloper #swiftuitutorials #iosappdevelopment #iosdeveloper #iosdevelopment #mobiledeveloper #mobiledevelopment",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m82/AQN_WMgICdq_NyLt4M6b0hItgh9k-eQuVV4PWi_u64_WqBV5_xs8fJijMZ5BwauDtDymliMkmhqkrzE1KpHF4J3tKlPYt0283tMNapk.mp4?_nc_cat=108&_nc_oc=AdqaIOFMpBL4e3tBRoygBpw6kLlPqMOcTvO01VGHPo6UbRNKq9tx1lX_58YnDNQtQo8oEcB4SYLNAl0WHZ0xcI1y&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=uO0pBGzY1I8Q7kNvwGYjf_1&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6OTM2MDYwMTgxMTExNzU3LCJhc3NldF9hZ2VfZGF5cyI6ODg5LCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6MjMsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=5a77bb749c885235&_nc_vs=HBksFQIYT2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfcHJvZC80ODQ5QUUzM0RFOUJFNTA5NjYwNTQ2NjExMDFFRDBCMl92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HT1llM3htQlFOYXd4REFEQUx4Ynh5MGFfMjlfYnFfRUFBQUYVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAmmo-r6e_VqQMVAigCQzMsF0A33bItDlYEGBJkYXNoX2Jhc2VsaW5lXzFfdjERAHX-B2XmnQEA&_nc_gid=2doyJ8qA6wf86kqL-fMFlQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQHl3n2OIBKCY66dp9_ZW8NzZVIWS2eLZma8s8SRfgIORA&oe=6A9084C1",
+    "like_count": 16,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 19,
+      "matched_keywords": [
+        "card"
+      ]
+    },
+    "transcript": "ktop shipgoating",
+    "principles": []
+  },
+  {
+    "post_id": "3326963725989521497",
+    "shortcode": "C4rv-G8NyhZ",
+    "url": "https://www.instagram.com/p/C4rv-G8NyhZ/",
+    "date": "2024-03-19",
+    "caption": "I made a 3d card with a liquid action button in SwiftUI\n\nFull tutorial here: https://buff.ly/4adlodf \n\n#appdevelopment #appdeveloper #xcode #swiftios #swiftui #swiftuiappdevelopment #swiftuideveloper #swiftuitutorials #iosappdevelopment #iosdeveloper #iosdevelopment #mobiledeveloper #mobiledevelopment",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m82/AQPxEonH1jlieZdJZJn4u2wDxMBipQGg-FXsGha_DVdmwkGt_WiwAjeMW2FSM0I_zkx-bZVefl2Qhc90rJKd2bpMs06jrGKT5fe_SY0.mp4?_nc_cat=102&_nc_oc=AdpxSsYJ8hbslT8DMHQRjqu9l2yXD0zEwoQd4SXsRyEvdII0lWjhrJjHhLZmkN79sLtuL7uT8ybt71OgifS25M5G&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=S5AVR1vPUJIQ7kNvwHlx-sO&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MjQ0MjQwNDAyMTEyNjM1LCJhc3NldF9hZ2VfZGF5cyI6ODkwLCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6MjUsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=eb099c923f41542e&_nc_vs=HBksFQIYT2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfcHJvZC80NTQ5RkFGOEI2QkZDNEY2Njk1RDM1N0U5ODcyQzhBRl92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HUG5BM0JrVzZfQ0NIcHdDQUZmeUxHOUFOd0FrYnFfRUFBQUYVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAm9oHD5tSIbxUCKAJDMywXQDldsi0OVgQYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=PbOQtv9tf3hSezNmV8mOWQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQEqpLTLQDtdU4zshkGI9XP1nH_FCsbdLE0R6a-ASiCA_A&oe=6A90983F",
+    "like_count": 17,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 32,
+      "matched_keywords": [
+        "button",
+        "card"
+      ]
+    },
+    "transcript": "Thanks for watching guys!",
+    "principles": []
+  },
+  {
+    "post_id": "3326883190160067474",
+    "shortcode": "C4rdqKGtYuS",
+    "url": "https://www.instagram.com/p/C4rdqKGtYuS/",
+    "date": "2024-03-19",
+    "caption": "Translucent UI using the back camera #appdevelopment #appdeveloper #xcode #swiftios #swiftui #swiftuiappdevelopment #swiftuideveloper #swiftuitutorials #iosappdevelopment #iosdeveloper #iosdevelopment #mobiledeveloper #mobiledevelopment",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m82/AQMUQVUe2AWwjR5CJTFRC2eNmzEiCbLV3mknrACWn3e7bhwWX8PyQkMRtPlau8azo9gkb9K79Z5uAF9bRtHMQ2eeLUduBYdHzMR9cQ8.mp4?_nc_cat=103&_nc_oc=AdprpGfuYLByrNTyrYzEWajb2zKw2zR5r85lC-4UBgjxi2IouClCWtWNcvLDkV_5_C09c8hDBFm5LQHmQPhl4QFa&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=kic2WdpNetgQ7kNvwHnXEJI&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTEyOTA2MjY1MTY3MTcyMywiYXNzZXRfYWdlX2RheXMiOjg5MCwidmlfdXNlY2FzZV9pZCI6MTAwOTksImR1cmF0aW9uX3MiOjI1LCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&vs=d72b5fd0570aa3bf&_nc_vs=HBksFQIYT2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfcHJvZC8zQjQ3RUVDQTBFOTQ3OTkyRDg5RDQ2ODQ5RkM0QjZCOF92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HS255M2huNXFVNmdfb1lCQUVjWk1aN3FpaUp1YnFfRUFBQUYVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAm1tLBpIy4gQQVAigCQzMsF0A5d0vGp--eGBJkYXNoX2Jhc2VsaW5lXzFfdjERAHX-B2XmnQEA&_nc_gid=PbOQtv9tf3hSezNmV8mOWQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQEsui37X6A7D1bPpu6Uf0r60cgi1hp8Smllu6jKBW_YkA&oe=6A908FF4",
+    "like_count": 14,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 19,
+      "matched_keywords": [
+        "ui"
+      ]
+    },
+    "transcript": "Thanks for watching guys!",
+    "principles": []
+  },
+  {
+    "post_id": "3325396924259408201",
+    "shortcode": "C4mLuJHqJlJ",
+    "url": "https://www.instagram.com/p/C4mLuJHqJlJ/",
+    "date": "2024-03-17",
+    "caption": "Will developers cry if we made this in Figma? Tutorial coming next week. \ud83d\ude31 \n\n#figmaappdesign #figmadesign #figmadesigntemplate #figmadesigntips #figmadesign #figmatemplate #figmaforbeginner #figmatutorial #howtousefigma #uidesign #uibucket #uidesginer #uiuxdesign #uiuxinspiration #interfacedesign",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m82/AQMghLSCD9L1jKuYBEpsUhdHLhdLENrht5BZPVVrO8uuvzRDSarJ0sC945KXIKO1lLWLZqF2pQiVeYsFkPWARZLCpF83G2y50F75DNc.mp4?_nc_cat=103&_nc_oc=AdqKMI-cQNmt4qteQTo5eeIGNMQLC2QO_OplxRXOmvTJ0PSHsjha-JO3FAyCBxKMFHoZfhzha6PkC4oLIUp6g8Uu&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=r2PCP5bhxscQ7kNvwGlrN1m&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6NzA4MjA4NzU4MTMyMTQxLCJhc3NldF9hZ2VfZGF5cyI6ODkyLCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6MTQsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=db4c5006a84615a9&_nc_vs=HBksFQIYT2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfcHJvZC80QzQ4Mzc5MUI0QkREMTMwOEZDMDZFMDFEODQ1OUE5OV92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HRXRoemhrVVo1aWJyVTBEQUtiTnA5UGY2RHMxYnFfRUFBQUYVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAm2rakt5aHwgIVAigCQzMsF0At7peNT987GBJkYXNoX2Jhc2VsaW5lXzFfdjERAHX-B2XmnQEA&_nc_gid=PbOQtv9tf3hSezNmV8mOWQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQGG5KKg8gOle9RlWjTyBIC98CeSjro91sBj9aMcQOy15Q&oe=6A909154",
+    "like_count": 17,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 28,
+      "matched_keywords": [
+        "figma"
+      ]
+    },
+    "transcript": "",
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3324789433853137828",
+    "shortcode": "C4kBl_lydOk",
+    "url": "https://www.instagram.com/p/C4kBl_lydOk/",
+    "date": "2024-03-16",
+    "caption": "\ud83d\ude80 Dive into web design with ZERO experience \u2014 and it's completely free. My course is perfectly crafted for beginners, no coding knowledge required. Here\u2019s what you get:\n\n\ud83c\udfa8 Step-by-step guidance from the very basics to your own stunning website.\n\n\ud83c\udf10 Explore the final site: https://buff.ly/4clmk0g\n \n\ud83d\udd04 Access to my remix link to duplicate the project directly into your account. https://buff.ly/4cfxfsz \n\n\ud83d\udcda Figma template: https://buff.ly/4cfxfsz \n\n#nocode #nocodeapps #nocodetools #nocodeneeded #webdesigncourse #webdesign #uiinteraction #interactivedesign #webdesigncourse #webbuilder #webdesigntips #webdesigntutorial #webdesigninspiration #websitedevelopment #websitedesigntips #webbuilder #webdesigntutorial #webdeveloper #websitedesign #websitedesigners #websitebuilder #websitebuilders #madeinframer #framertemplate #framerwebsite",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQNahwCIpcLbMQlfvxc7nmaZNtYYaUIdjit71I1y3l3eL3-wX5Hv00xRZEYsMwJCNgpx3p-dGVGldaX4ZCZCuP7i.mp4?_nc_cat=110&_nc_oc=Adprh3_h1SapBixAF68krKPS7K_ez7uS-GCzOF6SiRsx42BvbWsLsBScHSTljal0kvHkPJwb0j6CqJ6VigDhQXzZ&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=Q5OtO1mbPr8Q7kNvwG-QJ_Y&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuMTA4MC5kYXNoX2hpZ2hfMTA4MHBfdjEiLCJ4cHZfYXNzZXRfaWQiOjQyNzIzODYzMzA5MDI2NSwiYXNzZXRfYWdlX2RheXMiOjg5MywidmlfdXNlY2FzZV9pZCI6MTAwOTksImR1cmF0aW9uX3MiOjU1LCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&vs=ee2675604e4070bc&_nc_vs=HBksFQIYR2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC83MzMyNDUxNDcwMTU2NDQ5XzQ2MTQ2NjQ3NDU2NjMxOTExMjQubXA0FQACyAESABUCGDpwYXNzdGhyb3VnaF9ldmVyc3RvcmUvR0R2Snlobi0zQ0Z0elUwSkFOVElfb0s4eks1X2JxX0VBQUFGFQICyAESACgAGAAbAogHdXNlX29pbAExEnByb2dyZXNzaXZlX3JlY2lwZQExFQAAJrKzre_HpMIBFQIoAkMzLBdAS-IMSbpeNRgSZGFzaF9oaWdoXzEwODBwX3YxEQB1_gdl5p0BAA&_nc_gid=PbOQtv9tf3hSezNmV8mOWQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQHYVTw4QP-9cYfNVk05mESL-MQ0qgEmQc8tdmyweyMeTg&oe=6A907BF8",
+    "like_count": 34,
+    "classification": {
+      "path": "caption",
+      "reason": "Detailed caption (97 words) with design keywords: figma",
+      "word_count": 97,
+      "matched_keywords": [
+        "figma"
+      ]
+    },
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3324017880306394491",
+    "shortcode": "C4hSKaWtaV7",
+    "url": "https://www.instagram.com/p/C4hSKaWtaV7/",
+    "date": "2024-03-15",
+    "caption": "Tired of designing the same layout over and over again?\n\nUse the Repeaters tool instead.\n\nRepeaters in Wix Studio are efficient for managing repetitive elements on a website.\n\nFind it in the Layout Tools in the Add Elements menu.\n\nYou can design a single item, like a product card or blog post layout, and then replicate that design across your page, maintaining consistency and appearance.\n\nThe content changes, but not the layout.\n\nHere, I'm using the tool to build all the cards, all that's left is to customize the content.\n\nYou can customize each item, link them to your database, and they'll automatically update as your content changes.\n\nAll that without extra effort. \n\n#nocode #nocodeapps #nocodetools #nocodeneeded #webdesigncourse #webdesign #uiinteraction #interactivedesign #webdesigncourse #webbuilder #webdesigntips #webdesigntutorial #webdesigninspiration #websitedevelopment #websitedesigntips #webbuilder #webdesigntutorial #webdeveloper #websitedesign #websitedesigners #websitebuilder #websitebuilders #wixstudio #wixstudiotutorial",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m82/AQMLPxz-He4TOIFu0UrmDBYmDX4IkRbyGBG3zV-DmT601V9X8jxtNfYTbdCw94-FujKC00Kneo_WZVhLQRbcUnce0SLE24M-VpkqBmw.mp4?_nc_cat=108&_nc_oc=Ado98_YwjPbp_ujX3N1wMNS2C0crz0xIHX8ITgdX6wL4DSEWYLCUEra8yqWw8bPmwezGd3r4aCiSvszPtAq5lSA9&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=SafFf72u1eAQ7kNvwFUIuFK&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzE4LmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTQzMDYzMjIzMDg3NjI4NywiYXNzZXRfYWdlX2RheXMiOjg5NCwidmlfdXNlY2FzZV9pZCI6MTAwOTksImR1cmF0aW9uX3MiOjQxLCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&vs=577a6e5f124e830e&_nc_vs=HBksFQIYT2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfcHJvZC9FRDQ4MTNGNEE3OURBMjQ3RTIwN0JGRjQyQjcyNzY4Rl92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HTTJyelJraDA2c1NOUU1FQUUzTFFJMTBfVDVIYnFfRUFBQUYVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAm_tHn3uDJigUVAigCQzMsF0BE3dLxqfvnGBJkYXNoX2Jhc2VsaW5lXzFfdjERAHX-B2XmnQEA&_nc_gid=PbOQtv9tf3hSezNmV8mOWQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQHtwwfFHlJLRjr-bML6N2J7lC_Xk5XbLsOE7O3IZwdp9A&oe=6A909F4D",
+    "like_count": 11,
+    "classification": {
+      "path": "caption",
+      "reason": "Detailed caption (140 words) with design keywords: card",
+      "word_count": 140,
+      "matched_keywords": [
+        "card"
+      ]
+    },
+    "principles": [
+      {
+        "principle": "Master-Template Card Grid Layout",
+        "category": "layout",
+        "rule": "Standardize dynamic content feeds by designing a single master card template with fixed image aspect ratios and explicit text container constraints to maintain layout consistency across variable database inputs.",
+        "why": "Ensures visual uniformity and prevents layout breaking or uneven card heights when dynamic content of varying lengths is loaded from a database.",
+        "example": "A blog post repeater grid where every card maintains a strict 1:1 image aspect ratio, 16px internal padding, and a 2-line truncation limit for titles, ensuring all cards in the row align perfectly at the bottom.",
+        "confidence": "medium",
+        "sources": [
+          {
+            "handle": "designcode.io",
+            "date": "2024-03-15",
+            "url": "https://www.instagram.com/p/C4hSKaWtaV7/"
+          }
+        ]
+      }
+    ],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash",
+      "principles_count": 1
+    }
+  },
+  {
+    "post_id": "3323296146511009857",
+    "shortcode": "C4euDzYNphB",
+    "url": "https://www.instagram.com/p/C4euDzYNphB/",
+    "date": "2024-03-14",
+    "caption": "Radial gradients are a powerful tool for creating beautiful and interesting designs in Figma.\n\nThey can be used to create a variety of effects, from adding depth to an illustration, to creating a glossy effect on a logo.\n\nLearn the basics of radial gradient. And learn how to turn this plain background into this amazing effect. By adding radial gradients, strokes, and effects, layer by layer.\n\nGet the Figma file: https://buff.ly/3TxyZWK \n\n#figmatutorial #figmadesigntips #graphicdesigntutorial #graphicdesignlearning",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m82/AQO-D8Tg_Sio_p2Wze0WXqQLeJ7EkAAj3JY9qZ0SAN8qaP4lB6fiffnWbZumh4TSOBETicSeVyFEDD5aXiNtbjNuqtEXqIkGtVNAE9o.mp4?_nc_cat=108&_nc_oc=Ado1ij-p2pJO5U2KlzilcqfjbxwSolCNQmN8yJwl5IVJVeBRQQJa9KG0B833IHNsAz7G-LVZpss9Ylb71h_ewUkd&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=DUDouQ3qf8MQ7kNvwHVAA_n&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTU5MTA0Njc1MTY3OTYyNywiYXNzZXRfYWdlX2RheXMiOjg5NSwidmlfdXNlY2FzZV9pZCI6MTAwOTksImR1cmF0aW9uX3MiOjQwLCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&vs=ec87996092b766b9&_nc_vs=HBksFQIYT2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfcHJvZC8wMTQ3RUUzODc3QjVFODEyMDgzMTJFMTAzQzBEQkJCM192aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HQ1RIeWhrUXFaMmxlZ1FFQUpub3BWYzhxN2dsYnFfRUFBQUYVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAmltKjh47D0wUVAigCQzMsF0BEBP3ztkWiGBJkYXNoX2Jhc2VsaW5lXzFfdjERAHX-B2XmnQEA&_nc_gid=PbOQtv9tf3hSezNmV8mOWQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQEFzhefLUVgsvV6RLIATiDgrLTpzVAUhkYCgx3pweMg4Q&oe=6A908DAD",
+    "like_count": 8,
+    "classification": {
+      "path": "caption",
+      "reason": "Detailed caption (78 words) with design keywords: figma",
+      "word_count": 78,
+      "matched_keywords": [
+        "figma"
+      ]
+    },
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3322909452410957152",
+    "shortcode": "C4dWIqbvi1g",
+    "url": "https://www.instagram.com/p/C4dWIqbvi1g/",
+    "date": "2024-03-13",
+    "caption": "how should we code this? \ud83d\udc40 #uidesign #figmadesign #uidesigninspiration #skeuomorphism #uiinspirations #dribbble",
+    "is_video": false,
+    "video_url": null,
+    "like_count": 12,
+    "classification": {
+      "path": "skip",
+      "reason": "Static image without substantial design caption (11 words, 0 keywords)",
+      "word_count": 11,
+      "matched_keywords": []
+    },
+    "principles": []
+  },
+  {
+    "post_id": "3319772002187677117",
+    "shortcode": "C4SMwwNrw29",
+    "url": "https://www.instagram.com/p/C4SMwwNrw29/",
+    "date": "2024-03-09",
+    "caption": "Design a heart icon using path and angular gradient in Figma #figmatutorial #figmadesign #uidesign #figma #uidesigntips",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m82/AQNK_XHXaDu75lHUKWsl6JD8h5eZY-5fgp9Yu20XBmnca3OAs3DNIyIshsYRswk3NlfywqZapfUPCGvxmkTdU-2-xKPyqPxmnOtW6Ng.mp4?_nc_cat=103&_nc_oc=AdrxQIj484E3fRLMIAUSdN8WzXrz_SVLDUAI1S_dP5nMbjfE-OTSMXJuwJdjzSMKkHcmi5y0mcNa7lWLJy7xcBi_&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=d4QcvbVMrIUQ7kNvwHI9-MY&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTIyNjU4NzYzNDk2ODA2OSwiYXNzZXRfYWdlX2RheXMiOjkwMCwidmlfdXNlY2FzZV9pZCI6MTAwOTksImR1cmF0aW9uX3MiOjQ5LCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&vs=6280ce31eff44a4c&_nc_vs=HBksFQIYT2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfcHJvZC82MzQ2RkZFQ0RBMUU0MUI1Qjk0RTVFNDcwNTQ4ODFBOV92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HREVueFJrVVBkRGR6NTBDQUdwS2dqM3RJdTB5YnFfRUFBQUYVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAmipilhObkrQQVAigCQzMsF0BI2ZmZmZmaGBJkYXNoX2Jhc2VsaW5lXzFfdjERAHX-B2XmnQEA&_nc_gid=PbOQtv9tf3hSezNmV8mOWQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQFDPNxLIqhBWWG1wqyi8L4yoqnKNMzN517YOyjf1hyFNg&oe=6A907058",
+    "like_count": 8,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 16,
+      "matched_keywords": [
+        "figma"
+      ]
+    },
+    "transcript": "",
+    "principles": []
+  }
+]
