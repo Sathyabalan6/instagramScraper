@@ -86,7 +86,11 @@ GROQ_API_KEY=your_groq_key
 ### 3. Session Cookies Setup (Security Hardened)
 
 Export your Instagram session cookies using a browser extension (e.g. *Get cookies.txt LOCALLY*). Save them safely to your user directory outside the repository:
-
+or use the https://github.com/Sathyabalan6/session_export.git repo 
+ 1. go to the browser and enable the developer mode in extention
+ 2. unload this folder to the extention
+ 3. export the json file for the instagram. 
+ 4.for more details look into the https://github.com/Sathyabalan6/session_export.git readme file
 ```bash
 # Place cookies in your user home config:
 ~/.config/ig-skill-extractor/cookies.txt
