@@ -201,26 +201,6 @@
         "handle": "naomic.reate",
         "date": "2026-08-13",
         "url": "https://www.instagram.com/p/Db62JAksnOM/"
-      },
-      {
-        "handle": "celfstudies",
-        "date": "2026-08-25",
-        "url": "https://www.instagram.com/p/DccJ5SVP9eD/"
-      },
-      {
-        "handle": "celfstudies",
-        "date": "2026-08-07",
-        "url": "https://www.instagram.com/p/DbvCg0VgE45/"
-      },
-      {
-        "handle": "celfstudies",
-        "date": "2026-07-31",
-        "url": "https://www.instagram.com/p/DbaPIhngYp0/"
-      },
-      {
-        "handle": "celfstudies",
-        "date": "2026-07-25",
-        "url": "https://www.instagram.com/p/DbH5St2gzbV/"
       }
     ]
   },
@@ -531,21 +511,6 @@
         "handle": "naomic.reate",
         "date": "2026-08-25",
         "url": "https://www.instagram.com/p/Dccd4dfMFIo/"
-      }
-    ]
-  },
-  {
-    "principle": "Color System Harmonization",
-    "category": "color",
-    "rule": "Structure UI elements using systematic color rules to maintain visual rhythm, clarity, and interface predictability.",
-    "why": "Minimizes cognitive friction and streamlines user scanning by providing reliable visual cues.",
-    "example": "Implemented across responsive containers and core interactive controls.",
-    "confidence": "medium",
-    "sources": [
-      {
-        "handle": "naomic.reate",
-        "date": "2026-08-15",
-        "url": "https://www.instagram.com/p/DcAMWXGMvqG/"
       }
     ]
   }

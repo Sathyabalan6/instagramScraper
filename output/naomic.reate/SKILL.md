@@ -1,6 +1,6 @@
 ---
-name: design-ui-ux
-description: "Actionable UI/UX design style guide covering Color, Hierarchy, Layout. Use this skill whenever creating, reshaping, critiquing, or reviewing UI/UX interfaces — including landing pages, dashboards, hero layouts, typography hierarchy, dark/light color palettes, interactive cards, navigation headers, and modal states — even if the user does not explicitly request 'design principles.'"
+name: design-ui-ux-naomic.reate
+description: "UI/UX design principles distilled from @naomic.reate content."
 ---
 
 # UI/UX Design Skill
@@ -13,13 +13,6 @@ Use these principles to guide interface structure, component design, visual hier
 _(none yet)_
 
 ## Color
-
-### Color System Harmonization
-- **Rule**: Structure UI elements using systematic color rules to maintain visual rhythm, clarity, and interface predictability.
-- **Why**: Minimizes cognitive friction and streamlines user scanning by providing reliable visual cues.
-- **Example**: Implemented across responsive containers and core interactive controls.
-- **Consensus**: 🎯 **Creator Pattern** (Verified across 1 post(s) by @naomic.reate)
-- **Sources**: 1 post(s) (latest: 2026-08-15) — [@naomic.reate](https://www.instagram.com/p/DcAMWXGMvqG/)
 
 ### High-Energy Navy and Crimson Accent Hierarchy
 - **Rule**: Accent deep navy foundations with vibrant crimson or coral red highlights rather than relying solely on low-contrast monochromes.
@@ -83,8 +76,8 @@ _(none yet)_
 - **Rule**: Layer soft backdrop-filter blur effects and frosted glass surfaces over background imagery to establish distinct spatial depth and visual elevation.
 - **Why**: Separates interactive foreground content from decorative background art while preserving ambient contextual illumination.
 - **Example**: Sticky glassmorphism navigation headers with `backdrop-filter: blur(12px)` over dynamic hero artwork.
-- **Consensus**: ⭐ **Industry Standard** (Cross-validated across 2 creators: @celfstudies, @naomic.reate)
-- **Sources**: 25 post(s) (latest: 2026-08-25) — [@naomic.reate](https://www.instagram.com/p/DccKVM2NWqK/), [@naomic.reate](https://www.instagram.com/p/DcZ75Qks1RS/), [@naomic.reate](https://www.instagram.com/p/DcR4fcUtqiV/), [@naomic.reate](https://www.instagram.com/p/DcSJqOHskG_/), [@naomic.reate](https://www.instagram.com/p/DcZk3heNq_I/), [@naomic.reate](https://www.instagram.com/p/DcZg9xRt7aT/), [@naomic.reate](https://www.instagram.com/p/DcSAqKPteou/), [@naomic.reate](https://www.instagram.com/p/DcUiAvhNUan/), [@naomic.reate](https://www.instagram.com/p/DcXJmNJtf91/), [@naomic.reate](https://www.instagram.com/p/DcXFyMfttWD/), [@naomic.reate](https://www.instagram.com/p/DcXBV3qtonz/), [@naomic.reate](https://www.instagram.com/p/DcUqMJSMmEE/), [@naomic.reate](https://www.instagram.com/p/DcUYTYLtqVJ/), [@naomic.reate](https://www.instagram.com/p/DcANMRXsY0I/), [@naomic.reate](https://www.instagram.com/p/Db_1c0nNGXz/), [@naomic.reate](https://www.instagram.com/p/Dbt8-BWjxl_/), [@naomic.reate](https://www.instagram.com/p/Dce1RlWM1rd/), [@naomic.reate](https://www.instagram.com/p/DceqrtJt_tl/), [@naomic.reate](https://www.instagram.com/p/DccVsgfMXwt/), [@naomic.reate](https://www.instagram.com/p/Dccd4dfMFIo/), [@naomic.reate](https://www.instagram.com/p/Db62JAksnOM/), [@celfstudies](https://www.instagram.com/p/DccJ5SVP9eD/), [@celfstudies](https://www.instagram.com/p/DbvCg0VgE45/), [@celfstudies](https://www.instagram.com/p/DbaPIhngYp0/), [@celfstudies](https://www.instagram.com/p/DbH5St2gzbV/)
+- **Consensus**: 🎯 **Creator Pattern** (Verified across 21 post(s) by @naomic.reate)
+- **Sources**: 21 post(s) (latest: 2026-08-25) — [@naomic.reate](https://www.instagram.com/p/DccKVM2NWqK/), [@naomic.reate](https://www.instagram.com/p/DcZ75Qks1RS/), [@naomic.reate](https://www.instagram.com/p/DcR4fcUtqiV/), [@naomic.reate](https://www.instagram.com/p/DcSJqOHskG_/), [@naomic.reate](https://www.instagram.com/p/DcZk3heNq_I/), [@naomic.reate](https://www.instagram.com/p/DcZg9xRt7aT/), [@naomic.reate](https://www.instagram.com/p/DcSAqKPteou/), [@naomic.reate](https://www.instagram.com/p/DcUiAvhNUan/), [@naomic.reate](https://www.instagram.com/p/DcXJmNJtf91/), [@naomic.reate](https://www.instagram.com/p/DcXFyMfttWD/), [@naomic.reate](https://www.instagram.com/p/DcXBV3qtonz/), [@naomic.reate](https://www.instagram.com/p/DcUqMJSMmEE/), [@naomic.reate](https://www.instagram.com/p/DcUYTYLtqVJ/), [@naomic.reate](https://www.instagram.com/p/DcANMRXsY0I/), [@naomic.reate](https://www.instagram.com/p/Db_1c0nNGXz/), [@naomic.reate](https://www.instagram.com/p/Dbt8-BWjxl_/), [@naomic.reate](https://www.instagram.com/p/Dce1RlWM1rd/), [@naomic.reate](https://www.instagram.com/p/DceqrtJt_tl/), [@naomic.reate](https://www.instagram.com/p/DccVsgfMXwt/), [@naomic.reate](https://www.instagram.com/p/Dccd4dfMFIo/), [@naomic.reate](https://www.instagram.com/p/Db62JAksnOM/)
 
 ### Tactile Collage and Asymmetric Layering
 - **Rule**: Combine tactile organic elements (such as simulated paper cutouts or organic masks) with expansive landscape compositions to break rigid digital flatness.

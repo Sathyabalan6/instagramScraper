@@ -33,7 +33,10 @@ def classify_single_post(
             "tip", "rule", "spacing", "contrast", "hierarchy", "padding",
             "grid", "typography", "font", "color", "palette", "shadow",
             "radius", "alignment", "whitespace", "breakpoint", "accessibility",
-            "a11y", "ux", "ui"
+            "a11y", "ux", "ui", "clutter", "balance", "cta", "button",
+            "landing", "card", "nav", "navbar", "animation", "motion",
+            "micro-interaction", "glassmorphism", "elevation", "wireframe",
+            "mockup", "figma", "token", "system", "responsive", "darkmode", "lightmode"
         ]
 
     caption = post.get("caption") or ""
@@ -53,13 +56,17 @@ def classify_single_post(
 
     if has_substance:
         path = "caption"
+        reason = f"Detailed caption ({word_count} words) with design keywords: {', '.join(matched_keywords[:3])}"
     elif post.get("is_video", False):
         path = "audio"
+        reason = "Video reel with brief caption; queued for audio transcription"
     else:
         path = "skip"
+        reason = f"Static image without substantial design caption ({word_count} words, {len(matched_keywords)} keywords)"
 
     return {
         "path": path,
+        "reason": reason,
         "word_count": word_count,
         "matched_keywords": matched_keywords
     }
@@ -78,14 +85,22 @@ def classify_posts(
 
     min_words = classify_cfg.get("min_caption_words", 40)
     keywords = classify_cfg.get("keywords", [])
+    output_dir = paths_cfg.get("output_dir", "output")
     raw_data_dir = paths_cfg.get("raw_data_dir", "data/raw")
 
-    posts_file = Path(raw_data_dir) / handle / "posts.json"
-    if not posts_file.exists():
-        logger.error(f"No posts.json found at {posts_file}. Run fetch_posts.py first.")
+    out_posts_file = Path(output_dir) / handle / "posts.json"
+    raw_posts_file = Path(raw_data_dir) / handle / "posts.json"
+
+    target_file = None
+    if out_posts_file.exists():
+        target_file = out_posts_file
+    elif raw_posts_file.exists():
+        target_file = raw_posts_file
+    else:
+        logger.error(f"No posts.json found in {out_posts_file} or {raw_posts_file}. Run fetch_posts.py first.")
         return []
 
-    with open(posts_file, "r", encoding="utf-8") as f:
+    with open(target_file, "r", encoding="utf-8") as f:
         posts = json.load(f)
 
     stats = {"caption": 0, "audio": 0, "skip": 0}
@@ -99,8 +114,10 @@ def classify_posts(
             f"words={classification['word_count']}, matched={classification['matched_keywords']}"
         )
 
-    with open(posts_file, "w", encoding="utf-8") as f:
-        json.dump(posts, f, indent=2, ensure_ascii=False)
+    for pfile in [out_posts_file, raw_posts_file]:
+        pfile.parent.mkdir(parents=True, exist_ok=True)
+        with open(pfile, "w", encoding="utf-8") as f:
+            json.dump(posts, f, indent=2, ensure_ascii=False)
 
     logger.info(
         f"Classified {len(posts)} posts for @{handle} -> "

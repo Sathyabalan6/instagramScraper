@@ -39,32 +39,60 @@ def load_processed_ids(state_file: str) -> set:
     return set()
 
 
-def resolve_cookie_file(cookies_file: str) -> str:
+def resolve_cookie_file(cookies_file: str = None) -> str:
     """
     Ensure the cookie file is in Netscape format for Instaloader and yt-dlp.
+    Searches in priority order:
+    1. IG_COOKIES_PATH environment variable
+    2. ~/.config/ig-skill-extractor/cookies.txt (outside repo for safety)
+    3. Provided cookies_file path (e.g. cookies/instagram_cookies.txt)
     Automatically converts JSON-format cookie exports if detected.
     """
-    if not cookies_file or not os.path.exists(cookies_file):
+    candidate_paths = []
+    
+    # 1. Environment variable
+    env_path = os.environ.get("IG_COOKIES_PATH")
+    if env_path:
+        candidate_paths.append(Path(env_path))
+
+    # 2. User home config folder
+    home_config = Path.home() / ".config" / "ig-skill-extractor"
+    candidate_paths.append(home_config / "instagram_cookies.txt")
+    candidate_paths.append(home_config / "cookies.txt")
+
+    # 3. Local candidate path
+    if cookies_file:
+        candidate_paths.append(Path(cookies_file))
+
+    target_cookie_path = None
+    for p in candidate_paths:
+        if p and p.exists() and p.is_file():
+            target_cookie_path = p
+            break
+
+    if not target_cookie_path:
         return None
+
+    str_path = str(target_cookie_path)
 
     # Test if it already loads as Netscape
     try:
-        jar = MozillaCookieJar(cookies_file)
+        jar = MozillaCookieJar(str_path)
         jar.load(ignore_discard=True, ignore_expires=True)
-        return cookies_file
+        return str_path
     except Exception:
         pass
 
     # Try parsing as JSON cookie export
     try:
-        with open(cookies_file, "r", encoding="utf-8") as f:
+        with open(str_path, "r", encoding="utf-8") as f:
             data = json.load(f)
 
         cookies = data.get("cookies", []) if isinstance(data, dict) else (data if isinstance(data, list) else [])
         if not cookies:
             return None
 
-        netscape_path = Path(cookies_file).parent / "instagram_cookies.netscape.txt"
+        netscape_path = target_cookie_path.parent / "instagram_cookies.netscape.txt"
         lines = ["# Netscape HTTP Cookie File", "# Auto-converted from JSON format"]
 
         for c in cookies:
@@ -84,7 +112,7 @@ def resolve_cookie_file(cookies_file: str) -> str:
         logger.info(f"Converted JSON cookies to Netscape format ({len(cookies)} cookies).")
         return str(netscape_path)
     except Exception as e:
-        logger.warning(f"Could not parse cookie file {cookies_file}: {e}")
+        logger.warning(f"Could not parse cookie file {str_path}: {e}")
         return None
 
 
@@ -270,26 +298,36 @@ def fetch_posts(
 
     request_delay = ig_cfg.get("request_delay_seconds", 3)
     cookies_file = ig_cfg.get("cookies_file", "cookies/instagram_cookies.txt")
+    output_dir = paths_cfg.get("output_dir", "output")
     raw_data_dir = paths_cfg.get("raw_data_dir", "data/raw")
     state_file = paths_cfg.get("state_file", "state/processed.json")
 
     processed_ids = load_processed_ids(state_file)
     logger.info(f"Loaded {len(processed_ids)} previously processed post IDs.")
 
-    handle_dir = Path(raw_data_dir) / handle
-    handle_dir.mkdir(parents=True, exist_ok=True)
-    posts_file = handle_dir / "posts.json"
+    # Target directories
+    handle_out_dir = Path(output_dir) / handle
+    handle_out_dir.mkdir(parents=True, exist_ok=True)
+    out_posts_file = handle_out_dir / "posts.json"
 
-    # Load existing posts for this handle if available
+    raw_handle_dir = Path(raw_data_dir) / handle
+    raw_handle_dir.mkdir(parents=True, exist_ok=True)
+    raw_posts_file = raw_handle_dir / "posts.json"
+
+    # Load existing posts from output/ or data/raw/
     existing_posts = []
     existing_post_ids = set()
-    if posts_file.exists():
-        try:
-            with open(posts_file, "r", encoding="utf-8") as f:
-                existing_posts = json.load(f)
-                existing_post_ids = {str(p.get("post_id")) for p in existing_posts}
-        except Exception as e:
-            logger.warning(f"Error reading existing posts from {posts_file}: {e}")
+
+    for pfile in [out_posts_file, raw_posts_file]:
+        if pfile.exists():
+            try:
+                with open(pfile, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                    if isinstance(data, list) and len(data) > len(existing_posts):
+                        existing_posts = data
+                        existing_post_ids = {str(p.get("post_id")) for p in existing_posts}
+            except Exception as e:
+                logger.warning(f"Error reading existing posts from {pfile}: {e}")
 
     logger.info(f"Querying profile and posts for @{handle}...")
     new_posts = fetch_posts_direct_api(
@@ -301,10 +339,13 @@ def fetch_posts(
     )
 
     all_posts = existing_posts + new_posts
-    with open(posts_file, "w", encoding="utf-8") as f:
-        json.dump(all_posts, f, indent=2, ensure_ascii=False)
+    
+    # Save to output/<handle>/posts.json and data/raw/<handle>/posts.json
+    for pfile in [out_posts_file, raw_posts_file]:
+        with open(pfile, "w", encoding="utf-8") as f:
+            json.dump(all_posts, f, indent=2, ensure_ascii=False)
 
-    logger.info(f"Saved {len(all_posts)} posts ({len(new_posts)} new) to {posts_file}")
+    logger.info(f"Saved {len(all_posts)} posts ({len(new_posts)} new) to {out_posts_file}")
     return all_posts
 
 

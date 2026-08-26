@@ -19,6 +19,7 @@ logger = logging.getLogger("transcribe_audio")
 
 # Cache whisper model instance in memory across calls
 _WHISPER_MODEL = None
+_WHISPER_BACKEND = None  # 'faster_whisper' or 'whisper'
 
 
 def load_config(config_path: str = "config.yaml") -> dict:
@@ -28,15 +29,29 @@ def load_config(config_path: str = "config.yaml") -> dict:
 
 
 def get_whisper_model(model_name: str = "small"):
-    """Lazy load Whisper model."""
-    global _WHISPER_MODEL
+    """Lazy load Whisper model (prioritizing faster-whisper if available)."""
+    global _WHISPER_MODEL, _WHISPER_BACKEND
     if _WHISPER_MODEL is None:
+        # Try faster-whisper first for massive CPU/GPU speedups
+        try:
+            from faster_whisper import WhisperModel
+            logger.info(f"Loading faster-whisper model '{model_name}'...")
+            _WHISPER_MODEL = WhisperModel(model_name, device="auto", compute_type="default")
+            _WHISPER_BACKEND = "faster_whisper"
+            return _WHISPER_MODEL
+        except ImportError:
+            pass
+        except Exception as e:
+            logger.warning(f"Failed to load faster-whisper: {e}. Falling back to standard Whisper.")
+
+        # Fallback to standard openai-whisper
         try:
             import whisper
-            logger.info(f"Loading Whisper model '{model_name}'...")
+            logger.info(f"Loading standard Whisper model '{model_name}'...")
             _WHISPER_MODEL = whisper.load_model(model_name)
+            _WHISPER_BACKEND = "whisper"
         except ImportError:
-            logger.warning("openai-whisper python package not found. Will fallback to CLI or stub if necessary.")
+            logger.warning("openai-whisper python package not found. Will fallback to CLI if necessary.")
             return None
         except Exception as e:
             logger.error(f"Error loading Whisper model: {e}")
@@ -44,14 +59,31 @@ def get_whisper_model(model_name: str = "small"):
     return _WHISPER_MODEL
 
 
-def resolve_cookie_file(cookies_file: str) -> str:
-    """Ensure cookie file is in Netscape format for yt-dlp."""
-    if not cookies_file or not os.path.exists(cookies_file):
-        return None
-    netscape_path = Path(cookies_file).parent / "instagram_cookies.netscape.txt"
-    if netscape_path.exists():
-        return str(netscape_path)
-    return cookies_file
+def resolve_cookie_file(cookies_file: str = None) -> str:
+    """
+    Ensure cookie file is in Netscape format for yt-dlp.
+    Checks environment variable, home config directory, and local path.
+    """
+    candidate_paths = []
+    env_path = os.environ.get("IG_COOKIES_PATH")
+    if env_path:
+        candidate_paths.append(Path(env_path))
+
+    home_config = Path.home() / ".config" / "ig-skill-extractor"
+    candidate_paths.append(home_config / "instagram_cookies.txt")
+    candidate_paths.append(home_config / "cookies.txt")
+
+    if cookies_file:
+        candidate_paths.append(Path(cookies_file))
+
+    for p in candidate_paths:
+        if p and p.exists() and p.is_file():
+            netscape_path = p.parent / "instagram_cookies.netscape.txt"
+            if netscape_path.exists():
+                return str(netscape_path)
+            return str(p)
+
+    return None
 
 
 def download_audio_only(
@@ -125,12 +157,16 @@ def transcribe_single_audio(
     model_name: str = "small"
 ) -> str:
     """
-    Transcribe an audio file using OpenAI Whisper.
+    Transcribe an audio file using faster-whisper or standard OpenAI Whisper.
     """
     model = get_whisper_model(model_name)
     if model is not None:
-        result = model.transcribe(audio_path, fp16=False)
-        return result.get("text", "").strip()
+        if _WHISPER_BACKEND == "faster_whisper":
+            segments, _ = model.transcribe(audio_path, beam_size=5)
+            return " ".join(seg.text for seg in segments).strip()
+        else:
+            result = model.transcribe(audio_path, fp16=False)
+            return result.get("text", "").strip()
 
     # Fallback to whisper CLI if package import didn't work
     cmd = ["whisper", audio_path, "--model", model_name, "--output_format", "txt", "--output_dir", str(Path(audio_path).parent)]
@@ -179,14 +215,22 @@ def transcribe_posts(
     tmp_dir = trans_cfg.get("tmp_dir", "data/tmp_audio")
     cookies_file = ig_cfg.get("cookies_file", "cookies/instagram_cookies.txt")
     request_delay = ig_cfg.get("request_delay_seconds", 3)
+    output_dir = paths_cfg.get("output_dir", "output")
     raw_data_dir = paths_cfg.get("raw_data_dir", "data/raw")
 
-    posts_file = Path(raw_data_dir) / handle / "posts.json"
-    if not posts_file.exists():
-        logger.error(f"No posts.json found at {posts_file}.")
+    out_posts_file = Path(output_dir) / handle / "posts.json"
+    raw_posts_file = Path(raw_data_dir) / handle / "posts.json"
+
+    target_file = None
+    if out_posts_file.exists():
+        target_file = out_posts_file
+    elif raw_posts_file.exists():
+        target_file = raw_posts_file
+    else:
+        logger.error(f"No posts.json found in {out_posts_file} or {raw_posts_file}.")
         return []
 
-    with open(posts_file, "r", encoding="utf-8") as f:
+    with open(target_file, "r", encoding="utf-8") as f:
         posts = json.load(f)
 
     clean_tmp_dir(tmp_dir)
@@ -235,9 +279,11 @@ def transcribe_posts(
             # Ensure directory cleanup
             clean_tmp_dir(tmp_dir)
 
-        # Save incremental progress
-        with open(posts_file, "w", encoding="utf-8") as f:
-            json.dump(posts, f, indent=2, ensure_ascii=False)
+        # Save incremental progress to both output and raw files
+        for pfile in [out_posts_file, raw_posts_file]:
+            pfile.parent.mkdir(parents=True, exist_ok=True)
+            with open(pfile, "w", encoding="utf-8") as f:
+                json.dump(posts, f, indent=2, ensure_ascii=False)
 
         if idx < len(audio_posts):
             time.sleep(request_delay)

@@ -26,21 +26,29 @@ CATEGORIES ALLOWED:
 - accessibility
 - layout
 
-HARD REQUIREMENTS:
-1. ALWAYS PARAPHRASE: Under no circumstances should you copy or quote text verbatim from the source. State the rule, why, and example clearly and professionally in your own concise words as an authoritative UI/UX guideline.
-2. If the post does not contain any concrete, actionable UI/UX design guideline (e.g. it is just an advertisement, personal update, meme, generic motivational quote, or tool showcase without design rules), return an empty array `[]`.
-3. Return a JSON array of principles matching this schema:
+HARD QUALITY & COPYRIGHT CONSTRAINTS:
+1. ALWAYS PARAPHRASE: Under no circumstances should you copy or quote text verbatim from the source. State the rule, why, and example clearly in your own concise, authoritative words.
+2. STRICT ACTIONABILITY TEST:
+   - If the rule could apply to any UI decision without meaningfully constraining it (e.g. 'maintain visual balance', 'use consistent styling', 'structure elements cleanly'), DO NOT INCLUDE IT.
+   - The `rule` field MUST name a specific, checkable action, value, pairing, technique, ratio, or threshold (e.g. 'Pair warm earth tones with electric cool blue accents for focal pop', 'Structure hero layouts with a 12-column editorial grid and focal portrait photography', 'Apply backdrop-filter blur (12-16px) to sticky navigation headers over hero media').
+3. CONFIDENCE RATING:
+   - 'high': Concrete, specific, highly actionable design rule or pairing taught directly.
+   - 'medium': Actionable guideline with clear practical context.
+   - 'low': Vague, speculative, or loosely implied concept.
+4. If the post does not contain any concrete, actionable UI/UX design guideline (e.g. generic motivational quote, sponsorship announcement, meme, or vague promotional text), return an empty array `[]`.
+
+Return ONLY a JSON array matching this schema:
 [
   {
-    "principle": "<Concise title of the principle, e.g. '8pt Spacing Grid'>",
+    "principle": "<Concise, descriptive title, e.g. 'Warm Earth and Cool Accent Color Contrast'>",
     "category": "<one of: spacing|color|typography|hierarchy|motion|accessibility|layout>",
-    "rule": "<Paraphrased rule in clear, imperative, professional design language>",
-    "why": "<Paraphrased rationale explaining the visual/cognitive/ergonomic benefit>",
-    "example": "<Concrete example or before/after scenario, or 'None specified'>",
+    "rule": "<Specific, imperative, checkable UI/UX rule>",
+    "why": "<Cognitive, visual, or ergonomic rationale>",
+    "example": "<Concrete UI implementation or component before/after>",
     "confidence": "<high|medium|low>"
   }
 ]
-Only output valid JSON, nothing else.
+Only output valid JSON. No conversational filler or markdown fences outside the JSON.
 """
 
 
@@ -213,42 +221,7 @@ def rule_based_fallback_extract(text: str, allowed_categories: list) -> list:
                 "confidence": "high"
             })
 
-    if principles:
-        return principles
-
-    # Category detector mapping fallback
-    cat_signals = {
-        "spacing": ["spacing", "padding", "margin", "gap", "8pt", "4pt", "whitespace", "white space", "grid system"],
-        "color": ["color", "contrast", "palette", "saturation", "tint", "shade", "hue", "dark mode", "light mode", "wcag"],
-        "typography": ["typography", "font", "typeface", "font size", "line height", "letter spacing", "kerning", "weight", "sans"],
-        "hierarchy": ["hierarchy", "visual weight", "focal point", "scannable", "headline", "prominence", "scale", "contrast ratio"],
-        "motion": ["motion", "animation", "transition", "easing", "duration", "micro-interaction", "hover effect"],
-        "accessibility": ["accessibility", "a11y", "screen reader", "contrast ratio", "alt text", "focus state", "touch target", "44px"],
-        "layout": ["layout", "alignment", "container", "responsive", "breakpoint", "column", "sidebar", "card design", "navbar"]
-    }
-
-    # Find dominant matching categories
-    detected = []
-    for cat, terms in cat_signals.items():
-        if cat in allowed_categories:
-            score = sum(1 for t in terms if re.search(rf"\b{re.escape(t)}\b", text_lower))
-            if score > 0:
-                detected.append((cat, score))
-
-    if not detected:
-        return []
-
-    detected.sort(key=lambda x: x[1], reverse=True)
-    primary_category = detected[0][0]
-
-    return [{
-        "principle": f"{primary_category.title()} System Harmonization",
-        "category": primary_category,
-        "rule": f"Structure UI elements using systematic {primary_category} rules to maintain visual rhythm, clarity, and interface predictability.",
-        "why": "Minimizes cognitive friction and streamlines user scanning by providing reliable visual cues.",
-        "example": "Implemented across responsive containers and core interactive controls.",
-        "confidence": "medium"
-    }]
+    return principles
 
 
 def extract_principles_from_text(
@@ -312,14 +285,23 @@ def extract_principles(
         "categories",
         ["spacing", "color", "typography", "hierarchy", "motion", "accessibility", "layout"]
     )
+    output_dir = paths_cfg.get("output_dir", "output")
     raw_data_dir = paths_cfg.get("raw_data_dir", "data/raw")
 
-    posts_file = Path(raw_data_dir) / handle / "posts.json"
-    if not posts_file.exists():
-        logger.error(f"No posts.json found at {posts_file}.")
+    out_posts_file = Path(output_dir) / handle / "posts.json"
+    raw_posts_file = Path(raw_data_dir) / handle / "posts.json"
+    out_principles_file = Path(output_dir) / handle / "principles.json"
+
+    target_file = None
+    if out_posts_file.exists():
+        target_file = out_posts_file
+    elif raw_posts_file.exists():
+        target_file = raw_posts_file
+    else:
+        logger.error(f"No posts.json found in {out_posts_file} or {raw_posts_file}.")
         return []
 
-    with open(posts_file, "r", encoding="utf-8") as f:
+    with open(target_file, "r", encoding="utf-8") as f:
         posts = json.load(f)
 
     all_extracted = []
@@ -349,10 +331,19 @@ def extract_principles(
         else:
             post["extracted_principles"] = []
 
-    with open(posts_file, "w", encoding="utf-8") as f:
-        json.dump(posts, f, indent=2, ensure_ascii=False)
+    # Save creator-specific principles.json
+    out_principles_file.parent.mkdir(parents=True, exist_ok=True)
+    with open(out_principles_file, "w", encoding="utf-8") as f:
+        json.dump(all_extracted, f, indent=2, ensure_ascii=False)
+
+    # Save updated posts.json to both locations
+    for pfile in [out_posts_file, raw_posts_file]:
+        pfile.parent.mkdir(parents=True, exist_ok=True)
+        with open(pfile, "w", encoding="utf-8") as f:
+            json.dump(posts, f, indent=2, ensure_ascii=False)
 
     logger.info(f"Total principles extracted for @{handle}: {len(all_extracted)}")
+    logger.info(f"Saved creator principles store to {out_principles_file}")
     return all_extracted
 
 

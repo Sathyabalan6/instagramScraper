@@ -165,8 +165,8 @@ def run_pipeline(
 
         # Stage 5: Merge
         pbar.set_description("Stage 5: Merging skill")
-        logger.info("--- Stage 5: Merging into SKILL.md ---")
-        merged = merge_skill(config_path=config_path)
+        logger.info("--- Stage 5: Merging into SKILL.md & creator output folder ---")
+        merged = merge_skill(handle=handle, config_path=config_path)
         pbar.update(1)
 
     # Update processed state
@@ -174,9 +174,16 @@ def run_pipeline(
     update_processed_state(state_file, post_ids)
     logger.info(f"Updated state: {len(post_ids)} post IDs recorded in {state_file}")
 
+    output_dir = paths_cfg.get("output_dir", "output")
+    creator_dir = Path(output_dir) / handle
+
     logger.info(f"=== Pipeline completed successfully for @{handle} ===")
-    logger.info(f"Total structured principles: {len(merged)}")
-    logger.info("Deliverable updated: skills/design-ui-ux/SKILL.md")
+    logger.info(f"Creator Output Directory: {creator_dir.resolve()}")
+    logger.info(f"  |-- Skill Deliverable:  {creator_dir / 'SKILL.md'}")
+    logger.info(f"  |-- Summary Report:     {creator_dir / 'SUMMARY.md'}")
+    logger.info(f"  |-- Principles JSON:    {creator_dir / 'principles.json'}")
+    logger.info(f"  \\-- Posts & Audio Data: {creator_dir / 'posts.json'}")
+    logger.info(f"Global Aggregated Skill: skills/design-ui-ux/SKILL.md (Total {len(merged)} principles)")
 
 
 def main():

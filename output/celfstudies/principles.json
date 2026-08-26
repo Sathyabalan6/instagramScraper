@@ -1,0 +1,32 @@
+[
+  {
+    "principle": "Layered Blur and Frosted Glass Elevation",
+    "category": "layout",
+    "rule": "Layer soft backdrop-filter blur effects and frosted glass surfaces over background imagery to establish distinct spatial depth and visual elevation.",
+    "why": "Separates interactive foreground content from decorative background art while preserving ambient contextual illumination.",
+    "example": "Sticky glassmorphism navigation headers with `backdrop-filter: blur(12px)` over dynamic hero artwork.",
+    "confidence": "high",
+    "sources": [
+      {
+        "handle": "celfstudies",
+        "date": "2026-08-25",
+        "url": "https://www.instagram.com/p/DccJ5SVP9eD/"
+      },
+      {
+        "handle": "celfstudies",
+        "date": "2026-08-07",
+        "url": "https://www.instagram.com/p/DbvCg0VgE45/"
+      },
+      {
+        "handle": "celfstudies",
+        "date": "2026-07-31",
+        "url": "https://www.instagram.com/p/DbaPIhngYp0/"
+      },
+      {
+        "handle": "celfstudies",
+        "date": "2026-07-25",
+        "url": "https://www.instagram.com/p/DbH5St2gzbV/"
+      }
+    ]
+  }
+]

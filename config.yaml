@@ -28,6 +28,27 @@ classify:
     - a11y
     - ux
     - ui
+    - clutter
+    - balance
+    - cta
+    - button
+    - landing
+    - card
+    - nav
+    - navbar
+    - animation
+    - motion
+    - micro-interaction
+    - glassmorphism
+    - elevation
+    - wireframe
+    - mockup
+    - figma
+    - token
+    - system
+    - responsive
+    - darkmode
+    - lightmode
 
 transcription:
   whisper_model: "small"            # bump to "medium" if transcripts are garbled
@@ -53,6 +74,7 @@ merge:
   principles_store_path: "skills/design-ui-ux/principles.json"
 
 paths:
+  output_dir: "output"
   raw_data_dir: "data/raw"
   state_file: "state/processed.json"
   logs_dir: "logs"
