@@ -486,5 +486,205 @@ def test_cross_category_guard():
     assert len(synthesized) == 2
 
 
+def test_instructive_directive_markdown_rendering(tmp_path):
+    """Verify that SKILL.md and SUMMARY.md render instructive fields (When to apply, Do this, Don't do this)."""
+    from scripts.merge_skill import generate_skill_markdown, generate_creator_summary_markdown
+
+    principle = {
+        "principle": "Predictable Primary Action Hierarchy",
+        "category": "layout",
+        "rule": "Maintain exactly one high-contrast primary CTA above the fold per view.",
+        "do_this": "Anchor the primary CTA in the bottom-right or top-right visual scanning path.",
+        "dont_do_this": "Place multiple competing high-saturation buttons in the same container.",
+        "trigger_context": "Designing conversion-critical screens or modal confirmations.",
+        "why": "Prevents decision paralysis by creating an unambiguous visual path.",
+        "example": "Before: Side-by-side solid 'Save' and solid 'Cancel' buttons. After: Solid 'Save' paired with a ghost/text 'Cancel' button.",
+        "confidence": "high",
+        "sources": [{"handle": "design_lead", "url": "https://instagram.com/p/test123"}]
+    }
+
+    skill_file = tmp_path / "INSTRUCTIVE_SKILL.md"
+    generate_skill_markdown([principle], str(skill_file), skill_name="instructive-test")
+    skill_content = skill_file.read_text(encoding="utf-8")
+
+    assert "- **When to apply**: Designing conversion-critical screens" in skill_content
+    assert "- **Do this**: Anchor the primary CTA" in skill_content
+    assert "- **Don't do this**: Place multiple competing high-saturation buttons" in skill_content
+    assert "- **Why it matters**: Prevents decision paralysis" in skill_content
+    assert "- **Implementation Pattern**:" in skill_content
+    assert "- **Avoid**: Side-by-side solid" in skill_content
+    assert "- **Do This**: Solid 'Save' paired with a ghost" in skill_content
+
+    summary_file = tmp_path / "INSTRUCTIVE_SUMMARY.md"
+    generate_creator_summary_markdown("design_lead", [principle], [], str(summary_file))
+    summary_content = summary_file.read_text(encoding="utf-8")
+
+    assert "- **Trigger Scenario**: Designing conversion-critical screens" in summary_content
+    assert "- **Guideline**: Anchor the primary CTA" in summary_content
+    assert "- **Avoid (Anti-Pattern)**: Place multiple competing" in summary_content
+    assert "- **Rationale**: Prevents decision paralysis" in summary_content
+
+
+def test_embedding_cache_disk_persistence(tmp_path, monkeypatch):
+    """Verify that embedding cache reads and writes to disk seamlessly."""
+    import scripts.merge_skill as ms
+
+    test_cache_file = tmp_path / "cache" / "embeddings.json"
+    monkeypatch.setattr(ms, "EMBEDDINGS_CACHE_FILE", test_cache_file)
+    monkeypatch.setattr(ms, "CACHE_DIR", tmp_path / "cache")
+
+    # Initial state -> empty cache
+    assert ms.load_embedding_cache() == {}
+
+    # Save dummy embeddings
+    dummy_data = {
+        "key1": [0.1, 0.2, 0.3],
+        "key2": [-0.5, 0.0, 0.5]
+    }
+    ms.save_embedding_cache(dummy_data)
+    assert test_cache_file.exists()
+
+    # Reload and verify
+    reloaded = ms.load_embedding_cache()
+    assert reloaded == dummy_data
+
+
+def test_multi_target_synthesis(tmp_path):
+    """Verify pooling, deduplication, and cross-creator synthesis across multiple targets."""
+    import json
+    import yaml
+    from scripts.merge_skill import merge_multi_target
+
+    output_dir = tmp_path / "output"
+    raw_dir = tmp_path / "data" / "raw"
+    skills_dir = tmp_path / "skills"
+    output_dir.mkdir(parents=True)
+    raw_dir.mkdir(parents=True)
+    skills_dir.mkdir(parents=True)
+
+    config_data = {
+        "instagram": {},
+        "classify": {},
+        "transcription": {},
+        "extraction": {"categories": ["typography", "color", "layout", "accessibility", "spacing"]},
+        "merge": {"dedup_similarity_threshold": 80.0},
+        "paths": {
+            "output_dir": str(output_dir),
+            "raw_data_dir": str(raw_dir),
+            "skills_dir": str(skills_dir)
+        }
+    }
+    cfg_file = tmp_path / "config.yaml"
+    with open(cfg_file, "w", encoding="utf-8") as f:
+        yaml.dump(config_data, f)
+
+    # Target 1: creator_a with an 8pt spacing principle
+    dir_a = output_dir / "creator_a"
+    dir_a.mkdir()
+    posts_a = [{
+        "post_id": "1001",
+        "shortcode": "CODE_A1",
+        "date": "2026-09-01",
+        "is_video": False,
+        "like_count": 500,
+        "principles": [{
+            "principle": "8pt Spatial Grid System",
+            "category": "layout",
+            "rule": "Use strict 8pt grid increments for inner padding and margins.",
+            "do_this": "Enforce 8px, 16px, 24px spacing.",
+            "dont_do_this": "Use arbitrary 11px or 13px padding.",
+            "trigger_context": "Container spacing",
+            "why": "Ensures visual harmony.",
+            "example": "Before: 13px padding. After: 16px padding.",
+            "confidence": "high",
+            "sources": [{"handle": "creator_a", "url": "https://instagram.com/p/CODE_A1/"}]
+        }]
+    }]
+    with open(dir_a / "posts.json", "w", encoding="utf-8") as f:
+        json.dump(posts_a, f)
+
+    # Target 2: creator_b with a near-identical 8pt principle AND an accessibility principle
+    dir_b = output_dir / "creator_b"
+    dir_b.mkdir()
+    posts_b = [{
+        "post_id": "2001",
+        "shortcode": "CODE_B1",
+        "date": "2026-09-02",
+        "is_video": True,
+        "like_count": 1200,
+        "principles": [
+            {
+                "principle": "8pt Grid Spatial Rhythm",
+                "category": "layout",
+                "rule": "Use strict 8pt grid increments for inner padding and layout margins.",
+                "do_this": "Apply 8, 16, 24, 32 spatial tokens.",
+                "dont_do_this": "Use uneven odd margins.",
+                "trigger_context": "Component layout",
+                "why": "Guarantees cross-screen consistency.",
+                "example": "Before: 9px margin. After: 16px margin.",
+                "confidence": "high",
+                "sources": [{"handle": "creator_b", "url": "https://instagram.com/p/CODE_B1/"}]
+            },
+            {
+                "principle": "Accessible Minimum Touch Target",
+                "category": "accessibility",
+                "rule": "Provide minimum 44x44pt bounding boxes for mobile touch targets.",
+                "do_this": "Add touch hit slop of at least 44pt.",
+                "dont_do_this": "Make buttons smaller than 44pt without hit expansion.",
+                "trigger_context": "Mobile interactive components",
+                "why": "Prevents mistaps per WCAG 2.2 AA.",
+                "example": "Before: 28px icon button. After: 44px container padding.",
+                "confidence": "high",
+                "sources": [{"handle": "creator_b", "url": "https://instagram.com/p/CODE_B2/"}]
+            }
+        ]
+    }]
+    with open(dir_b / "posts.json", "w", encoding="utf-8") as f:
+        json.dump(posts_b, f)
+
+    # Run synthesis with min_sources=1 (should yield 2 principles: 1 merged layout + 1 accessibility)
+    synth = merge_multi_target(
+        targets=["creator_a", "creator_b"],
+        output_skill_name="flagship-ui",
+        min_sources=1,
+        config_path=str(cfg_file)
+    )
+    assert len(synth) == 2
+
+    # Verify that the layout principle merged sources and has consensus from both creators
+    layout_p = next(p for p in synth if p.get("category") == "layout")
+    assert len(layout_p.get("sources", [])) == 2
+    handles = {s.get("handle") for s in layout_p.get("sources", [])}
+    assert "creator_a" in handles
+    assert "creator_b" in handles
+
+    # Verify output skill files were generated
+    skill_dir = skills_dir / "flagship-ui"
+    assert (skill_dir / "SKILL.md").exists()
+    assert (skill_dir / "SUMMARY.md").exists()
+    assert (skill_dir / "principles.json").exists()
+
+    skill_md = (skill_dir / "SKILL.md").read_text(encoding="utf-8")
+    assert "Multi-Source Consensus (Validated across 2 creators: @creator_a, @creator_b)" in skill_md
+    assert "- **When to apply**:" in skill_md
+    assert "- **Do this**:" in skill_md
+    assert "- **Don't do this**:" in skill_md
+
+    summary_md = (skill_dir / "SUMMARY.md").read_text(encoding="utf-8")
+    assert "Cross-Creator Design Skill Synthesis Report: flagship-ui" in summary_md
+    assert "Contributing Target Count" in summary_md
+
+    # Now test min_sources=2 filter (only the consensus principle should survive)
+    synth_strict = merge_multi_target(
+        targets=["creator_a", "creator_b"],
+        output_skill_name="strict-consensus",
+        min_sources=2,
+        config_path=str(cfg_file)
+    )
+    assert len(synth_strict) == 1
+    assert synth_strict[0].get("category") == "layout"
+
+
+
 
 

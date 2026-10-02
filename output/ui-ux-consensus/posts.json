@@ -1,0 +1,1844 @@
+[
+  {
+    "post_id": "3997592712018040775",
+    "shortcode": "Dd6TWQ0hpfH",
+    "url": "https://www.instagram.com/p/Dd6TWQ0hpfH/",
+    "date": "2026-09-30",
+    "caption": "Comment “POLISH” for the prompts + full 10+ item guide 📝\n\nFollow @lincolndevine and send this to a vibe coder 🤝\n\n#vibecoding #buildwithai #aitips #solopreneur #claudecode",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQOjygdq3xtkrE0OvwwkiBHV5Oi_lWxpTo9noG0WQkA_qiRSX6A9r3NNR8x3_6q01GM_lzLsyvFlVyNSjxETcmnjlJvsJfyX_Hp7XsA.mp4?_nc_cat=107&_nc_oc=AdoqI5LRDlAjud7yIJrRX6DAtnWl4yI7LBKJtawc3fqOtekxPM-3Fn1wbWs5QfJz7URNKdkQEH3M_RzNXYQiWACN&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=kTfgfmU-jFwQ7kNvwE_W1xU&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTA1Nzc2MzMyNzEyNjYyOCwiYXNzZXRfYWdlX2RheXMiOjIsInZpX3VzZWNhc2VfaWQiOjEwMDk5LCJkdXJhdGlvbl9zIjo0MSwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=e449c559e4125fd9&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC8zRUYzN0JFQjg2OTE0RTUyOTg1OTMxNzNFRjc5QTAxNl92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyL0Y0OTY2QTExMEQ2MzRGQTRCRkE1RjM5QUY2QzlEQjAyX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACbIsfX19oHhAxUCKAJDMywXQETVP3ztkWgYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=dKzSZ9NDg8kXj6KbfAZhVA&_nc_ss=7a22e&_nc_map=urlgen_bucketless&_nc_zt=28&oh=00_AQMaVr9xUFanQFo2zaGwrBu2v4eJ-MqS1tfMGflZBUTsTw&oe=6AC09DFC",
+    "video_duration": 41.678001403809,
+    "like_count": 1157,
+    "owner_username": "lincolndevine",
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 23,
+      "matched_keywords": []
+    },
+    "transcript": "Five more tells your app was vibe coded.  You know who you are.  First, tapping the thing twice does the thing twice.  Two purchases, two saves, one annoyed user.  Second, raw error text on the screen.  Use toasts, no one wants to see undefined  or some weird database error.  Third, the keyboard covers the field you're typing in.  This is the worst.  Fourth, switching between dark and light mode  suddenly makes things unreadable.  Fifth, you hit the back button  and everything you entered or typed is gone.  You don't always catch these things in testing  because you know how things are supposed to work,  but your users don't.  Comment, polish, I'll send you these five  plus another five and the prompts  to fix all of this stuff.",
+    "principles": [
+      {
+        "principle": "Interactive Tap Debouncing",
+        "category": "motion",
+        "rule": "Disable action triggers immediately upon activation to prevent duplicate submissions or purchases from rapid double-tapping.",
+        "why": "Rapid or impatient double-taps cause unintended duplicate requests, leading to user frustration and state corruption.",
+        "example": "Button component enters a disabled loading state on first tap: onClick={() => { setLoading(true); submitForm(); }}",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "lincolndevine",
+            "date": "2026-09-30",
+            "url": "https://www.instagram.com/p/Dd6TWQ0hpfH/"
+          }
+        ]
+      },
+      {
+        "principle": "User-Friendly Error Notification Toasts",
+        "category": "hierarchy",
+        "rule": "Replace raw technical error logs or undefined strings with contextual, human-readable notification toasts.",
+        "why": "Exposing raw database errors creates cognitive overload and damages product trust.",
+        "example": "Displaying 'Something went wrong saving your changes. Try again.' instead of 'Error: TypeError: undefined at Object...'",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "lincolndevine",
+            "date": "2026-09-30",
+            "url": "https://www.instagram.com/p/Dd6TWQ0hpfH/"
+          }
+        ]
+      },
+      {
+        "principle": "Viewport Auto-Scrolling for Active Inputs",
+        "category": "layout",
+        "rule": "Ensure focused input fields automatically scroll into view above the software keyboard when the virtual keyboard expands.",
+        "why": "When keyboards obscure input fields, users cannot see what they are typing, leading to input errors and abandonment.",
+        "example": "Applying scrollIntoView({ behavior: 'smooth', block: 'center' }) on input focus events within mobile viewports.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "lincolndevine",
+            "date": "2026-09-30",
+            "url": "https://www.instagram.com/p/Dd6TWQ0hpfH/"
+          }
+        ]
+      },
+      {
+        "principle": "Theme State Persistence on Back Navigation",
+        "category": "color",
+        "rule": "Maintain consistent color token values and contrast ratios across dark and light mode transitions to prevent unreadable text states.",
+        "why": "Abrupt theme switches can cause foreground text to blend into newly loaded backgrounds, breaking legibility.",
+        "example": "Using dynamic CSS custom properties (e.g., var(--text-primary)) that update cleanly without orphan color dependencies.",
+        "confidence": "medium",
+        "sources": [
+          {
+            "handle": "lincolndevine",
+            "date": "2026-09-30",
+            "url": "https://www.instagram.com/p/Dd6TWQ0hpfH/"
+          }
+        ]
+      },
+      {
+        "principle": "Client-Side Input State Caching",
+        "category": "layout",
+        "rule": "Persist form input states and user entries locally on page or route transitions so data is not lost when hitting the back button.",
+        "why": "Losing typed inputs upon navigating backward causes severe user friction and forces repetitive data entry.",
+        "example": "Autosaving form state to sessionStorage or localStorage on input change events.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "lincolndevine",
+            "date": "2026-09-30",
+            "url": "https://www.instagram.com/p/Dd6TWQ0hpfH/"
+          }
+        ]
+      }
+    ],
+    "extraction_metadata": {
+      "method": "llm_batch",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 5
+    }
+  },
+  {
+    "post_id": "3994690532684013093",
+    "shortcode": "Ddv_d_sPx4l",
+    "url": "https://www.instagram.com/p/Ddv_d_sPx4l/",
+    "date": "2026-09-26",
+    "caption": "Do not publish your vibe coded website without making claude double check this\n\n#ai #vibecoding #claude #claudecode #vibecodingtools",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQNHwoFUM0_kAYtIml9nMMhxa3YTC4gxEZwgcDKn1ceMGy68H1K_oo_M7J2SxS9DPy5yOFYqFpIWih4dqxaT3cUQTEcAP4jPgzXZ5mo.mp4?_nc_cat=110&_nc_oc=AdpaKLc7-kkJA4HN8AMv_WtwwI73Z1N8UUxHyywGmAFOyK2PGOzio02R5AkQnd0GheqjEwuunNndUHkUqng8Gi4c&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=AioRT2JeRiAQ7kNvwGx-Ra8&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6OTU5NDQ4MTM5ODk4MzA4LCJhc3NldF9hZ2VfZGF5cyI6NSwidmlfdXNlY2FzZV9pZCI6MTAwOTksImR1cmF0aW9uX3MiOjE4LCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&vs=534852b9d20532ae&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC9ENDNENzFFNEE5MzA0RTM1QTNCRUZBQzRCNTQzRjE1Q192aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyL0QxNEQ2MzZCNDkwODc5QkIxQkNGNTA2NkYwQTI2QzhEX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACaI9_jYnae0AxUCKAJDMywXQDIeNT987ZEYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=dKzSZ9NDg8kXj6KbfAZhVA&_nc_ss=7a22e&_nc_map=urlgen_bucketless&_nc_zt=28&oh=00_AQOQujbLQgMaGByUhHFeHc7iEd9WtpPwqkPjDlh7qdIAvg&oe=6AC08547",
+    "video_duration": 18.132999420166,
+    "like_count": 4345,
+    "owner_username": "okaashish",
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 18,
+      "matched_keywords": []
+    },
+    "transcript": "Privacy Policy, Terms and Conditions, Cookie Policy, Refund Policy, Cookie plus Form Consent,  what user data do you collect?  3rd party embeds, Alltext plus Color Contrast, Keyboard Friendly Forms plus Clear Buttons,  Fake Reviews plus Unsupported Claims plus Business Details, Copyrighted Images plus Applicable  Local Loss.",
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm_batch",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3990128593399548755",
+    "shortcode": "DdfyNCptYtT",
+    "url": "https://www.instagram.com/p/DdfyNCptYtT/",
+    "date": "2026-09-20",
+    "caption": "You just vibe coded an app in 2 hours… but can it survive the internet? 👀\n\nSpeed is easy with AI. Security is what most people forget.\n\nHere are the 5 prompts you should always run before shipping:\n\nAdd rate limiting to all endpoints (max 5 attempts on auth routes per 15 minutes)\nScan the entire codebase for hardcoded API keys, tokens, or passwords\nMove all sensitive data to environment variables and ensure nothing is exposed in frontend or Git\nSanitize all user inputs and reject oversized or malformed payloads\nRun a full security audit and report any remaining vulnerabilities\n\nIf you're building with AI, this is not optional.\n\n💾 Save this before your next launch\n👉 Follow for more\n\n#ai #vibecoding #buildinpublic #webdev #cybersecurity",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQOZyPRyVBdhp6Jg_ugfYxr1nLP1SjAUM5oJEX8I3dCvmsJGfqjserqMrwlOVgJ7jY3vI6Sxt-Cy-f8gDowcuY5WJx8zm7sslryvnu8.mp4?_nc_cat=100&_nc_oc=AdrxnGeFjARNFTCA-8PUP2tGhiGBGwVWVD7RlY45XllGmbZM7dvlrmTD2Fq1jA-udnp3xDi8jfCrQQOMucGwAr68&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=r-usmQE-wB8Q7kNvwE07E9p&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTA1MzU0NjAxNDE2MTU3NCwiYXNzZXRfYWdlX2RheXMiOjExLCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6ODQsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=ac1adc7a028f89be&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC9EMDRBRkQ1MDgyQzhBMTI1QUQ5RUJCNzI5NjA1NDRBMF92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzhFNDlDNUUyRjg3NUNDRDdDQTMxMjAzNDdBMDdBQUI4X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACbM6u2-uYzfAxUCKAJDMywXQFUEOVgQYk4YEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=dKzSZ9NDg8kXj6KbfAZhVA&_nc_ss=7a22e&_nc_map=urlgen_bucketless&_nc_zt=28&oh=00_AQMishoov0Z2JPZ6moWUMTq4syFUq8xUiVP-zkCqS4E4xQ&oe=6AC08A4D",
+    "video_duration": 84.11799621582,
+    "like_count": 18,
+    "owner_username": "kevini.mai",
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 123,
+      "matched_keywords": []
+    },
+    "transcript": "I just vibe coded an entire app in two hours. It works. It looks great, but I have no idea if it's actually secure. Like, could someone hack this thing?  Oh, they absolutely could. And they will. Unless you use these five prompts to lock it down before it's too late.  Prompt number one. Tell your AI to implement rate limiting on all endpoints. Five attempts max per 15 minutes on login routes. That way hackers can't brute force their way in.  Oh yeah, that's smart. What about the passwords I left in the code?  You did what? That's prompt number two, you buffoon. Tell the AI to scan your entire code base for any hard code.  And prompt three. Move all sensitive data to environment variables. Make sure nothing is exposed in the front end or committed to get. You absolute walnut.  Okay. Okay. I'm writing this down. What else?  Prompt four. Sanitize all user inputs and reject anything oversized or malformed. Unless you want someone injecting code straight into your database.  That sounds bad.  It is bad, Peter. And finally, prompt five. Run a full security audit and report any remaining vulnerabilities. Think of it as a final health check before you unleash your little creation on the world.  Thanks, Stewie. You just saved my app and probably my identity.  You're welcome. Now if you found this useful, follow this page for more tips so you don't get destroyed on the internet. Do it now.",
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm_batch",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3989102042265434968",
+    "shortcode": "DdcIywaBDtY",
+    "url": "https://www.instagram.com/p/DdcIywaBDtY/",
+    "date": "2026-09-18",
+    "caption": "Comment “DESIGN” to get the exact prompt rules I use to stop Claude from generating default Tailwind slop🤝\n\nIf your landing page has a purple radial gradient and a bento grid with zero actual data, Claude got you. \n\n1. Tailwind slate-900 with a purple center blur\n2. Lucide icons trapped in rounded square badges\n3. “Supercharge your workflow” in the hero\n4. Glowing “Most Popular” middle pricing tier\n5. Empty bento grids with fake toggle animations\n6. Unsplash avatar testimonials from “Sarah, Head of Growth”\n7. 15-degree tilted browser mockups\n8. Grayscale logos of imaginary companies\n\nIt takes 5 minutes to feed Claude proper design constraints so your site looks like an actual product instead of Al template 4.\n\n#vibecoding #claude #claudecode #webdesign #ai",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t16/f2/m84/AQOycFtv8iua-P56wI5yexE2NSDTNWZKH8RzRXDGTF65Au07qfhHdXOWQaVuWK2SJ3s1w53jZ6XEJqALKB0pf2NTRdx5HGb7ECheohQ.mp4?_nc_cat=103&_nc_oc=AdrxAd7Sva-sJ1HrN9RctxSLk3_eYJD6CfywoUAm2eJyYSZ0oLqhurqbWFVnOb62nvNKEam5IRmpRyhbDALdTPru&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=amGl1FNwSy0Q7kNvwFcFcM5&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MjI4MzQxNzM4MjQxNTUyMSwiYXNzZXRfYWdlX2RheXMiOjEzLCJ2aV91c2VjYXNlX2lkIjoxMDgyNywiZHVyYXRpb25fcyI6NjMsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=3770968cc335604a&_nc_vs=HBksFQIYTGlnX2JhY2tmaWxsX3RpbWVsaW5lX3ZvZC9BNzRGNTI2MDM4MUJGQzkzMzIwMzgzMTY0RUU3MkI4Ml92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzAwNDY4QzM4QjRBODk1QzZGQkFCM0U3OTE4OThCRUE3X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACbCsp-fsbCOCBUCKAJDMywXQE-VP3ztkWgYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZZapAQA&_nc_gid=dKzSZ9NDg8kXj6KbfAZhVA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_ss=7a22e&oh=00_AQNUY4HKbN7JlqRLqUGdAqkE1_Vj2yuVRH09i58GaOoj5w&oe=6AC08529",
+    "video_duration": 63.180000305176,
+    "like_count": 352,
+    "owner_username": "murphmaxxing",
+    "classification": {
+      "path": "caption",
+      "reason": "Detailed caption (126 words) with design keywords: grid, landing",
+      "word_count": 126,
+      "matched_keywords": [
+        "grid",
+        "landing"
+      ]
+    },
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm_batch",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3987679292711256551",
+    "shortcode": "DdXFTBoPEHn",
+    "url": "https://www.instagram.com/p/DdXFTBoPEHn/",
+    "date": "2026-09-16",
+    "caption": "5 things you should be embarrassed to have in your app 🤮🤮\n\n1. Spinning loaders: Use skeleton loaders that match the screen users are waiting for. It looks cleaner and makes loading feel faster.\n\n2. Dark patterns: Don’t hide unsubscribe buttons or use confusing wording to push purchases. Short-term revenue isn’t worth losing user trust.\n\n3. Unresponsive buttons: Every tap should give instant feedback. If something takes longer to process, update the UI first and handle the work in the background when possible.\n\n4. Inconsistent onboarding buttons: Keep your main continue button in the same place throughout onboarding. Users should be able to move through it without thinking about where to tap next.\n\n5. Developer errors shown to users: Your users should NEVER see a 404, 500, stack trace, or backend error. Catch it, log it internally, and show a simple message explaining what they should do next.\n\nFollow JPLoft for more practical app development tips before you build your first app.\n\n#appdevelopment #appdeveloper #appdesign #mobileapp #startup",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQMmuVaSdbZXqiMO26A_5JF6OF81twyAi5q-e6ExvwE7-pY4MXSYjjIeDoVxWzm4r7qcOJawWEmI6IScbi12iuPT4FsgVmBDMjULjf4.mp4?_nc_cat=111&_nc_oc=Adr5lrpb51T-sE1vYQNuNRbBZfMpQC1-3UV4r2DfJThOMMUirKYX7CYyfsROChWCQqvG6ombEkNiwrt4FusYo_4c&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=Bykd4ato_jgQ7kNvwGCrjb3&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTY0NTU2MTYxMzU3ODE4OSwiYXNzZXRfYWdlX2RheXMiOjE1LCJ2aV91c2VjYXNlX2lkIjoxMjM3NCwiZHVyYXRpb25fcyI6NzEsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=b426e5ff0d70fc0&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC80MzQwNEQ4QUJDMkE2MjM3Nzk0MjNGMDEyNEI2MEI4M192aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzMwNENCODA5QTBGOEE0QTA1NjRBODVFNjhCODMxM0ExX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACaav_e2pajsBRUCKAJDMywXQFHmZmZmZmYYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZazBAQA&_nc_gid=dKzSZ9NDg8kXj6KbfAZhVA&_nc_ss=7a22e&_nc_map=urlgen_bucketless&_nc_zt=28&oh=00_AQOeYB9EYu-M8haqTPWHOSgNlDVZ2aGyHSEER40_y87Mgw&oe=6AC081C8",
+    "video_duration": 71.599998474121,
+    "like_count": 105,
+    "owner_username": "jploft.us",
+    "classification": {
+      "path": "caption",
+      "reason": "Detailed caption (169 words) with design keywords: ui, button",
+      "word_count": 169,
+      "matched_keywords": [
+        "ui",
+        "button"
+      ]
+    },
+    "principles": [
+      {
+        "principle": "Skeleton Screen Content Placeholders",
+        "category": "layout",
+        "rule": "Replace generic spinners with structural skeleton loaders that mimic the dimensions and layout of the incoming content.",
+        "why": "Mimicking the final layout shape reduces perceived waiting time and prevents layout shifts when data resolves.",
+        "example": "Instead of a centered spinner, display grey pulsing rectangular blocks where cards or lists will load.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "jploft.us",
+            "date": "2026-09-16",
+            "url": "https://www.instagram.com/p/DdXFTBoPEHn/"
+          }
+        ]
+      },
+      {
+        "principle": "Immediate Touch Feedback for Interactive Elements",
+        "category": "motion",
+        "rule": "Trigger instant visual state changes (like scale or color shifts) on every tap, executing heavy tasks asynchronously.",
+        "why": "Immediate visual confirmation reassures the user that their input was registered, eliminating perceived lag.",
+        "example": "An action button shows a pressed/active state instantly while the network request is handled in the background.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "jploft.us",
+            "date": "2026-09-16",
+            "url": "https://www.instagram.com/p/DdXFTBoPEHn/"
+          }
+        ]
+      },
+      {
+        "principle": "Fixed Primary CTA Positioning in Stepper Flows",
+        "category": "layout",
+        "rule": "Anchor the primary progression button (e.g., 'Continue') to the exact same screen coordinates across every step of an onboarding flow.",
+        "why": "Maintaining spatial consistency builds muscle memory, allowing users to progress rapidly without visually searching for the button.",
+        "example": "Pin the primary 'Next' button to the bottom sticky container across all 4 onboarding screens.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "jploft.us",
+            "date": "2026-09-16",
+            "url": "https://www.instagram.com/p/DdXFTBoPEHn/"
+          }
+        ]
+      },
+      {
+        "principle": "Human-Readable Fallback Error States",
+        "category": "accessibility",
+        "rule": "Intercept raw system exceptions (404, 500, stack traces) and display an actionable recovery message with clear next steps.",
+        "why": "Technical error codes cause confusion and erode trust, whereas plain-language instructions guide the user toward recovery.",
+        "example": "Instead of 'Error 500: SQL Timeout', show 'We're having trouble connecting. Try again in a moment.' with a retry button.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "jploft.us",
+            "date": "2026-09-16",
+            "url": "https://www.instagram.com/p/DdXFTBoPEHn/"
+          }
+        ]
+      }
+    ],
+    "extraction_metadata": {
+      "method": "llm_batch",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 4
+    }
+  },
+  {
+    "post_id": "3963214328433643698",
+    "shortcode": "DcAKm8HBpCy",
+    "url": "https://www.instagram.com/p/DcAKm8HBpCy/",
+    "date": "2026-08-14",
+    "caption": "Comment LAUNCH and I’ll send you my personal pre-launch list - all ten with skills and all. \n\nThese are the three that make the difference between a link that looks like a product and a link that looks like a school project:\n\n01 A preview image. The grey box when someone shares your link is the cheapest-looking thing in software. One image, four lines of metadata.\n02 An onboarding path. One first action, and the app says what it is. Most apps with “no traction” are apps where nobody found the good bit.\n03 Analytics with session replay. Watching one real person get stuck beats a week of guessing.\n\nPart one of Build Good Apps. The other seven are waiting - LAUNCH gets them.",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQNtzghj40q5wh_zl8wUbEC1VpGY5Q-Yexk-i5xlu7YmWTj3Ubz7cK2DeVXRk1M_YdnECLJU6ZsnY8je-xNjLADL9is1m6HRKroOvbI.mp4?_nc_cat=108&_nc_oc=AdrU-pcbIOFbWy9KGbXihoYGkU1stLbC8is8Z1ujcHx0EWbfJCXqY5akmRHOfC3g43Qdz8eY-q5dIetHBvSQwqai&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=98KZhjTayikQ7kNvwH3qi6G&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTc3MDE0OTMzNDIwNDEyOSwiYXNzZXRfYWdlX2RheXMiOjQ4LCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6MTcsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=a787ebe38a5fbf35&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC9CQjQ2ODEyRjg1NTM3REVDNjE4MzdEQ0MzMzMwQ0RBM192aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzhDNDdEMzAxQkYyQ0UzMkEyODUyRjc1RDYwM0E5MjhDX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACbC-52koPykBhUCKAJDMywXQDHEGJN0vGoYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=dKzSZ9NDg8kXj6KbfAZhVA&_nc_ss=7a22e&_nc_map=urlgen_bucketless&_nc_zt=28&oh=00_AQO5wd2NfUnOb4NOmnQ2LIZjFwMPxW9WVJiCj-zj9w8G1Q&oe=6AC093C9",
+    "video_duration": 17.784999847412,
+    "like_count": 15,
+    "owner_username": "danielwelsh_routiq",
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 125,
+      "matched_keywords": []
+    },
+    "transcript": "You're launching your app.  Three things first and one you can't fix later.  So one, your preview image.  Make sure it looks good, sort this out.  Two, onboarding, you won't gain traction  if people don't know what to do.  And the one that you can't fix later,  three, analytics, post-hoc.  Record what the user actually does,  but you can add it later,  but the sessions that you didn't record are gone forever.  None of them take longer than drinking the cup of coffee.",
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm_batch",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3963813388116613078",
+    "shortcode": "DcCS0Z6oNfW",
+    "url": "https://www.instagram.com/p/DcCS0Z6oNfW/",
+    "date": "2026-08-15",
+    "caption": "Your vibe-coded app looks finished.\nIt’s missing the 15 things that make it a real product.\n\n1. analytics\n2. crash reporting\n3. privacy policy\n4. loading states\n5. error states\n6. onboarding\n7. paywall\n8. restore purchases\n9. account deletion\n10. empty states\n11. real-device testing\n12. app store screenshots\n13. support flow\n14. monitoring\n15. actual users 💀\n\nI learned most of these after thinking my first app was already “done”.",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQOeXnfziI9cJxGE6acqMhb4N5ajaroT1INhR80y6T7qsrFD-32aHQipJCvqi3o7E4-3pVsdvDOFOabxr8Mula724iQ2Yy2XL1bMQrc.mp4?_nc_cat=105&_nc_oc=Adpr4nPz9ZywtcG3ChHkkBp5DGwb7RgIhUiVqimYEJVzVrZqESwzFGO5uik_2_Yk2E-BzjaaYyPoQ_GoBeAzD_FU&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=1jNNl1tgT9cQ7kNvwG4kwSp&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MzQwMjA3OTg4NjYzNzkxNiwiYXNzZXRfYWdlX2RheXMiOjQ3LCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6OCwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=580f2611630372fa&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC84NzQxRUM3RDIzRjZGMDZBRDlCQjcwMTcxMzRBMzk5RV92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzFDNEQ2QjAwRTY2MDg3NzQwRkVGNEY3QTlBQkQ1NUJFX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACa47Z-yjouLDBUCKAJDMywXQCEAAAAAAAAYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=dKzSZ9NDg8kXj6KbfAZhVA&_nc_ss=7a22e&_nc_map=urlgen_bucketless&_nc_zt=28&oh=00_AQOWSnBfMYnm2tZOJyDas5YQKsx_x_h4IDB9vFiFnEM8UA&oe=6AC0AC12",
+    "video_duration": 8.5200004577637,
+    "like_count": 381,
+    "owner_username": "corecodevibes",
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 74,
+      "matched_keywords": []
+    },
+    "transcript": "Throw a lot, let me show you how to move, let me show you how  Get that bad, you ain't never coming last  Fuck your man, you know this gon' make him mad",
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm_batch",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3964333368108065752",
+    "shortcode": "DcEJDHBTyPY",
+    "url": "https://www.instagram.com/p/DcEJDHBTyPY/",
+    "date": "2026-08-15",
+    "caption": "does your VIBECODED site have any of this ‼️🚨\n\n#ai #vibecoding #claude #chatgpt\n\nUnfortunately, I had to quickly explain all these to keep the video short. Many of these examples could be described in better detail so send a DM or drop a comment if you want a longer version.",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQPdrzRY2aZsOHwyapKjjIH6x0Gavlb7t_t8Q5PL_rcGGY8Y0diieiMwzMDwqCM8srTl0zvJcoUZlZls31KwFQ8tTdS2JtKTF4iwHU0.mp4?_nc_cat=107&_nc_oc=Adq8_-IXrBrHiLfR8giLu_o_NnUYDbg8RfIV52XNVgwYwAKWTSrmdcifSFXZFxXccGZEvjHKLGAMQ_REIqPdErW2&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=9Py28OxZ8wcQ7kNvwHJN5KQ&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTU3MTg4Mzk1MTE0NjkxNywiYXNzZXRfYWdlX2RheXMiOjQ3LCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6MjksInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=46c30256d5c7861a&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC9CODQwMkUyQjM1NkVGMzJFNkVEQ0M2MzQ4QThGOEVCMV92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzVGNDBGODBDQ0I3ODkxOUFDMUVFMkQzNjg1OUE4MEJBX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACbKnsqI2OfKBRUCKAJDMywXQD0Q5WBBiTcYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=dKzSZ9NDg8kXj6KbfAZhVA&_nc_ss=7a22e&_nc_map=urlgen_bucketless&_nc_zt=28&oh=00_AQPY_h4EvJy5gTxAoSGPEP2m5DmlblO-fObpcBJEfxPwVg&oe=6AC086E8",
+    "video_duration": 29.065999984741,
+    "like_count": 84093,
+    "owner_username": "aj.on.ai",
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 49,
+      "matched_keywords": []
+    },
+    "transcript": "Harsh gradients, loose side icons, pure white background, rainbow coloring, drop shadow and  everything.  Three feature cards in a row.  Emojis, liquid glass, M dashes, using inter, geist or space grotesque fonts.  This colored stripe, fake testimonials, bento grids, terminal window, it's not X, it's  Y, check mark bullets, three pricing tiers, no real product demos, soft corner radius,  purple and black, no skeleton loaders, radio orbs, dot grids, sparkle icons, animated  arrows, no TOS, no privacy policy, hover animations for everything, neon colors and basic  pastel colors, drop a follow if this helped.",
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm_batch",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3963636836802732097",
+    "shortcode": "DcBqrPsR6BB",
+    "url": "https://www.instagram.com/p/DcBqrPsR6BB/",
+    "date": "2026-08-14",
+    "caption": "Comment CHECK and I’ll DM you the 20 point checklist and the 5 prompts.\n\nYour AI built site looks finished on the homepage, then ships with no 404 page, no meta descriptions, and forms failing in silence.\n\n#claude #ai #artificialintelligence #digitalmarketing #vibecoding",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQPoAjuQvONu4LlNeDr0ctHcz21Z5i4BtCt6GzOCMCZNx2uEBP9Oht0f86PA-1ROVlJXMRA5SDCC0QII36u7cd162D4LkEY6oYIKSX8.mp4?_nc_cat=106&_nc_oc=Ado7fpQQKd6oLNBXsFaECRgCFhKOUPloJXd7rn7H1yvOkesim3Hz4sr-BRc8O0U3yQkXUnzO87bgQigtec5YPm77&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=k3ymYfqCMNcQ7kNvwEJ_mMG&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTgwMTAzMTg0Nzk3NzUyMiwiYXNzZXRfYWdlX2RheXMiOjQ4LCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6OCwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=e24f669a535631bd&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC81MjQ4RDEzMEMxMENEQzEzNkVEODM4MkIyOUQ2MUZCQ192aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyL0VDNDMxMjQ1Mjc1NUQ3M0Q2MkUxNTJGOEE1N0IzMDlCX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACbkiLn47IGzBhUCKAJDMywXQCDMzMzMzM0YEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=dKzSZ9NDg8kXj6KbfAZhVA&_nc_ss=7a22e&_nc_map=urlgen_bucketless&_nc_zt=28&oh=00_AQORqLBpOkl6w19mNExhT1ARNGKxKE-5zo9QxhY65BGfmw&oe=6AC0A6EF",
+    "video_duration": 8.4040002822876,
+    "like_count": 1896,
+    "owner_username": "quentin_aimarketing",
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 43,
+      "matched_keywords": []
+    },
+    "transcript": "",
+    "principles": [
+      {
+        "principle": "Dedicated 404 Error State Design",
+        "category": "layout",
+        "rule": "Provide a fully styled, custom 404 error page complete with navigation pathways back to primary site sections rather than falling back to unstyled server defaults.",
+        "why": "Prevents user disorientation and abandonment when encountering broken URLs or deprecated links by offering immediate re-engagement options.",
+        "example": "Before: Browser default white screen with 'Server Not Found'. After: A branded illustration, search bar, and direct links to Home, Pricing, and Support.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "quentin_aimarketing",
+            "date": "2026-08-14",
+            "url": "https://www.instagram.com/p/DcBqrPsR6BB/"
+          }
+        ]
+      }
+    ],
+    "extraction_metadata": {
+      "method": "llm_batch",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 1
+    }
+  },
+  {
+    "post_id": "3963972325044080028",
+    "shortcode": "DcC29Pdu02c",
+    "url": "https://www.instagram.com/p/DcC29Pdu02c/",
+    "date": "2026-08-15",
+    "caption": "Did I miss anything here?\n\n#ai #vibecoding #buildinpublic #claude #appsecurity",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQPEQjT9MJFKaMaBMuNZKpbIAX2jEOV1HYbHuNOyZuXp5oJ5fbj95M8lvIhqy67aymMbuXgsk7DczcQVgtIZNfBC4s29IrcsHqGx5ho.mp4?_nc_cat=105&_nc_oc=Adp_PGAISF1yBsC0jUHw-1YLtoALu2NyN7i58NryLZwSw2f7cPRcXt5uReipNa7xHaDGI3njRZ5iOolcgh8A4m9N&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=JCGSKs7ApRQQ7kNvwHNbI6Y&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MjE2MDU3NDM0NDg2ODI0NiwiYXNzZXRfYWdlX2RheXMiOjQ3LCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6MjQsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=c755db32e98d4e1c&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC9FQzQ1QjIzQTAyMUMxMUU3NjNFMjVFNUU0NDQwOTc5OF92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzlCNENENjhGMjdFRUQyN0YxNTRGNEJENzRGMzJCODk4X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACasxrGl_cHWBxUCKAJDMywXQDjEGJN0vGoYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=dKzSZ9NDg8kXj6KbfAZhVA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_ss=7a22e&oh=00_AQMWcb10_inxxIGguWnOK5Xw8wbyy4LpB2PRtVNKtCaFRA&oe=6AC0AB4E",
+    "video_duration": 24.774000167847,
+    "like_count": 1502,
+    "owner_username": "millee.md",
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 10,
+      "matched_keywords": []
+    },
+    "transcript": "Hide API key, purge get secret, use public database key, enable RLS, encrypt sensitive  data, enforce server-side auth, lock record access, block field tampering, secure session  cookies, hash passwords, rate limit login, add bot protection, parameterize queries,  validate all input, escape user content, restrict field uploads, trim API responses,  add security headers, force HTTPS scan dependencies.",
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm_batch",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3963817986500087847",
+    "shortcode": "DcCT3UfpFAn",
+    "url": "https://www.instagram.com/p/DcCT3UfpFAn/",
+    "date": "2026-08-14",
+    "caption": "Am I missing anything this time?\n\nP.S. This doesn’t replace a proper pen-test!\n\n#ai #claude #vibecoding #appsecurity #app",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQPQklwkHGEagcB4rejuwBZ6fWkGetXFV3OaRlj9FFs-ArbZJ4w9vDSofrKD0qFPN-3E1VdYUCLcR9jixL4Vsn1DmgPybph9sRT8hro.mp4?_nc_cat=106&_nc_oc=Adqh4VID264mwqEybohGolNByKV7PyQcc1YONy4EHlmWl6NttOo6mxcSDUB3E-IB1AxDl9IZfFj0LRJDYk64rys3&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=s7_Ed8ZITR8Q7kNvwHwe8yI&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTU3NTUwOTQ5NDAyMTA3NywiYXNzZXRfYWdlX2RheXMiOjQ3LCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6MjYsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=2c42f4e4e347b916&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC84MjQwMEI4MzA4OTFEQzY3NTlDRDc0QjlDMDkyMDNBQV92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyL0UzNEQ4RjNGMDkzMDI1RDg5QkVDNTIzMDIxNTg1REJGX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACaq79m73LrMBRUCKAJDMywXQDqAAAAAAAAYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=dKzSZ9NDg8kXj6KbfAZhVA&_nc_ss=7a22e&_nc_map=urlgen_bucketless&_nc_zt=28&oh=00_AQMpZAYkAKq3-u3cEXsQk7I0WpsUCNqmJfsZARmEs3v1nA&oe=6AC0867F",
+    "video_duration": 26.514999389648,
+    "like_count": 2735,
+    "owner_username": "millee.md",
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 21,
+      "matched_keywords": []
+    },
+    "transcript": "Add HSTS, add CSRF tokens, reset sessions on password change, expire reset links, prevent user  enumeration, whitelist upload types, verify payment webhooks, set prices service site,  block prompt injection, cap AI usage, limit request size, rate limit password resets, sanitize  before storing, lock down cores, disable directory listing, remove default admin routes,  lock accounts after failed logins, log security events, set secure cookies, restrict database  permissions.",
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm_batch",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3964396318457627702",
+    "shortcode": "DcEXXKGiIQ2",
+    "url": "https://www.instagram.com/p/DcEXXKGiIQ2/",
+    "date": "2026-08-15",
+    "caption": "Top 10 non negotiable things to add to your site after you launch it. #claude #website #ecommerce",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t16/f2/m84/AQMP2mMXK7aNUvwVHI6zu3xP7Lm31J9DJNLYUncbgXzsVQH54rCFaDQ2rAnS54JFPxFslpaDw2c3u_IcbO-d8GNymdiT6AqXE0TrzJc.mp4?_nc_cat=111&_nc_oc=AdofbFSWuPqKgZ1qqSVzjg9H9G-q24ULqxL36Do7px5uUzOt1TwUlLv6h9yVTJgH9pgA_qjTOzSg2I3nuvu-bnYL&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=8bh4VlORDC4Q7kNvwGkZPhE&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTM4MTY3MzI2Mzk0MDI5MywiYXNzZXRfYWdlX2RheXMiOjQ3LCJ2aV91c2VjYXNlX2lkIjoxMDgyNywiZHVyYXRpb25fcyI6MjMsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=2a418a3c848fff5c&_nc_vs=HBksFQIYTGlnX2JhY2tmaWxsX3RpbWVsaW5lX3ZvZC9GMTQ0MzY4QjVBQTAzRjE0NjY1NkVDNDkxODVFRjFCRF92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzJGNEU1N0E4NDRGMEI1NjBBMUM1NzFDNkIzOTA0RkJDX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACaKi76B_Kf0BBUCKAJDMywXQDd3S8an754YEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZZapAQA&_nc_gid=dKzSZ9NDg8kXj6KbfAZhVA&_nc_ss=7a22e&_nc_map=urlgen_bucketless&_nc_zt=28&oh=00_AQMOueVGYePwtaFFk5AwxBCqNNT4HAe9kHV1hth8UmYd4w&oe=6AC07FB5",
+    "video_duration": 23.465999603271,
+    "like_count": 1338,
+    "owner_username": "theecommguy",
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 17,
+      "matched_keywords": []
+    },
+    "transcript": "Top 10 non-negotiable items you have to have on your website after you launch it.  Make sure you set up Google Search Console, test your website speed, ensure conversion  tracking is set up for your ads, compress all your images, install GA4, make sure you  set up email capture, collect product reviews, find a great heatmap tool, and get an AB  testing platform.  If you want the 10th one, comment bonus and I'll send it over.",
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm_batch",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3966133156805801793",
+    "shortcode": "DcKiRe3TvdB",
+    "url": "https://www.instagram.com/p/DcKiRe3TvdB/",
+    "date": "2026-08-18",
+    "caption": "20 things to tell Claude to fix on your vibecoded website (in 27 seconds)\n\n#vibecoding #vibecode",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t16/f2/m84/AQMgF12cRjsFS4sahFDvjJK3OHNDBJTPOCVBx67dbV0HBn-SdpnomPQIZeVS7lWyk9UpRokov9y3zr8JzTFJk2yUlyW62O2-ongTwd4.mp4?_nc_cat=111&_nc_oc=AdqDXHeGyvTCHmGC0TDoOifrh3_LiAAw8AqH64_CR9F6pkINe3Kw_cpmH09vF8FxavEGucCfqB_tzcnBXm7Q6sb9&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=BdrXxUdEQwkQ7kNvwG8v7wt&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MjExMjY3NTc0Mjk1NTU3MiwiYXNzZXRfYWdlX2RheXMiOjQ0LCJ2aV91c2VjYXNlX2lkIjoxMDgyNywiZHVyYXRpb25fcyI6MjYsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=ed7310d4eeae6fac&_nc_vs=HBksFQIYTGlnX2JhY2tmaWxsX3RpbWVsaW5lX3ZvZC8zOTQ3ODFBREUwMDFDQTZCNkZGNDgzQUE1RTU2QkFBRl92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzY0NDY3RERDNTE2MUM4MzY3MkU4NTAxRTk0NjFDN0FDX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACbo4Pny9N3ABxUCKAJDMywXQDr3S8an754YEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZZapAQA&_nc_gid=yLv_lEIO2I2x4DCbOPHYcg&_nc_ss=7a22e&_nc_map=urlgen_bucketless&_nc_zt=28&oh=00_AQP8wnAnEtQNwfI1YjXr_CQWQ2Wh3169hBuU8cZO45Wsqw&oe=6AC080FD",
+    "video_duration": 26.979999542236,
+    "like_count": 3128,
+    "owner_username": "yatesvids",
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 16,
+      "matched_keywords": []
+    },
+    "transcript": "Remove horizontal scrolling, find broken links at a mobile menu, at a Favicon, fix page titles,  add meta descriptions, fix footer links, add a custom 404 page, fix the copyright year,  compress images, fix broken buttons, add success messages and add error messages,  remove placeholder text, remove unused navigation, fix mobile overflow, make the logo clickable,  make the phone number clickable, make the email clickable and every page to be mobile optimized.",
+    "principles": [
+      {
+        "principle": "Interactive Contact Triggers",
+        "category": "accessibility",
+        "rule": "Convert text-based phone numbers and email addresses into active tel: and mailto: hyperlinks to enable direct device action.",
+        "why": "Reduces user friction by eliminating the need to manually copy and paste contact details into external applications on mobile devices.",
+        "example": "Before: <span>Call us at 555-0199</span>\nAfter: <a href=\"tel:5550199\">Call us at 555-0199</a>",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "yatesvids",
+            "date": "2026-08-18",
+            "url": "https://www.instagram.com/p/DcKiRe3TvdB/"
+          }
+        ]
+      },
+      {
+        "principle": "Form Submission Feedback States",
+        "category": "hierarchy",
+        "rule": "Provide explicit, visible success and error messaging components immediately following user form interactions.",
+        "why": "Prevents user confusion and uncertainty by confirming system status or clearly highlighting required corrections.",
+        "example": "Before: Form clears silently on error.\nAfter: Inline red error alert displays above the submit button stating 'Please enter a valid email address.'",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "yatesvids",
+            "date": "2026-08-18",
+            "url": "https://www.instagram.com/p/DcKiRe3TvdB/"
+          }
+        ]
+      }
+    ],
+    "extraction_metadata": {
+      "method": "llm_batch",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 2
+    }
+  },
+  {
+    "post_id": "3964176678724717073",
+    "shortcode": "DcDla-qRkoR",
+    "url": "https://www.instagram.com/p/DcDla-qRkoR/",
+    "date": "2026-08-15",
+    "caption": "Comment “checks” for the resource doc.\n\nPromise I’m not held hostage.\n\nFormat inspired by my boy @yatesvids \n\n#ai #founder #viral #security #solofounder",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t16/f2/m84/AQOMXncmKQrM5eFOzLiWTWR_HI4rgNFCdeQrbD_yR3xdLujMfVGPyByMxK_MhILYexlorOD--wvBl31kRSYJgh2SHJgyWcF-oFdhj0s.mp4?_nc_cat=102&_nc_oc=AdohErHnQTOo10Y5cRO5nll6r_6jPKk0CZ1wJIFZr089ayIjjvxB6Bt_5CN8WE0Ghvc-x3vDKEixCIfOiMUXYbIG&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=-ijsYBO3ceUQ7kNvwHEMG7n&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTc3OTg3MjE5MzQzODIxOCwiYXNzZXRfYWdlX2RheXMiOjQ3LCJ2aV91c2VjYXNlX2lkIjoxMDgyNywiZHVyYXRpb25fcyI6MzUsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=6a55abe0df47c8d4&_nc_vs=HBksFQIYTGlnX2JhY2tmaWxsX3RpbWVsaW5lX3ZvZC84OTQyNEQ1QUY0MDBDM0I2OTUzRDVCNjNDRjUyQThCRF92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzVGNEY0OEMxMEIxOTkwNzAwNEU0QTFBMDM1QTY4M0IwX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACaUiK-dmbKpBhUCKAJDMywXQEHIcrAgxJwYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZZapAQA&_nc_gid=yLv_lEIO2I2x4DCbOPHYcg&_nc_ss=7a22e&_nc_map=urlgen_bucketless&_nc_zt=28&oh=00_AQP7AbxPBqXDsaU3Uwf_DEfKwUIhAeFfplQRMWkAeclbnw&oe=6AC086BE",
+    "video_duration": 35.570999145508,
+    "like_count": 1534,
+    "owner_username": "byarnieverma",
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 23,
+      "matched_keywords": []
+    },
+    "transcript": "exposed database credentials, public.env files,  hard-coded API keys or secrets,  weak or missing authentication, missing server-side ortho checks,  users able to access other users' data,  open or overly permissive database read and write permissions,  misconfigured Firebase, SuperBase S3 or storage buckets,  admin routes left unprotected,  debug pages or developer tools exposed in prod,  build logs leaking secrets,  but both error messages leaking stack traces  or internal details,  secrets or sensitive data committed to get or get history,  secrets involved in front-end JavaScript,  client-side-only security checks,  missing input validation, SQL injection, no SQL injection.",
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm_batch",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3964479918582613647",
+    "shortcode": "DcEqXsySUaP",
+    "url": "https://www.instagram.com/p/DcEqXsySUaP/",
+    "date": "2026-08-30",
+    "caption": "SAVE this checklist 🔖 + SHARE it with someone building a website!\n\nYour AI/vibe-coded website may look finished…\nbut looking finished ≠ being launch-ready. 👀\n\nBefore you hit Publish, check these 20 things:\n\n1️⃣ Custom 404 page\n2️⃣ CTA above the fold\n3️⃣ Meta title for every page\n4️⃣ Meta description for every page\n5️⃣ Open Graph image\n6️⃣ Favicon\n7️⃣ robots.txt\n8️⃣ sitemap.xml\n9️⃣ Alt text on every image\n🔟 Mobile breakpoints\n1️⃣1️⃣ Sticky mobile CTA\n1️⃣2️⃣ Loading states\n1️⃣3️⃣ Form error states\n1️⃣4️⃣ Thank-you page\n1️⃣5️⃣ Privacy policy\n1️⃣6️⃣ Terms & conditions\n1️⃣7️⃣ Cookie banner\n1️⃣8️⃣ Analytics installed\n1️⃣9️⃣ Real contact information\n2️⃣0️⃣ Compressed images\n\nThe website can be AI-generated in minutes.\n\nMaking it feel like a real, trustworthy product is where the work begins. ⚡\n\n💬 Comment “LAUNCH” and I’ll share the full checklist.\n\nFollow @techbypriyanka for practical AI, tech & career content.\n\n#AI #AIAutomation #VibeCoding #WebDevelopment #AITools BuildInPublic WebDesign ProductDevelopment StartupTips TechTips AIForDevelopers SoftwareDevelopment DigitalProduct WebsiteTips ArtificialIntelligence",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t16/f2/m84/AQNLuZ_5pjQx_Ugi6qFI1dyhCmRk8eW2b25b094szRY9-uzz_KZP08m5uYrZ0NWJmgfVHEvpjoBjx-uCK3Fac88LoUbqYHO_f9ggakw.mp4?_nc_cat=104&_nc_oc=AdrpTSznhPl_24UZmQHmW7w2S65sZRnnJZoXcTn4xIoPcduCDGZsM3IqsyVhlp7iTmUfUQW7lR6GyWBTV-qtrecU&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=Ob72VeyWd6IQ7kNvwE0BZQA&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTg4MDk2NTg1MzI4NjM4NywiYXNzZXRfYWdlX2RheXMiOjQ3LCJ2aV91c2VjYXNlX2lkIjoxMDgyNywiZHVyYXRpb25fcyI6OSwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=7d4c0c7f444be47e&_nc_vs=HBksFQIYTGlnX2JhY2tmaWxsX3RpbWVsaW5lX3ZvZC84NzQ5QjE0ODhGNkJENjYzMTk4RDhFOTRCQjEwNUVBRV92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyL0IxNDA5NjE3ODBCQTNGMDRGNkY1OTkzQzY5NTI1QThDX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACbmv6jYz67XBhUCKAJDMywXQCMQ5WBBiTcYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZZapAQA&_nc_gid=yLv_lEIO2I2x4DCbOPHYcg&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_ss=7a22e&oh=00_AQMgq3EMsr5jrB8A7OPFRaZyUAIIov7Q-d0QD513l6ZL2w&oe=6AC0B2A8",
+    "video_duration": 9.5329999923706,
+    "like_count": 1713,
+    "owner_username": "techbypriyanka",
+    "classification": {
+      "path": "caption",
+      "reason": "Detailed caption (170 words) with design keywords: cta",
+      "word_count": 170,
+      "matched_keywords": [
+        "cta"
+      ]
+    },
+    "principles": [
+      {
+        "principle": "Above-the-Fold Primary Call to Action",
+        "category": "layout",
+        "rule": "Position the primary conversion action within the initial viewport so it is visible without requiring vertical scrolling.",
+        "why": "Maximizes conversion potential by capturing immediate user intent before they scroll past the hero section.",
+        "example": "Before: CTA placed at the bottom of a long landing page hero.\nAfter: Primary 'Get Started' button anchored directly beside the main hero headline inside the 100vh container.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "techbypriyanka",
+            "date": "2026-08-30",
+            "url": "https://www.instagram.com/p/DcEqXsySUaP/"
+          }
+        ]
+      },
+      {
+        "principle": "Persistent Mobile Conversion Anchor",
+        "category": "layout",
+        "rule": "Implement a sticky bottom bar housing the primary conversion action on mobile viewports.",
+        "why": "Keeps the primary conversion goal accessible at all times on small screens, preventing the user from needing to scroll back up to convert.",
+        "example": "Before: Static CTA that scrolls away with the content.\nAfter: position: fixed; bottom: 0; width: 100%; z-index: 100; container holding a full-width purchase button.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "techbypriyanka",
+            "date": "2026-08-30",
+            "url": "https://www.instagram.com/p/DcEqXsySUaP/"
+          }
+        ]
+      }
+    ],
+    "extraction_metadata": {
+      "method": "llm_batch",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 2
+    }
+  },
+  {
+    "post_id": "3851275105683486304",
+    "shortcode": "DVyek2-kbZg",
+    "url": "https://www.instagram.com/p/DVyek2-kbZg/",
+    "date": "2026-03-12",
+    "caption": "Comment “website” and I’ll send you the prompts \n\n(Obviously ai isn’t conscious that’s just me being clickbate lol)\n\n#vibecoding #ai",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQM1YLRR6X8ExJPKlBf3sOZQOiqXOSxByplWJ7Oxw3urvcdXWibf0-Fe5aC_WNc0pKvvatT4UFsIbD6gL3W3Ks9-PWo4DkymXHzhYEM.mp4?_nc_cat=101&_nc_oc=AdrVSI6ahlu7rIwwfMgFM4tYgnBeUT8-2nfcA3xEvzxLvQcSZ-91TVQYt4VxgdF1-k0g9HwiSeA_vFyTxc-rYLxZ&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=NdISOvmEzX0Q7kNvwEo9l-K&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTc4NzUwNjM4MjQ1NDY1NzEsImFzc2V0X2FnZV9kYXlzIjoyMDMsInZpX3VzZWNhc2VfaWQiOjEwODI3LCJkdXJhdGlvbl9zIjo0NywidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=7636c6307dac9585&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC8xOTQ5NjQyMUEzQzFDRDNEOEMxM0YxNUUyRTczMUQ5Q192aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzExNEE5RTgyMDEyODI1RDMyNDFDRjE1NzBBMzNFOUFGX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACaW7MvZ09HAPxUCKAJDMywXQEeu2RaHKwIYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZZapAQA&_nc_gid=yLv_lEIO2I2x4DCbOPHYcg&_nc_ss=7a22e&_nc_map=urlgen_bucketless&_nc_zt=28&oh=00_AQMl8tYF9dR2p5DbA3QFg_p795wn_nVY0yAOfWlEyIxiTw&oe=6AC0A766",
+    "video_duration": 47.367000579834,
+    "like_count": 13014,
+    "owner_username": "angus.sewell",
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 23,
+      "matched_keywords": []
+    },
+    "transcript": "You know it's crazy if you vibe coded your landing page you can low-key give it a consciousness now to this website right here  That's gonna look kind of scary, but do not fret my friend use any analytic software dude  This one's just free now go to your landing page give Claude code this prompt or whatever you use to vibe coded  It does not matter Claude code will literally figure it out have faith my friend. It's done  Give it this prompt is now officially analytics time final prompt here  This will create an ab split test version of your landing page go to the connectors section and claw find  Posthog now go say some shit like Claude go tell me where people are leaving my website  Which version of my landing page is working less badly now if you're feeling super diabolical  You could set up a Claude project with this prop Claude update my landing page based on all the analytics of my website  Yeah, but I can't wait to be unemployed with you my guy",
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm_batch",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3969612207050278529",
+    "shortcode": "DcW5UU5SUaB",
+    "url": "https://www.instagram.com/p/DcW5UU5SUaB/",
+    "date": "2026-08-22",
+    "caption": "If you find this useful please like and follow! Also let me know If there are any topics you’d like me to cover",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t16/f2/m84/AQOkQBa8v5tf8djDNeeYBlHHyXDmuvhB9dsJWYT3zVjLuZltx4KOBRfsrAEGtEoACAVKXP8ayV9hdEtA19ZA2q4GFdOeBB6f4oYXk6A.mp4?_nc_cat=111&_nc_oc=AdqGlZqLCkBIQC-LNaW9VqTbzP2Xx9-NgMIJM9dD9k5kIorAGbq2ZdsIavHlWuptLFTsMYkp3_bOcJkqRP6fdM31&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=ccKkWQMw1bMQ7kNvwGJRCPC&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTA5MDAyOTc3MDE1NjgzNiwiYXNzZXRfYWdlX2RheXMiOjM5LCJ2aV91c2VjYXNlX2lkIjoxMDgyNywiZHVyYXRpb25fcyI6NjYsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=8382ec04ec8be121&_nc_vs=HBksFQIYTGlnX2JhY2tmaWxsX3RpbWVsaW5lX3ZvZC9DRDRCNEEyMDQxNDAzNEJERTE5RjFENUE2M0M1REI4Rl92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzhGNERCOEREQUZDNTYyQkRERkE5ODczODgyMDA3RUFBX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACbIrPXTitjvAxUCKAJDMywXQFC7tkWhysEYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZZapAQA&_nc_gid=yLv_lEIO2I2x4DCbOPHYcg&_nc_ss=7a22e&_nc_map=urlgen_bucketless&_nc_zt=28&oh=00_AQNc-V0E2RRgDVFTzwZUxxv6dhBoXKxa-S7PYkEUQiTl3A&oe=6AC095B1",
+    "video_duration": 66.94100189209,
+    "like_count": 920,
+    "owner_username": "ayoships",
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 24,
+      "matched_keywords": []
+    },
+    "transcript": "So, your coding agent is probably doing these two things behind your back that are slowly  killing your app, and you can't see either of them.  I've published over 15 apps with AI, and these two things were caught in almost all of them.  The first one is likely why your app is laggy.  When setting up the server, your coding agent probably built the app to ask the server  for data every few seconds forever.  This is called polling.  This might feel fine during testing, but when users actually try the app, it'll  drain their battery and lower their framerate.  Nowadays, modern backends like SuperBase or Convex can actually push data directly to  your app when it changes.  So make sure your AI is not polling, but rather subscribing to events as they happen.  The second one can explain why your AI actually keeps going in circles and breaking things.  Every time you request a change, most AIs don't actually change it.  Rather, they create a version 2 on top of the broken version 1, just in case anybody  was using it.  This causes your app to be full of broken code that nobody was using anyway.  Now for your future prompts, the AI will get confused between which is the working  version and now go in circles and break things that seem to be working before.  To fix this, just tell it not to use fallbacks or backwards compatibility.  Just replace the old feature and make sure the new one works.  And if you're like me and you're too lazy to type all of that, you can just send  this video to your AI and it'll figure it out.",
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm_batch",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3975844454128371932",
+    "shortcode": "DctCXdSh0jc",
+    "url": "https://www.instagram.com/p/DctCXdSh0jc/",
+    "date": "2026-08-31",
+    "caption": "Comment “REJECTED” to get the full app launch guide 👇🏻\n\nFollow @lincolndevine for more vibe coding advice 📈\n\n#vibecoding #solofounder #startupstories #buildwithai #aitips",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t16/f2/m84/AQPn8x9DWxaQWNYknhBCh7_fnuE71Q29zFmH4U2Ava9IifZQBOlrFqwa6FCsqw-TwxfLkznbaAIrU35wrewMKKYzveIbDMsGEEKj7UU.mp4?_nc_cat=102&_nc_oc=Ado22dfyk8srWZnxJzL-89sQnH3gEeqTC7NF_YT059CwH32EPJRkuOn8CdPXo1P4X5fWy934sHyCXlk7UrcXU4OC&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=m1ZbK_MKlkwQ7kNvwFRWTQ6&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTcwNDM5NzU1NzUyNTE4OSwiYXNzZXRfYWdlX2RheXMiOjMxLCJ2aV91c2VjYXNlX2lkIjoxMDgyNywiZHVyYXRpb25fcyI6NDQsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=3cec028b3a01516d&_nc_vs=HBksFQIYTGlnX2JhY2tmaWxsX3RpbWVsaW5lX3ZvZC8xMzRCMEExMDIxRTAzRjRERUIzOThFRkNFNDBBMDM5NF92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyL0I5NDBGMkRCN0ZFRDU2QTVCNkJENTJCMUM4RjQxNzgxX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACaKq8ev_4iHBhUCKAJDMywXQEZ7peNT988YEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZZapAQA&_nc_gid=yLv_lEIO2I2x4DCbOPHYcg&_nc_ss=7a22e&_nc_map=urlgen_bucketless&_nc_zt=28&oh=00_AQNdppirGuNYJDTVDrcRPebnJEhsKUCeodVbBkcLxqbxpQ&oe=6AC0AB7A",
+    "video_duration": 44.974998474121,
+    "like_count": 2209,
+    "owner_username": "lincolndevine",
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 21,
+      "matched_keywords": []
+    },
+    "transcript": "Last year, Apple rejected 1.2 million app store submissions.  Here are the top five reasons yours got sent back.  First reason is that you basically vibe coded a website  and then put it into a wrapper.  Apple can tell.  Second reason is that you built a beautiful signup flow  but you didn't build a way to delete an account  and it has to be done inside the app.  Third reason is that you may be collecting data  that you don't know about  and you're required to disclose.  Things like crash reporting, analytics, ad delivery.  Fourth is that your app icon matches an icon  associated with an in-app purchase.  It's a weird one but they look for this.  Last, you don't have the EULA or the end user  license agreement link in the app description.  Super easy one to miss.  Follow and leave a comment rejected  if you want the full app store launch guide.",
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm_batch",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3975269199414323984",
+    "shortcode": "Dcq_kZlpGsQ",
+    "url": "https://www.instagram.com/p/Dcq_kZlpGsQ/",
+    "date": "2026-09-10",
+    "caption": "Comment “Sued” for the full guide 🤝\n#ai #claudecode #appdevelopment #vibecoding",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t16/f2/m84/AQMP6ylBTxWleyfoVVrnWN4_07bOM6Y_Bvj-m88Oy61Sf0Qx7hiY6w2iT-Bugv2eGgXtpUTJbP_Pyh9_CpFxd4YFLVnLC6AZlhb7nMI.mp4?_nc_cat=111&_nc_oc=Adrt2KJZgB3H_AA52vMyb8G4oSnfsK2FXtsLJ6tNSkcPjOoniRQ_DSsVuPXtv_w4gHJyHO_KCW0LoL_RTU_wOTDx&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=squTx1K90YEQ7kNvwGxpjW2&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MjE3OTM0OTkyNTk2MDg5MiwiYXNzZXRfYWdlX2RheXMiOjMyLCJ2aV91c2VjYXNlX2lkIjoxMDgyNywiZHVyYXRpb25fcyI6NDcsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=ee2d23a50421a3cc&_nc_vs=HBksFQIYTGlnX2JhY2tmaWxsX3RpbWVsaW5lX3ZvZC9BOTQ1MTVDRUEwNkQ1MTExNEEzNzM3MjlFM0JCQzU5QV92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyL0UxNEIzNDZCQUFEOTBBNTQ0QTVEMzUwRjc2Mzk0QkE3X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACb48uyi7obfBxUCKAJDMywXQEeVP3ztkWgYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZZapAQA&_nc_gid=yLv_lEIO2I2x4DCbOPHYcg&_nc_ss=7a22e&_nc_map=urlgen_bucketless&_nc_zt=28&oh=00_AQM-aExA9dVe-PkazRYmhNWamzrbx-QELP-XqpMkbVssPw&oe=6AC0B051",
+    "video_duration": 47.180999755859,
+    "like_count": 1742,
+    "owner_username": "murphmaxxing",
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 10,
+      "matched_keywords": []
+    },
+    "transcript": "10 ways your shitty vibe coded app is getting sued but they get progressively more niche.  No privacy policy at all, $2,500 per user.  Privacy policy doesn't say you collect user data, $8,000 per user.  Privacy policy doesn't say you use AI, $8,000 per user.  Privacy policy doesn't name third parties you send data to, $8,000 per user.  Uploads you promise to delete are still in storage, $750 per user.  Storage buckets set to public, $750 per user.  Fake testimonials on your website, $53,000 per review.  Canceling subscription takes more clicks than signing up, $53,000 per violation.  Free trial auto charges with no reminder, every single dollar refunded.  AI chatbot has no self-harm response, $1,000 per violation.  Comment sued to get sent over my full guide on how to fix all of this using chat  to your clod so your ass doesn't get sued to the ground.",
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm_batch",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3976838443715648403",
+    "shortcode": "DcwkX6OyduT",
+    "url": "https://www.instagram.com/p/DcwkX6OyduT/",
+    "date": "2026-09-02",
+    "caption": "Comment “UX” and follow for md instructions to give to Claude #startup #marketing #claude",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t16/f2/m84/AQOUXGKWLg236K1plfZuFwS5aOVRZFBDqNCr1ztg_eNVwMn7CRgpuELeAQ4yUT6uuHyF5y4_0K-04OaT-TrsxqmQRF_obQcBovqZHBg.mp4?_nc_cat=109&_nc_oc=AdrckYOpDRLr8M_0Kr4C4Z3kt0zyFTKqtZLIhyScRhXzmntDFTMi4HTyqqVRApvHtHIjZnnRqsPxVFd1bDgXPpah&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=JiHNh7kVxZ4Q7kNvwGbtTFB&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTI0Mzk4MjM2NDUzMDQyNCwiYXNzZXRfYWdlX2RheXMiOjI5LCJ2aV91c2VjYXNlX2lkIjoxMDgyNywiZHVyYXRpb25fcyI6MzEsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=a38cef45ee3ba0e5&_nc_vs=HBksFQIYTGlnX2JhY2tmaWxsX3RpbWVsaW5lX3ZvZC83QTRBQzdDMzA1NzcyMEQyMzMxODcyOEY0NjAxODE5Nl92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzcwNEEwOUY2QjEyMzBCODMzNjkxNTMzNDI5OUI5MkJFX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACbw247vptm1BBUCKAJDMywXQD-qfvnbItEYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZZapAQA&_nc_gid=yLv_lEIO2I2x4DCbOPHYcg&_nc_ss=7a22e&_nc_map=urlgen_bucketless&_nc_zt=28&oh=00_AQPklOqLzSgUuL1ijnt5Q5Ru_8AvKHraRwBcWGWwneuong&oe=6AC09AB3",
+    "video_duration": 31.670000076294,
+    "like_count": 6211,
+    "owner_username": "adam_ha_yes",
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 14,
+      "matched_keywords": [
+        "ux"
+      ]
+    },
+    "transcript": "Reduce choices per screen. Make targets large. Follow familiar patterns.  Group related information. Break content into chunks.  Interactions within 400 milliseconds. Highlight the primary action.  Place key actions nearby. Put essentials first.  End flows memorably. Show visible progress. Simplify complex interfaces.  Use sensible defaults. Prevent errors proactively.  Make errors recoverable. Maintain pattern consistency.  Connect related elements visually. Reduce task completion time.  Reveal complexity gradually. Make completion feel closer.",
+    "principles": [
+      {
+        "principle": "Low-Latency Interface Interaction Response",
+        "category": "motion",
+        "rule": "Ensure all interactive UI feedback and state changes execute within 400 milliseconds.",
+        "why": "Faster response times keep users feeling in control and prevent the application from feeling sluggish or unresponsive.",
+        "example": "Button press triggers an immediate loading spinner or state change within 200ms rather than a delayed network block.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "adam_ha_yes",
+            "date": "2026-09-02",
+            "url": "https://www.instagram.com/p/DcwkX6OyduT/"
+          }
+        ]
+      }
+    ],
+    "extraction_metadata": {
+      "method": "llm_batch",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 1
+    }
+  },
+  {
+    "post_id": "3977917742707495228",
+    "shortcode": "Dc0ZxxvzdE8",
+    "url": "https://www.instagram.com/p/Dc0ZxxvzdE8/",
+    "date": "2026-09-03",
+    "caption": "Most people consume AI content.\n\nI build with AI every single day and share exactly what works, what doesn’t, and what will actually make you money.\n\nIf you’re serious about AI agents, automation, Claude, n8n, and building real products instead of chasing hype, you’re in the right place.\n\nFollow for practical AI content you can implement today, not “10 AI tools” lists tomorrow.",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t16/f2/m84/AQNjYXyq90v8Riide-ZyX8or1Ugq7VeVp3KXafsnBA9BIGP5t2DdQjAmMHCguCah4xNdiGAoBqgPcINMdOiOp-ghL-ANNGyh_JqoA9M.mp4?_nc_cat=110&_nc_oc=AdqDppAoHTn06F9d2J4m_Jd73pEh_-bHkP2LsnDtL4LN-shlDoELV-rdsXsM9u-1Uc4k83OnEqPlnLbYX2QArS_2&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=lBH_jdJDaOkQ7kNvwEkrWzQ&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTQ4MDM0NjY4NDEyMDE4NywiYXNzZXRfYWdlX2RheXMiOjI4LCJ2aV91c2VjYXNlX2lkIjoxMDgyNywiZHVyYXRpb25fcyI6NiwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=263da4520f12c540&_nc_vs=HBksFQIYTGlnX2JhY2tmaWxsX3RpbWVsaW5lX3ZvZC9CNTQwMUFFMzgxRjYyMzhFMzU0QjUyRTYzQzRFNUZCN192aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzUxNDg1NEE5MDc4QzU5NDFCQjRDQjI5RTRFQ0E1MTkzX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACb28YKkwpehBRUCKAJDMywXQBu7ZFocrAgYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZZapAQA&_nc_gid=yLv_lEIO2I2x4DCbOPHYcg&_nc_ss=7a22e&_nc_map=urlgen_bucketless&_nc_zt=28&oh=00_AQMUofjoAMYWE5G_crfqQIk0PYq0KxaemL6UnZvuijWVAg&oe=6AC0974E",
+    "video_duration": 6.9409999847412,
+    "like_count": 3197,
+    "owner_username": "shubhamnalingupta",
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 66,
+      "matched_keywords": []
+    },
+    "transcript": "مرزا نامی",
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3982366412837637191",
+    "shortcode": "DdENScqokxH",
+    "url": "https://www.instagram.com/p/DdENScqokxH/",
+    "date": "2026-09-09",
+    "caption": "20 hidden signs a website was vibecoded\n\n1. vercel.app url\n2. no 404 page \n3. no meta description\n4. no favicon\n5. massive JS bundles\n...and 15 more\n\nReal devs don't ship like this.\nAI is a tool. Fundamentals matter.\n\nSave this QA checklist\nComment \"CHECKLIST\" for my audit template\n\n#ayeshaappdev #webdevelopment #codingreels #frontenddeveloper #TechTipsPK",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t16/f2/m84/AQOEXBhCoP2MRaYpBkyia9kOOly6XTcCB91DIMNBS3XsavV3gz0QJ2ojDftSimeDT_gloZW4w75kcQ0hjiFMqE9_KD4dNmZ0E5KheCY.mp4?_nc_cat=105&_nc_oc=AdrDxOzFhSvhpfi-3MTRAw2hSzsaKz9umnJMW2sn1hWsmPLL1Qt8FpUu29mZR9Wh3KQPiKtHYPpgH1x0MkEi8OTh&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=J3eNqgUm36AQ7kNvwFFzz1x&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MjA3MzAyMzgyNjY1NjA5NiwiYXNzZXRfYWdlX2RheXMiOjIyLCJ2aV91c2VjYXNlX2lkIjoxMDgyNywiZHVyYXRpb25fcyI6NywidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=b781c66e4f9ae89e&_nc_vs=HBksFQIYTGlnX2JhY2tmaWxsX3RpbWVsaW5lX3ZvZC82QjRFRDZFNjY2NTJFMjNEMTAxM0RBQTA4NDAyQkFCOV92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzI4NEI4MUREMEM2QkEzQ0IxMUUwMkM2M0M2OEZDNkJGX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACbA7eOM79muBxUCKAJDMywXQBxmZmZmZmYYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZZapAQA&_nc_gid=yLv_lEIO2I2x4DCbOPHYcg&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_ss=7a22e&oh=00_AQPQuFrM6lhpO_RTZ9japcY0fu-J4N4mkfFfymbeihZhrw&oe=6AC07F03",
+    "video_duration": 7.173999786377,
+    "like_count": 541,
+    "owner_username": "ayesha.appdev",
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 57,
+      "matched_keywords": []
+    },
+    "transcript": "You're a skunk, you're a skunk, you're a skunk",
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm_batch",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3985640747834723411",
+    "shortcode": "DdP1ySxAsxT",
+    "url": "https://www.instagram.com/p/DdP1ySxAsxT/",
+    "date": "2026-09-14",
+    "caption": "Vibe-coding is all fun and games until you have actual user data running. Claude does not optimize for scale out of the box. Especially when using tools like Supabase, speed is a critical element to prompt around.\n\n#claudecode #grokbot #vibecoding #codex #cursor",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQNSghrrcwTpBZGNNW9qch_j2K6yDKJZSn52N9_jDRHtIHuhtdG1qtGFd99R4EIIs6geGii6ttlEhfs3Kc1K1AXUCeygSxTswtAdERE.mp4?_nc_cat=111&_nc_oc=AdrQK9Y79cWISUGBVMJ4pGCRStOJjz6b19ygon4nlKsXBGRINFzle2GcTqbSaSJ9urkWjBQPNlrrgbiyrUpxAorh&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=7NLqjONAsZ8Q7kNvwFxN6cE&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTAzNTQzMDI1MjgzNjIzMywiYXNzZXRfYWdlX2RheXMiOjE3LCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6MzIsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=3360b2782a5ac392&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC85RTRGRjAwQjJCNDM1NEVBMTA5OTJCOTA1OTE2MTRCMF92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyL0E3NDA3OTlCRTBFMUY5RjQ1NDJGRkIxRDAzRjZBNTkwX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACaS1sfG_O3WAxUCKAJDMywXQEBzMzMzMzMYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=yLv_lEIO2I2x4DCbOPHYcg&_nc_ss=7a22e&_nc_map=urlgen_bucketless&_nc_zt=28&oh=00_AQMzrD-jgclrGxz7I8ZyCbvaZxscJhzXUHlC_WAbKj084g&oe=6AC08488",
+    "video_duration": 32.901000976562,
+    "like_count": 6821,
+    "owner_username": "joshtheaiguy",
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 43,
+      "matched_keywords": []
+    },
+    "transcript": "Hey Claude, my VibeCoded website is so slow. I need you to compress all images, add lazy loading,  split the code into chunks, cache API responses, add a CDN, minify JS and CSS, index the database,  reduce unnecessary rebenders, debounce input handlers, paginate large lists, remove unused  dependencies, defer non-critical scripts, add a loading skeleton, add a load balancer,  compress API payloads, add database connection pooling, cache expensive computed results,  fix nplus1 database queries, enable server-side caching and run a lighthouse audit. Make no mistakes.",
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm_batch",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3982630382095935950",
+    "shortcode": "DdFJTtMganO",
+    "url": "https://www.instagram.com/p/DdFJTtMganO/",
+    "date": "2026-09-09",
+    "caption": "Did I miss anything?",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQNUR0OLG-pZy8Tzt0NZi20AWlmxcGrLZXtYkOC4c5B5c-dKff40tv1Yp6dbOy1lH-0vtCMM9hJYUZllIoxPgPjoeDlpRR5gvKGQNqI.mp4?_nc_cat=104&_nc_oc=AdpQF4Dg5uuhjQ6HUkfMWW4DNB5GUWTQXgE7KwghBN8aiCI5b-0ZsN0gOAcQvArSrR5GId2YAIkVyHL5hIvxIU_S&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=W--R8o8mqpIQ7kNvwGUxa77&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6OTIwNDIxMDY0NDgwNzA1LCJhc3NldF9hZ2VfZGF5cyI6MjEsInZpX3VzZWNhc2VfaWQiOjEwMDk5LCJkdXJhdGlvbl9zIjoyNywidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=fa321d058599e17d&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC9CRDQ4OEQxRUQ4RjJEMTk4MEVBMkUxRjgxRTg3NTJCRl92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyL0Y2NDNDOTk1RkUwQTEwMDkxQTA5MUY5NkUzRDYzRjgzX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACaC37ypx8eiAxUCKAJDMywXQDvmZmZmZmYYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=yLv_lEIO2I2x4DCbOPHYcg&_nc_ss=7a22e&_nc_map=urlgen_bucketless&_nc_zt=28&oh=00_AQPnEp-u6P8ygnL8wHIRuCeoLzF8X-c3AiAtrX2xh68ZnQ&oe=6AC08B35",
+    "video_duration": 27.908000946045,
+    "like_count": 2636,
+    "owner_username": "millee.md",
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 4,
+      "matched_keywords": []
+    },
+    "transcript": "Add Privacy Policy page, add Terms and Conditions page, get your secrets off the front end,  force HTTPS, add a cookie consent banner, add meta titles and descriptions, add a social  preview image, add a favicon, generate a sitemap and robots.txt, add alt text to your images,  compress your images, check your page load speed, fix your color contrast, make it  mobile friendly, add a custom 404 page, fix any broken links, add form validation,  add band protection, set up analytics, add one clear color action, and follow me  for more.",
+    "principles": [
+      {
+        "principle": "Accessible Text Color Contrast",
+        "category": "accessibility",
+        "rule": "Ensure all text elements meet minimum contrast ratios against their background to support users with visual impairments.",
+        "why": "Sufficient contrast prevents eye strain and ensures content is legible for users with low vision or when viewing screens in bright sunlight.",
+        "example": "Change secondary gray text from #A0A0A0 to #595959 on a white background to achieve a 4.5:1 contrast ratio.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "millee.md",
+            "date": "2026-09-09",
+            "url": "https://www.instagram.com/p/DdFJTtMganO/"
+          }
+        ]
+      },
+      {
+        "principle": "Informative Image Alternative Text",
+        "category": "accessibility",
+        "rule": "Provide descriptive alt attributes for all meaningful images to support screen reader users.",
+        "why": "Screen readers rely on alt text to convey the content and function of images to users who cannot see them.",
+        "example": "Update `<img src=\"avatar.png\">` to `<img src=\"avatar.png\" alt=\"Profile portrait of Jane Doe\">`.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "millee.md",
+            "date": "2026-09-09",
+            "url": "https://www.instagram.com/p/DdFJTtMganO/"
+          }
+        ]
+      },
+      {
+        "principle": "Single Primary Call-to-Action",
+        "category": "hierarchy",
+        "rule": "Designate one dominant, high-contrast visual action per view to guide user conversion and minimize cognitive load.",
+        "why": "Multiple competing primary buttons cause decision fatigue and slow down user progression.",
+        "example": "Style the primary 'Create Account' action as a filled solid brand button while secondary 'Sign In' is styled as a low-emphasis ghost button.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "millee.md",
+            "date": "2026-09-09",
+            "url": "https://www.instagram.com/p/DdFJTtMganO/"
+          }
+        ]
+      }
+    ],
+    "extraction_metadata": {
+      "method": "llm_batch",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 3
+    }
+  },
+  {
+    "post_id": "3985832770114274046",
+    "shortcode": "DdQhclcxcL-",
+    "url": "https://www.instagram.com/p/DdQhclcxcL-/",
+    "date": "2026-09-15",
+    "caption": "Comment “Apple” for the full list 💬",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQPofimq0qDk6aO-Rh1jLl2obtgjvuSVSH0D-QBh1w07EXv-w1JHmHtpmbO5-OIlYpz_EnefdbPDKXOQQoBD_zV1r_9yckMaHa6p4Ak.mp4?_nc_cat=102&_nc_oc=AdoHnQjcxmY7uu-dQCaPOoKUwR7xB43xh1sK0xOMtRf7yP-NAXnJZibxseAZZRb-zgGdpD5bDISqyIJqcuZpg6gl&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=nzMEMlAfHWQQ7kNvwFrcHsQ&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTA2OTEyOTE0OTI0MTgxOSwiYXNzZXRfYWdlX2RheXMiOjE3LCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6MzQsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=ee3f3201091a3d44&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC84NjRFMzBBNkIwNUNDQTFDRjJERUZGRjY1NTExRkU5OF92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzA1NDY2QjQ5MEM5QjEzRUUyNjUyREU0N0EyM0ZDNkE4X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACa258bywJfmAxUCKAJDMywXQEFmZmZmZmYYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=nBbU7swuc_y6IrWf_4RGbA&_nc_ss=7a22e&_nc_map=urlgen_bucketless&_nc_zt=28&oh=00_AQNCfjRp8jwyvm9Q7CXfFplyn2nV2ST0YnqtqjAFOD42Zw&oe=6AC0A2CB",
+    "video_duration": 34.805000305176,
+    "like_count": 109,
+    "owner_username": "julianxuofficial",
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 6,
+      "matched_keywords": []
+    },
+    "transcript": "Add subtle haptics, use FA symbols, match native transitions, add swipe to dismiss, use  spring animations, add interactive gestures, use native sheets, smooth keyboard transitions,  use match transitions, add scroll linked motion, animate sheet presentation, animate stage  changes, add press feedback, add contest menus, use system materials, match native  navigation, animate loading states, respect safe areas, respect reduced motion, remove  web styled motion. Follow for more.",
+    "principles": [
+      {
+        "principle": "Physics-Based Spring Animations",
+        "category": "motion",
+        "rule": "Utilize spring physics curves instead of linear or basic ease-in-out transitions for UI state changes.",
+        "why": "Spring animations mimic natural real-world physics, making interfaces feel tactile, responsive, and organic.",
+        "example": "Apply a damping ratio of 0.8 and response time of 300ms to modal popups instead of a static linear fade.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "julianxuofficial",
+            "date": "2026-09-15",
+            "url": "https://www.instagram.com/p/DdQhclcxcL-/"
+          }
+        ]
+      },
+      {
+        "principle": "Reduced Motion Preference Compliance",
+        "category": "accessibility",
+        "rule": "Disable or substitute motion-heavy transitions when the operating system's reduced motion setting is enabled.",
+        "why": "Abrupt or scaling animations can trigger vestibular disorders, dizziness, or nausea for sensitive users.",
+        "example": "Wrap expansive zoom transitions in `@media (prefers-reduced-motion: no-preference)` queries.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "julianxuofficial",
+            "date": "2026-09-15",
+            "url": "https://www.instagram.com/p/DdQhclcxcL-/"
+          }
+        ]
+      },
+      {
+        "principle": "Immediate Interactive Press Feedback",
+        "category": "motion",
+        "rule": "Provide instantaneous visual and haptic feedback when a user touches or clicks an interactive surface.",
+        "why": "Instantaneous feedback confirms touch registration and reassures the user that their input is being processed.",
+        "example": "Scale a button down to 98% and trigger a light haptic pulse immediately upon touch down.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "julianxuofficial",
+            "date": "2026-09-15",
+            "url": "https://www.instagram.com/p/DdQhclcxcL-/"
+          }
+        ]
+      }
+    ],
+    "extraction_metadata": {
+      "method": "llm_batch",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 3
+    }
+  },
+  {
+    "post_id": "3911003339935009226",
+    "shortcode": "DZGrND4MUnK",
+    "url": "https://www.instagram.com/p/DZGrND4MUnK/",
+    "date": "2026-06-03",
+    "caption": "Everything changed when I stopped treating my life like something I had to survive and started approaching it like a problem to solve! \n\nThat’s when the freelance work came together and the exit finally came.\n\nIf you’re seeing this, take it as your sign to keep going :) \n\nFollow for the real, unfiltered journey of building a creative career on your own terms.\n\n[careergrowth, selfawareness, designthinking, personaldevelopment, mindsetshift, creativecareer]",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQNCuZGJii-evJa5aULxTfN1DVbrr-3icyBXypaktD8p_BJmniewwuL0ZAj_tvI77gnoO6jQM7EgkqPqyPDMdamPYgChc86tY7Q39k8.mp4?_nc_cat=106&_nc_oc=Adpz5CckTNYS203uY4Z4MsZCteasUgx9mXOjh_OLkYLHwb20gkiMCNYk_Nolbg-EEYaJpsg5bM8fPIDoRCGv24px&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=2uktp7PL6MEQ7kNvwHSbibx&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTYzNDkyMDMwNzcyMzI3NSwiYXNzZXRfYWdlX2RheXMiOjg0LCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6NDEsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=61fa5bdce8db6660&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC8yRjQ4NkI4RkNFM0U5MDlFRkZBMEZDQ0VEQjZERDFBMl92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzY4NDFGNkVCQjNFQTQzQUI1Q0M4RkJDQkIwODhGOEIxX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACaWsOzC8bznBRUCKAJDMywXQETZmZmZmZoYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=PCfOArHo5kExtP1jLgBjsw&_nc_zt=28&_nc_ss=7a22e&oh=00_AQGMkQgs9mtDyV3FW12BWK0FVpsVHOKEGPR9GwA5EceE-A&oe=6A90E29B",
+    "like_count": 4899,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 70,
+      "matched_keywords": []
+    },
+    "transcript": "This is the end. I've drowned and dreamt this moment. So overdue I owe the hate. Sweat away I'm stolen. Let the sky fall when the calm grows. We will stand tall, I praise you. Together let the sky fall when the calm grows. We will stand tall.",
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3908474655090253826",
+    "shortcode": "DY9sP2mRaAC",
+    "url": "https://www.instagram.com/p/DY9sP2mRaAC/",
+    "date": "2026-05-30",
+    "caption": "twenty browser tabs. three Pinterest boards. still no design.\n\nthe cruel joke of being a designer is that thinking about the work and doing the work are two completely different sports 😂\n\nfollow along for the real, slightly chaotic reality of design 🤍\n\n[overthinking, designerhumor, graphicdesign, designerlife, freelancedesigner, creativeblock, designprocess, designermemes, branddesigner, designcommunity]",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQO3EM2w4hnltd0Ditym5o28n2PaqL9kw7fO88pSwafl5505zs2fFkp_R50Lg9J8xAYInQXaQxsUeu_4p5gZ32WbIsCwU0t9K85TwW8.mp4?_nc_cat=111&_nc_oc=Adqf50bZ4cB2f6XcFAtTY6-Rrc3hUtE8rBM-efh6mX3rYROab8zvWhiJ-pWzjZpm_GEECmGq-bdtIWQtWOD4NrFo&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=0404bbdIBTwQ7kNvwFuWbpW&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTI2NTIzMTUxNTM5NDk1OCwiYXNzZXRfYWdlX2RheXMiOjg4LCJ2aV91c2VjYXNlX2lkIjoxMDgyNywiZHVyYXRpb25fcyI6OCwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=63471a8b9409cdc8&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC81RTQ3NTNBMDU0RUNDRjgzMjkyMDNCMjg3QkU1RDY5Ml92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzJFNDBEQTk0NTg4QjM3MUI2NjNGNUQ2QTYzODU5MTg1X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACacjsWwla6_BBUCKAJDMywXQCF3S8an754YEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZZapAQA&_nc_gid=PCfOArHo5kExtP1jLgBjsw&_nc_ss=7a22e&_nc_zt=28&oh=00_AQHi_Wwx30Kp4z9KWeoiE_gKcCOfiUj4u37mKWvyG3Z5kg&oe=6A90D7C4",
+    "like_count": 63443,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 51,
+      "matched_keywords": []
+    },
+    "transcript": "For what is the best? What has he got? If not himself...",
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3864506388706370992",
+    "shortcode": "DWhfBXjEiWw",
+    "url": "https://www.instagram.com/p/DWhfBXjEiWw/",
+    "date": "2026-03-31",
+    "caption": "Student me was so rude. I would judge every bad design. Working designer me knows somebody made that poor designer do it.\n\n[designer life, graphic design, design brain, design humor, freelance designer, creative life, design school, designer problems]",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQPHpgzLRmmq_RqMqikRViOCJtzi5LpfbQ7k6ZkXixIG3e1J-37-TE5VyglljuwdHdx6BQ6xhTr62dbcDhc29OaaMnyncdqD0cZyfeg.mp4?_nc_cat=101&_nc_oc=AdqX6VY70yqUPmDb1PXrviKfvPq4JgiuBpEcT93wFo08GMIsEJ5dmd872Q62c7mVTRjGqyWZSJS1thT7rVzX_HO7&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=TBe7UCmigvcQ7kNvwFNyC2M&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTc4OTg0MjczODk0MTk5MzYsImFzc2V0X2FnZV9kYXlzIjoxNDgsInZpX3VzZWNhc2VfaWQiOjEwODI3LCJkdXJhdGlvbl9zIjoxMywidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=702cc647b034d763&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC83RDRCQzM1QUZDQTY3RUJEMEM1NzAzNkFBREUxOTJCMF92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzNCNDJDMkFCOUM4RjM1ODc2Q0ExOTU4OTFGNDA1QUI4X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACbAhq3py6HLPxUCKAJDMywXQCtU_fO2RaIYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZZapAQA&_nc_gid=PCfOArHo5kExtP1jLgBjsw&_nc_ss=7a22e&_nc_zt=28&oh=00_AQHU6_B-jALgMXAaagw2znxQCt7f2BW09xSBMzI6fnn7dA&oe=6A90EAAA",
+    "like_count": 81838,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 38,
+      "matched_keywords": []
+    },
+    "transcript": "When I was a design student, I used to look at bad design and think, what kind of terrible designer made that? And now as a designer, I look at bad design and think, who forced that poor designer to create that?",
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3970083257277768628",
+    "shortcode": "DcYkbAmxGO0",
+    "url": "https://www.instagram.com/p/DcYkbAmxGO0/",
+    "date": "2026-08-23",
+    "caption": "Which design combo caught ur eye? My fav is cross stitch and type :)\n\n[graphic design, color palette, font pairing, design tips, brand design, design inspiration]",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t16/f2/m84/AQNMZUnqzAArrGULq7hl2vsWruxELZNRX-D_cwkHf1HCLzk7_bgNBCs8isU9HNLEIl825L-svxkyWKEDk_6I9uDkSoptXQ0RV36Sb2s.mp4?_nc_cat=111&_nc_oc=AdpjfHlW-VarlTuu2VfQx2IMv-Ev9_TevMo9DbpHlpERXHrgzPC89BV3mQovx-_4c4Rn2cBJXNBt9Uv5HJ357Wct&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=I_Y9Sg9JYLEQ7kNvwFWexmN&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTAxNzkyNDE2NDU3Njk3OCwiYXNzZXRfYWdlX2RheXMiOjMsInZpX3VzZWNhc2VfaWQiOjEwODI3LCJkdXJhdGlvbl9zIjoyMCwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=1095ea034157bc35&_nc_vs=HBksFQIYTGlnX2JhY2tmaWxsX3RpbWVsaW5lX3ZvZC85ODQ3QkFCMTg0NzU2Q0ZFM0I2OUI0QUNENTZBNEM5RV92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzQ0NDI5MUY2NTAwOTVDRDY5REQwOURBMDRDQkU2RDgwX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACakm-eD_vLOAxUCKAJDMywXQDSzMzMzMzMYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZZapAQA&_nc_gid=PCfOArHo5kExtP1jLgBjsw&_nc_ss=7a22e&_nc_zt=28&oh=00_AQF_NnN25aHZf8vu48I_cjFtLhaGRQj-Yqq2ig0QHa6_zw&oe=6A90C77D",
+    "like_count": 18475,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 25,
+      "matched_keywords": [
+        "font",
+        "color",
+        "palette"
+      ]
+    },
+    "transcript": "Flowers and x-ray are okay, but together they're interesting. Watercolor and scribbles are fine, but together they're so sweet. Cross stitch and type are okay, but together they're so lovely. Clean text and images are alright, but together they're cool. Happy designing!",
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3969353229556616172",
+    "shortcode": "DcV-btTxYvs",
+    "url": "https://www.instagram.com/p/DcV-btTxYvs/",
+    "date": "2026-08-22",
+    "caption": "Which one was the reminder u needed? :) 4 design edits! \n\n[graphic design, design tips, design process, before and after, design tutorial, editing tips]",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t16/f2/m84/AQOlN3rZv-jJO4gxdpLQkgk7lQIAq3UB-nDE0N-95cCKH96ZTuJ6t41iW6rxJiMuUJA6OsXogAVZc4yRduSboXJyjZUe2N87paajvkw.mp4?_nc_cat=103&_nc_oc=Adq58EXzYuz8eLHPz3iexc959BJooP-JOnmqLJ-4NUiUaDCX2rQ3RDIcZFVle5bs31bUUsJWcld3eJrylc-dxh2w&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=EOugseZysZcQ7kNvwGRDdGO&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTA4Mjc2MDM3NDcxMDU3MSwiYXNzZXRfYWdlX2RheXMiOjQsInZpX3VzZWNhc2VfaWQiOjEwODI3LCJkdXJhdGlvbl9zIjoxMywidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=4b5637deb2757e24&_nc_vs=HBksFQIYTGlnX2JhY2tmaWxsX3RpbWVsaW5lX3ZvZC8wQjQyQjRDNDZFQzgzMzUwQ0I1OUREQkE3N0RBNDA4MV92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzhENEFFRjRDNzcwRjBFNjZDMDMwNDM5RUNCRjYxNjhCX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACbWxJe4-bDsAxUCKAJDMywXQCoQ5WBBiTcYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZZapAQA&_nc_gid=PCfOArHo5kExtP1jLgBjsw&_nc_ss=7a22e&_nc_zt=28&oh=00_AQEIQXtgngaBhYny0Uc0t_TUjzGhvG95DvtY6rbDMBYt1g&oe=6A90BF61",
+    "like_count": 8079,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 23,
+      "matched_keywords": []
+    },
+    "transcript": "It feels cramped, adjusts the spacing. It feels boring, stops centering everything. Nothing stands out, use contrast. It looks messy, check the margins. Happy designing!",
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3968632220419458986",
+    "shortcode": "DcTafpORYeq",
+    "url": "https://www.instagram.com/p/DcTafpORYeq/",
+    "date": "2026-08-21",
+    "caption": "#ad Agent is in open beta and available on every Figma plan comment LINK and I’ll send you the link to try it free. \n\nFlower photography and soft blur effects! I’ve wanted to build in this direction for a while :) I needed a little help with finishing touches and Figma agents helped me apply the edits.\n\n#FigmaCreator",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQMWNRPSi9U5CW5vjrWtfjJKK_7gnXdfa52Kkfe_PzQy289rhoAt5P6s6WwNbepFNgDh5DlA_tbPjHBtL3GvjgDEzqVCXBvr-30j30I.mp4?_nc_cat=103&_nc_oc=AdpRVD-DnCJvdJfWp6CaCTPIzHNBGsrMtVnlSL3HVKJhLuvn_Xx_Ez6lBhgsw3wEZfvKfnheNlH2E2Rl73Ffta8t&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=cOZ8UBmcHzwQ7kNvwFoQxJz&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTQxODU5MDc4MzY5ODEyNiwiYXNzZXRfYWdlX2RheXMiOjUsInZpX3VzZWNhc2VfaWQiOjEwMDk5LCJkdXJhdGlvbl9zIjoyOSwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=2c68cf819458431a&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC83RjRCN0Y2QUQ4QUY2QzJBRUJFMkFGOUU0RkRFOEFCQl92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzYwNEU5QjY3OTgwN0M2Q0QwMzkyMkNCQzJEOUY1NDk2X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACac0_P77IyFBRUCKAJDMywXQD1EGJN0vGoYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=PCfOArHo5kExtP1jLgBjsw&_nc_ss=7a22e&_nc_zt=28&oh=00_AQGtQuz8WyFi4FlNivJDsFUVip6qialM2jJtA4gXvu8Gag&oe=6A90D988",
+    "like_count": 2135,
+    "classification": {
+      "path": "caption",
+      "reason": "Detailed caption (59 words) with design keywords: figma",
+      "word_count": 59,
+      "matched_keywords": [
+        "figma"
+      ]
+    },
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3967193116028889608",
+    "shortcode": "DcOTR60RuoI",
+    "url": "https://www.instagram.com/p/DcOTR60RuoI/",
+    "date": "2026-08-19",
+    "caption": "if you’ve scrolled all the way down ur font list and then back up hi hello we r the same\n\n[graphic designer, typography, design humor, freelance designer, creative life]",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t16/f2/m84/AQNs-fAbJlYPgVSACDoR7iC9rEobYv2D1eUHRVYBZ3mh3axpoOP32ozrvwtW3BaGj5K5updmVSDC40X1-yyg9GEfcCTGHIljduDgT7E.mp4?_nc_cat=107&_nc_oc=AdpuI2NLX9OfkQIlkJ2mI2yzSYSUeCgDUekwpmtvMgJZyLv8xaVfXDnqaf3pcWn_k6yJTNlkxbDfEBwC8jBMe7PU&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=c_SA856_7M0Q7kNvwFqpikT&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTgzMjQ0NTI4MTA3NTEyNywiYXNzZXRfYWdlX2RheXMiOjcsInZpX3VzZWNhc2VfaWQiOjEwODI3LCJkdXJhdGlvbl9zIjo3LCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&vs=b286e6006bf6211b&_nc_vs=HBksFQIYTGlnX2JhY2tmaWxsX3RpbWVsaW5lX3ZvZC82RjQwRDlDRTAwNkE3MENGRDE5RjhGODQzMzgwMEM4M192aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzQ3NDhGQjEzQ0EwRUQwN0IyNjgxQTA1ODMyQkEwRDgxX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACbu_uOgrabBBhUCKAJDMywXQByIMSbpeNUYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZZapAQA&_nc_gid=PCfOArHo5kExtP1jLgBjsw&_nc_ss=7a22e&_nc_zt=28&oh=00_AQHTw7qnsy9D5SQ--gPFW6b68WQY2UYYQwBpQ03a0UnjsA&oe=6A90CE95",
+    "like_count": 711,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 30,
+      "matched_keywords": [
+        "typography",
+        "font"
+      ]
+    },
+    "transcript": "ести",
+    "principles": []
+  },
+  {
+    "post_id": "3966469274763453556",
+    "shortcode": "DcLuspGxuR0",
+    "url": "https://www.instagram.com/p/DcLuspGxuR0/",
+    "date": "2026-08-18",
+    "caption": "Have u tried any of these color combos before?\n\n[color palette, color theory, graphic design, design tips, color combinations, brand design]",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t16/f2/m84/AQOqgeLhFrdDZ3r3k-LYwddHNxMTsBFZA7kfksKGz8k7EWKjPeNLeFjFO4XaomYFkjcoL66YFLkAGnNzZ6yIlcAvumjk-owfrMKHMw4.mp4?_nc_cat=108&_nc_oc=Adrs18ayrwqSiZBA6GI125G9P6nnfEAaVYdUTC6LDhg5eG-fSKTm7ZSHT1Ebvv8RNxAhVbBVLBCJyAzed2i55aEM&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=EhOTlVoHhI8Q7kNvwG1_A1a&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTYwNzczNDMyMDcxMTYyMCwiYXNzZXRfYWdlX2RheXMiOjgsInZpX3VzZWNhc2VfaWQiOjEwODI3LCJkdXJhdGlvbl9zIjoxMCwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=533367f1be7c7e75&_nc_vs=HBksFQIYTGlnX2JhY2tmaWxsX3RpbWVsaW5lX3ZvZC84RjRGNjMyOTQzOUUwRURFNEI0QTJFQTk2QkRCNkJCNV92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyL0QxNDAwREI1MzJGQjg3NEFDRUNFQzEwQUMwRjMxQzg0X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACaIn6KRuo7bBRUCKAJDMywXQCTMzMzMzM0YEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZZapAQA&_nc_gid=PCfOArHo5kExtP1jLgBjsw&_nc_ss=7a22e&_nc_zt=28&oh=00_AQGiawKEXDLMsG3lqNTcsKEhXdH3c-R-3GqCFxiaGmkyiw&oe=6A90C8BC",
+    "like_count": 7699,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 21,
+      "matched_keywords": [
+        "color",
+        "palette"
+      ]
+    },
+    "transcript": "Pair olive green with tomato red, three color combos to try. Pair espresso with baby pink. Pair bright yellow with royal blue. Happy designing!",
+    "principles": [
+      {
+        "principle": "Earthy Olive and Tomato Red Contrast",
+        "category": "color",
+        "rule": "Pair muted olive green backgrounds or structural elements with high-saturation tomato red accents for focal elements.",
+        "why": "Balances a grounded, natural neutral tone with a vibrant, high-attention chromatic pop to direct user focus effectively.",
+        "example": "Using an olive green interface background with tomato red primary CTA buttons.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "createwithalena",
+            "date": "2026-08-18",
+            "url": "https://www.instagram.com/p/DcLuspGxuR0/"
+          }
+        ]
+      },
+      {
+        "principle": "Espresso and Baby Pink Palette Pairing",
+        "category": "color",
+        "rule": "Combine deep espresso brown neutrals with soft, desaturated baby pink for balanced surface-to-content contrast.",
+        "why": "Provides a high-contrast dark foundation while utilizing a delicate pastel accent to maintain visual softness and legibility.",
+        "example": "Applying an espresso brown container background with baby pink typography or badge elements.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "createwithalena",
+            "date": "2026-08-18",
+            "url": "https://www.instagram.com/p/DcLuspGxuR0/"
+          }
+        ]
+      },
+      {
+        "principle": "Bright Yellow and Royal Blue Complementary Pairing",
+        "category": "color",
+        "rule": "Pair high-luminance bright yellow alongside deep royal blue to maximize chromatic contrast and visual impact.",
+        "why": "Leverages opposing chromatic temperatures and extreme value differences to create energetic, highly memorable focal zones.",
+        "example": "Highlighting key notification badges in bright yellow against a solid royal blue navigation bar.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "createwithalena",
+            "date": "2026-08-18",
+            "url": "https://www.instagram.com/p/DcLuspGxuR0/"
+          }
+        ]
+      }
+    ],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 3
+    }
+  },
+  {
+    "post_id": "3965734299583769287",
+    "shortcode": "DcJHlWIRerH",
+    "url": "https://www.instagram.com/p/DcJHlWIRerH/",
+    "date": "2026-08-17",
+    "caption": "Which one’s your fav? Patterns to use or spark your next design project :)\n\n[patterndesign, geometricpattern, polkadot, patternlove, designinspiration, patterncollective, modernpattern, colorpalette, graphicdesign]",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t16/f2/m84/AQPXFSfjnBlf_UCOpdsVcdtogfApBrMFWPNQoi8yFkfuADdULMwqWiMcDcqXnLEdRQEkTqmRQ-qsvBuy2IY4144LUi__ewQE1g60C0A.mp4?_nc_cat=106&_nc_oc=Adpp-qPYCjnB8oUs-KTkntlPg_29VWgIVeENoo3aBBsqgh1g9JrmBE917pBytR5_aHUuQWSLKhztfhJHkv5ya7et&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=289XLnLQMVQQ7kNvwHpEIoI&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTYwNjQ1MDg5NDIwMjYyOCwiYXNzZXRfYWdlX2RheXMiOjksInZpX3VzZWNhc2VfaWQiOjEwODI3LCJkdXJhdGlvbl9zIjoxMSwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=a317a16dbfd5c007&_nc_vs=HBksFQIYTGlnX2JhY2tmaWxsX3RpbWVsaW5lX3ZvZC8yMDQxRTg3NTRFODRFMUJCMzlBMEFDMzExQjc4ODlCNl92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyL0E5NDAzNzI1Qzc5NzQ0M0QzODExRTJGMUEyMUE2Q0E4X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACaInK_u38PaBRUCKAJDMywXQCd3S8an754YEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZZapAQA&_nc_gid=PCfOArHo5kExtP1jLgBjsw&_nc_ss=7a22e&_nc_zt=28&oh=00_AQGXxROnFjPXqNjqHlBQwlxSYZ2gkyRgl3if58LJ2xO6vA&oe=6A90BF3A",
+    "like_count": 6236,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 23,
+      "matched_keywords": []
+    },
+    "transcript": "Design patterns to try today. Animal print, paisley, argyle, plaid, polka dot, abstract print, houndstooth, laurel, chevron, and stripes. Comment board and I'll send you the Pinterest board for these.",
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3964282946214769479",
+    "shortcode": "DcD9lX-RTNH",
+    "url": "https://www.instagram.com/p/DcD9lX-RTNH/",
+    "date": "2026-08-15",
+    "caption": "I thought being a perfectionist meant I was a good creative. It was actually just hiding because if you only ever see the polished final thing you never get to judge the messy middle!\n\n[perfectionism, graphic design, creative process, freelance designer, vulnerability, creative life]",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQNHJbVKitZSN_pwweR_-ylxennvK7_lGSPxW6KPSiGAvRT6UHa_y4A5fL0o1ECCuyCkpJ8AS6JA6zKbZCIjs4NYaaWLmqbhQCjxDKM.mp4?_nc_cat=106&_nc_oc=AdrfbdYWHXfYZWofVcTbzPofOnI9IuGrFlmQ8fk_hetNfBm0-gT2XD3HXZYwOrD_7tHOR2SlKXu6K29y34HxHHl8&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=lvhq2zyBVw0Q7kNvwGgiQ_z&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTU5MjUxOTE4MjU3NzQ4NCwiYXNzZXRfYWdlX2RheXMiOjExLCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6MzIsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=8fd5400193b9a09&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC8wMjQwNTdBNDIyMzU4MTZFQzIzQzEzODIxQUU4OTNCRV92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzUzNEE5NjhGNTZBNDhEOUEwNzU4MTk3RjQ3NzI5MkFBX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACaYvefC6JjUBRUCKAJDMywXQEA7peNT988YEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=PCfOArHo5kExtP1jLgBjsw&_nc_ss=7a22e&_nc_zt=28&oh=00_AQHOsAC-P0mUoAnbNCABi12n9mzRYsfWHnNB2o_6WGduxA&oe=6A90BCBB",
+    "like_count": 301,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 44,
+      "matched_keywords": []
+    },
+    "transcript": "I dayd my life as a designer on learning perfectionism. I used to think perfectionism made me good at design, but really it was how I hid. I hated when people watched me work because I didn't want anyone to see the messy middle, the bad drafts, the overthinking, the doubt. I wanted to disappear until it felt perfect and polished. But when I started sharing my work before I felt ready, something changed. People didn't judge me, they added ideas, asked questions, and helped make the work better. That's when I realized perfectionism wasn't making me better, it was just keeping me invisible. Have you ever kept your work to yourself until it felt perfect?",
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3351118464422193944",
+    "shortcode": "C6BkH0IIysY",
+    "url": "https://www.instagram.com/p/C6BkH0IIysY/",
+    "date": "2024-04-21",
+    "caption": "View Layout Outlines helps with the visual hierarchy of your design #figma #figmatips #uidesign",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m82/AQMzmV8rpfkXI_viaWob2qUzc7vKnbqYt8kZshCW_fLgMc7ll3qtVzfQakdwpCP7QVDfRzeb0Uw1wqdK7TEGXmXZzLzEZP_lfxhI6iQ.mp4?_nc_cat=109&_nc_oc=Ado-EKskZUukdHTeu_qwzw_yruHYhwPQSzYsMWHoRr3P5coTr_qw09-t8N2C4srTeP456AFFG3KYoGyAe8ijONLl&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=ptJma0VgTusQ7kNvwGuAguc&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzE4LmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6NDA4NDg4OTY4NTU5MTA0LCJhc3NldF9hZ2VfZGF5cyI6ODU2LCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6NTksInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=8f4f40ca2b61b24c&_nc_vs=HBksFQIYT2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfcHJvZC8yMjRDQjA0QTZGNUIwN0YyQ0RCNzZDNThDODAyQThBMF92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HQXdZX3hsVWVDWWYwcE1HQURxM0RkazB4SEZwYnFfRUFBQUYVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAmgOjs_ZfhuQEVAigCQzMsF0BN92yLQ5WBGBJkYXNoX2Jhc2VsaW5lXzFfdjERAHX-B2XmnQEA&_nc_gid=4-qgBMDF5wvKPT4ag3EOVQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQH3AnUzmaiiFhgJGevAJlxCT2Mn1SWXDBhOPoM6bQM7wA&oe=6A90767E",
+    "like_count": 25,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 14,
+      "matched_keywords": [
+        "hierarchy",
+        "figma"
+      ]
+    },
+    "transcript": "Do you have a complex design and need to understand the hierarchy of your layers? The View Layer Outlines feature allows you to see how many layers each object contains, or how many objects are nested within another object. To display the outlines, click on the View Options menu in the left corner of the toolbar where the Figma icon is located. Select Outlines, then Show Outlines, and optionally choose to include hidden layers and object boundaries. Alternatively, you can activate the outline view quickly by pressing Command Shift plus O as a keyboard shortcut. The Show Outlines feature in Figma enables you to view the structure of your design by displaying the hierarchy of layers within your file. It can help inspect, select, and adjust layers that may be hidden or nested within other layers. Also, you can view and select objects on the canvas that are hidden, clipped, or positioned behind different layers. This feature also allows you to see stroke details, outer placements, and view all components of a Boolean operation.",
+    "principles": [
+      {
+        "principle": "X-Ray Outline Mode for Occluded Canvas Elements",
+        "category": "hierarchy",
+        "rule": "Implement a toggleable wireframe or outline rendering mode in canvas-based editing interfaces to expose and allow direct selection of occluded, clipped, or nested layers.",
+        "why": "Prevents foreground elements from blocking interaction with background elements, reducing the interaction cost of selecting deeply nested or hidden layers without altering the layer stack.",
+        "example": "In a graphic editor, a background vector shape is completely covered by a text box. Instead of manually hiding the text box in the layers panel, the user toggles outline mode to click and select the background shape directly on the canvas.",
+        "confidence": "medium",
+        "sources": [
+          {
+            "handle": "designcode.io",
+            "date": "2024-04-21",
+            "url": "https://www.instagram.com/p/C6BkH0IIysY/"
+          }
+        ]
+      }
+    ],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash",
+      "principles_count": 1
+    }
+  },
+  {
+    "post_id": "3346770106682453632",
+    "shortcode": "C5yHa4ZtC6A",
+    "url": "https://www.instagram.com/p/C5yHa4ZtC6A/",
+    "date": "2024-04-15",
+    "caption": "Design tip: use placeholder UI and content generator plugins to speed up design in Figma\n\n#figmaappdesign #figmadesign #figmadesigntemplate #figmadesigntips #figmadesign #figmatemplate #figmaforbeginner #figmatutorial #howtousefigma #uidesign #uibucket #uidesginer #uiuxdesign #uiuxinspiration #interfacedesign",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m82/AQNof-J2CUT94-XGf4Lo2sWWAl2y0ym2WrTUK2WKVTtMLbnkFQh47sXwiQxVLrGBxSq5Pjc16ZukBtrjrJz44I6E1y8-YhaXWBr9soA.mp4?_nc_cat=106&_nc_oc=AdqTge5KCDFG7y5zv_CRSUhEoldhvnSw9j120p0QfM6XCALsbTNw3CqBfqTrc3X6m98iyNC-V1Tb3RBfXTu1ccz4&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=EygBs9e1FjMQ7kNvwHi_YER&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzE4LmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTQ0NDk4MjgzNjM4Nzc5NywiYXNzZXRfYWdlX2RheXMiOjg2MiwidmlfdXNlY2FzZV9pZCI6MTAwOTksImR1cmF0aW9uX3MiOjU0LCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&vs=b01b6fbd46c3846f&_nc_vs=HBksFQIYT2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfcHJvZC83MTQ2QTA3QUE1NEU0MTY0NUVENjVFOEZFNDBDQzdBOF92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HRmJORmhwMzk3R2s2V2dCQU5Xd1dDckkyUGM5YnFfRUFBQUYVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAmqv_aiomNkQUVAigCQzMsF0BLDMzMzMzNGBJkYXNoX2Jhc2VsaW5lXzFfdjERAHX-B2XmnQEA&_nc_gid=4-qgBMDF5wvKPT4ag3EOVQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQH1UHen6dbEH-LuwptGc6cgtFQjfPn2DjlR5HWSjlD1xQ&oe=6A908D27",
+    "like_count": 17,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 30,
+      "matched_keywords": [
+        "tip",
+        "ui",
+        "figma"
+      ]
+    },
+    "transcript": "A placeholder is a temporary element used for design visualization. Typically, this element serves as a temporary stand-in, not intended as a final component within the UI. Use plugins to streamline the creation of placeholders. The ContentReal plugin allows for the effortless insertion of text, icons, logos, and images. Unsplash is the top choice for inserting high-quality images seamlessly into your design. Start with a wireframe of an application's user interface. To populate the shapes with temporary content like images or logos, you can utilize the ContentReal plugin. For text, use the text tool to create a text box on the placeholder and add temporary content such as LORAM Ipsum text. When you are ready to implement the design or functionality represented by the placeholder, select it and change it with the actual content.",
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3346045131478759565",
+    "shortcode": "C5vilGoN3iN",
+    "url": "https://www.instagram.com/p/C5vilGoN3iN/",
+    "date": "2024-04-14",
+    "caption": "Hug content and resizing in Figma design tips\n\n#figmaappdesign #figmadesign #figmadesigntemplate #figmadesigntips #figmadesign #figmatemplate #figmaforbeginner #figmatutorial #howtousefigma #uidesign #uibucket #uidesginer #uiuxdesign #uiuxinspiration #interfacedesign",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m82/AQNFA2omYbh8Ge0pZnb5FY1GWS3oRrEZS4kGA378D3enuuwQyg28BuTmS9JRIzL3a-Rctbbiw6JSP-4Lg5UX9YOsjd53UrZtOheXPVY.mp4?_nc_cat=110&_nc_oc=AdqiNycX3a8n8-3HW-kUL4vLKwklDxCpNpR5a8CxWpBVQgQDUYkBjI9XU9nTTGs632Cw5wVp1CjlXfTwpJeBX6KG&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=9dS921atGVcQ7kNvwEdZCWP&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuMTI4MC5kYXNoX2Jhc2VsaW5lXzFfdjEiLCJ4cHZfYXNzZXRfaWQiOjExNDcwNDE0MTY0ODMzMDYsImFzc2V0X2FnZV9kYXlzIjo4NjMsInZpX3VzZWNhc2VfaWQiOjEwMDk5LCJkdXJhdGlvbl9zIjo1MywidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=c2403b5b9aae1e3d&_nc_vs=HBksFQIYT2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfcHJvZC82RDQzQjcyOUY4QjJGMDcyQjIzNkY2Nzg4MDA3MkU5Q192aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HRTZtSlJxd1pGNG1iZE1DQU9vXzU5aUJoaGMxYnFfRUFBQUYVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAm1MfgwszOiQQVAigCQzMsF0BKyHKwIMScGBJkYXNoX2Jhc2VsaW5lXzFfdjERAHX-B2XmnQEA&_nc_gid=4-qgBMDF5wvKPT4ag3EOVQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQGN5F1ey6dP2qSSy8XBhxvNwlY7zKCbAkNOQ7W_ix4oqw&oe=6A907997",
+    "like_count": 12,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 23,
+      "matched_keywords": [
+        "figma"
+      ]
+    },
+    "transcript": "Learn how to resize designs dynamically by using Figma's Auto Layout system. When an Auto Layout frame is set to fixed width or height, the values of the frame's dimensions remain the same regardless of the content within them. The hug contents will resize to be as small as possible to surround all of its children, only leaving space for padding. The dimensions of the parent frame are determined by the size of the nested items. You can use the Auto Layout fill container to make sure that the size of your object is always the same as its parent frame. As you resize the frame, the nested items adjust to fill any new space and accommodate the dimensions. When the text exceeds the boundaries of its container, text truncation ensures that the layout remains clean and visually coherent by shortening the text and ending it with an ellipsis. This indicates to the viewer that there is more text than what is currently visible.",
+    "principles": [
+      {
+        "principle": "Fluid Component Resizing via Parent-Child Constraints",
+        "category": "layout",
+        "rule": "Configure parent containers to dynamically wrap child elements using 'hug contents' while setting nested content layers to 'fill container' to ensure components scale fluidly across varying viewport widths.",
+        "why": "Eliminates rigid, fixed-pixel dimensions that cause layout breakage, allowing components to automatically adapt to dynamic content lengths and screen sizes.",
+        "example": "A button component with horizontal padding of 16px set to 'hug contents' automatically expands or contracts its width based on the length of the button label text.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "designcode.io",
+            "date": "2024-04-14",
+            "url": "https://www.instagram.com/p/C5vilGoN3iN/"
+          }
+        ]
+      },
+      {
+        "principle": "Ellipsis-Based Text Truncation for Grid Preservation",
+        "category": "typography",
+        "rule": "Implement single-line or multi-line text truncation with an ellipsis (...) on dynamic text elements when they exceed the maximum width of their parent container.",
+        "why": "Prevents unexpected text wrapping from pushing down adjacent UI elements, preserving the vertical rhythm and visual alignment of the layout.",
+        "example": "A dashboard data table cell with a fixed width of 150px truncates a long product name like 'Premium Wireless Noise-Canceling Headphones' to 'Premium Wireless Noise-Can...' to keep the row height uniform.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "designcode.io",
+            "date": "2024-04-14",
+            "url": "https://www.instagram.com/p/C5vilGoN3iN/"
+          }
+        ]
+      }
+    ],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash",
+      "principles_count": 2
+    }
+  },
+  {
+    "post_id": "3345321298582134205",
+    "shortcode": "C5s9_8tiV29",
+    "url": "https://www.instagram.com/p/C5s9_8tiV29/",
+    "date": "2024-04-13",
+    "caption": "How to create particles in Spline tool \n\n#3danimation #interactiondesign #spline #splinetool #uiinteraction #interactivedesign #particles",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m82/AQPBrRfQGCpU6oVh4yOjz-mf-7Eg93csKbS3nPmU6_xmMqUmAivD6f2quZnEA6escqeGMI7lSQ39uOjWqwNiGWOC8GO4BLSPQFVBKU8.mp4?_nc_cat=104&_nc_oc=Adrd-j1RgXY5jWRNYGmJo8BB1FEw1XYymqXcc-priio2WFsV1RL3np5E6ONLq7J3DUqeKWMgoXQauDkDkG7O_O-k&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=5xGqLXVv8bUQ7kNvwF0YDQ4&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6OTMzMjYyNTM4NDkxNjUwLCJhc3NldF9hZ2VfZGF5cyI6ODY0LCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6NjAsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=232cef98e42c0724&_nc_vs=HBksFQIYT2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfcHJvZC82ODQ3QURFQzU3MUFFMERFQjA5NjJFMkZBM0U5OTk5RF92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HRVJBRGhxVkhxQ3dmYmtDQUlsWXloSUFXRVpaYnFfRUFBQUYVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAmhJy24YOzqAMVAigCQzMsF0BON2yLQ5WBGBJkYXNoX2Jhc2VsaW5lXzFfdjERAHX-B2XmnQEA&_nc_gid=4-qgBMDF5wvKPT4ag3EOVQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQHfk1_aJfoumLbiuo2QChrwH1CFwziR-4pUGek1erxrRw&oe=6A90A099",
+    "like_count": 14,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 14,
+      "matched_keywords": []
+    },
+    "transcript": "Learn to create this particle animation in just one minute. Select particle emitter from toolbar. Let's customize particle shape. Choose sphere. Set the size to 2 on 24. Next, set color A to magenta and B to blue. Choose random for coloring mode. Size, slide to 2. Rotation, slide to 1. Birth rate, slide to 2000. Lifetime set to 6. Fading opt to linear fade out. Speed, slide to 5. Orientation set to surface. Image opt to dot sharp. Move on to particle force. Gravity, slide to 0.20. Collider, none. Finally, customize particle noise. Types opt to curl, scale, slide to 6. Variations slide to 10. Seed set to 100. And that's it.",
+    "principles": [
+      {
+        "principle": "Ambient Background Particle Motion",
+        "category": "motion",
+        "rule": "Configure ambient UI particle animations with a low gravity scale (0.20), slow speed, and linear fade-out over a sustained lifetime (6 seconds) to maintain a non-distracting background layer.",
+        "why": "Rapidly moving or abruptly disappearing elements draw involuntary user attention away from primary call-to-actions, whereas slow, fading, low-gravity motion preserves visual hierarchy.",
+        "example": "A landing page hero section utilizing a subtle, floating sphere particle system with magenta-to-blue randomized coloring instead of a static, high-contrast background image.",
+        "confidence": "medium",
+        "sources": [
+          {
+            "handle": "designcode.io",
+            "date": "2024-04-13",
+            "url": "https://www.instagram.com/p/C5s9_8tiV29/"
+          }
+        ]
+      }
+    ],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash",
+      "principles_count": 1
+    }
+  },
+  {
+    "post_id": "3344595927841109135",
+    "shortcode": "C5qZEakL_SP",
+    "url": "https://www.instagram.com/p/C5qZEakL_SP/",
+    "date": "2024-04-12",
+    "caption": "Rename all layers at once in Figma + tricks \n\n#figmaappdesign #figmadesign #figmadesigntemplate #figmadesigntips #figmadesign #figmatemplate #figmaforbeginner #figmatutorial #howtousefigma #uidesign #uibucket #uidesginer #uiuxdesign #uiuxinspiration #interfacedesign",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m82/AQOgFQonHhZyVL1ccKFzOjaE9cCS6VKa1rUKV3DzQzZnjWn2Bj4LBic0mnlWpuLTxJDF-ihVv9pLF57BgLeGnRAIktr5dWZrXtQWlJc.mp4?_nc_cat=105&_nc_oc=Adow2mCUL4UHh9kpLhX5rZFM9ZoBl2KrZ2AHSnJOez4UYfpTC2ZPQvRHfuKcUhLmpnIBt0e9FHi-8XTTf20Fz-Al&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=8gMMJd9XrK4Q7kNvwGF6qB0&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzE4LmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6NzQ3ODI2NDExNTU3MTAzMiwiYXNzZXRfYWdlX2RheXMiOjg2NSwidmlfdXNlY2FzZV9pZCI6MTAwOTksImR1cmF0aW9uX3MiOjU2LCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&vs=54bb7f4befe8a1ae&_nc_vs=HBksFQIYT2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfcHJvZC9GMjRBRjdBODI3QjYzRTZCODhDNUM0QUJENkI5OEM4OV92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HQjFEQkJwR3Jwdk1CeEFNQUVRcVRFbXFJdDlLYnFfRUFBQUYVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAmsKWpwqHcyBoVAigCQzMsF0BMMzMzMzMzGBJkYXNoX2Jhc2VsaW5lXzFfdjERAHX-B2XmnQEA&_nc_gid=4-qgBMDF5wvKPT4ag3EOVQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQHLG1AfYjEnqaXm35I-u5r2hvI6vDyddG9uFxq-B7pPFg&oe=6A908FEE",
+    "like_count": 10,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 23,
+      "matched_keywords": [
+        "figma"
+      ]
+    },
+    "transcript": "Figma has a variety of features, including the ability to batch rename multiple layers or objects within a design file. To access the rename layers modal, right-click on the Layers panel and select Rename or use the keyboard shortcut command plus R. You can add a prefix to the existing name. In the Rename window, enter the prefix you'd like to add to the field and you can separate it with a forward slash if you wish. Then click on the Current Name button to add the current layer name after the prefix. To redesignate all selected layers to the same name, just enter the desired choice in the field and click on the button. You can add a number to the end or beginning of the layer's name. Click the number up or number down button to add a code to the name. This instructs Figma to append a unique number to the end of each layer's name. For further customization, you can use the Start Ascending From or Stop Descending at Fields to adjust the numbering sequence.",
+    "principles": [
+      {
+        "principle": "Dual-Trigger Access for Power Utilities",
+        "category": "accessibility",
+        "rule": "Integrate a dual-trigger access pattern for complex utility modals, combining a right-click context menu action with a standardized keyboard shortcut (such as Cmd + R) to accommodate diverse user physical abilities and workflow speeds.",
+        "why": "Providing both mouse-driven and keyboard-driven pathways reduces motor load, accommodates users with different accessibility needs, and accelerates high-frequency repetitive tasks for power users.",
+        "example": "A layer list component where right-clicking a layer displays a 'Rename' option, which can also be instantly opened by pressing Cmd + R when the layer is focused.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "designcode.io",
+            "date": "2024-04-12",
+            "url": "https://www.instagram.com/p/C5qZEakL_SP/"
+          }
+        ]
+      },
+      {
+        "principle": "Tokenized Dynamic Input Fields",
+        "category": "layout",
+        "rule": "Design batch-processing text inputs with adjacent, clickable variable tokens (such as original name or ascending/descending numbers) that inject dynamic placeholders directly into the input field at the current cursor position.",
+        "why": "This layout pattern eliminates the need for users to memorize syntax or regular expressions, reducing input errors and cognitive friction during complex string formatting.",
+        "example": "A batch-export modal featuring a text input for file naming, accompanied by a row of pill buttons labeled 'Date', 'Sequence', and 'Project Name' that insert dynamic variables into the input field when clicked.",
+        "confidence": "medium",
+        "sources": [
+          {
+            "handle": "designcode.io",
+            "date": "2024-04-12",
+            "url": "https://www.instagram.com/p/C5qZEakL_SP/"
+          }
+        ]
+      }
+    ],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash",
+      "principles_count": 2
+    }
+  },
+  {
+    "post_id": "3343146312566833099",
+    "shortcode": "C5lPdvIs__L",
+    "url": "https://www.instagram.com/p/C5lPdvIs__L/",
+    "date": "2024-04-10",
+    "caption": "Using a design system can speed up your designs and allow enough flexibility to create something unique\n\nThis is using our ui kit: http://designcodeui.com \n\n#figmaappdesign #figmadesign #figmadesigntemplate #figmadesigntips #figmadesign #figmatemplate #figmaforbeginner #figmatutorial #howtousefigma #uidesign #uibucket #uidesginer #uiuxdesign #uiuxinspiration #interfacedesign",
+    "is_video": false,
+    "video_url": null,
+    "like_count": 15,
+    "classification": {
+      "path": "caption",
+      "reason": "Detailed caption (41 words) with design keywords: ui, system",
+      "word_count": 41,
+      "matched_keywords": [
+        "ui",
+        "system"
+      ]
+    },
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3342103505722986407",
+    "shortcode": "C5hiW5lNM-n",
+    "url": "https://www.instagram.com/p/C5hiW5lNM-n/",
+    "date": "2024-04-09",
+    "caption": "Tesla desktop app concept 👀 \n\n#figmaappdesign #figmadesign #figmadesigntemplate #figmadesigntips #figmadesign #figmatemplate #figmaforbeginner #figmatutorial #howtousefigma #uidesign #uibucket #uidesginer #uiuxdesign #uiuxinspiration #interfacedesign",
+    "is_video": false,
+    "video_url": null,
+    "like_count": 28,
+    "classification": {
+      "path": "skip",
+      "reason": "Static image without substantial design caption (19 words, 0 keywords)",
+      "word_count": 19,
+      "matched_keywords": []
+    },
+    "principles": []
+  },
+  {
+    "post_id": "3341032402963379639",
+    "shortcode": "C5du0TZs7W3",
+    "url": "https://www.instagram.com/p/C5du0TZs7W3/",
+    "date": "2024-04-07",
+    "caption": "Spice up your designs with a dash of 3D elements! 🌟 Full course: https://designcode.io/spline-ios \n\n#figmaappdesign #figmadesign #figmadesigntemplate #figmadesigntips #figmadesign #figmatemplate #figmaforbeginner #figmatutorial #howtousefigma #uidesign #uibucket #uidesginer #uiuxdesign #uiuxinspiration #interfacedesign #uiinteraction #interactivedesign",
+    "is_video": false,
+    "video_url": null,
+    "like_count": 35,
+    "classification": {
+      "path": "skip",
+      "reason": "Static image without substantial design caption (34 words, 0 keywords)",
+      "word_count": 34,
+      "matched_keywords": []
+    },
+    "principles": []
+  },
+  {
+    "post_id": "3332681432634355541",
+    "shortcode": "C5AEBsNte9V",
+    "url": "https://www.instagram.com/p/C5AEBsNte9V/",
+    "date": "2024-03-27",
+    "caption": "Create this realistic UI from scratch in Figma: https://buff.ly/3PyKxXp\n\n- From UI pattern to wireframe to fully fleshed UI\n- Use the Arc tool for the knob design\n- Draw complex shapes for rings and charts\n- Work with gradients, advanced strokes and auto layout\n\nFree 41-min tutorial\n\n#figmaappdesign #figmadesign #figmadesigntemplate #figmadesigntips #figmadesign #figmatemplate #figmaforbeginner #figmatutorial #howtousefigma #uiinteraction #interactivedesign #uidesign #uibucket #uidesginer #uiuxdesign #uiuxinspiration #interfacedesign",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m82/AQP5-aYgKQei7FBca5kFvhESLgl2RSaidYo0P6-mQ1xS-uEWjaG4fMmR9NdbGwBlLrv8xaerG-u4xZ1AIWth8DBNuOOK5zGkMKtasz4.mp4?_nc_cat=100&_nc_oc=AdoZjknSwIXTtyyaqMK_avj5AIs5VsbV56Hq0knZDGVK6gmaDerUdSiYSeQ8TS4x-ruq0TAr076jkCG5gUy3E2Bh&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=G5Oj4lJ6zEAQ7kNvwGT7J3k&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6Mzg2NDkxMjI3NTA3NDcyLCJhc3NldF9hZ2VfZGF5cyI6ODgyLCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6NDAsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=99aaee04cb6187fd&_nc_vs=HBksFQIYT2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfcHJvZC8wRTQ5NDY3NTA2MjJGMEE5QzUzODZBRkYzRTE4RkJCOV92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HUHJmNUJsSDM0QXJ4RDhIQVBzUU8xVkZJQXRlYnFfRUFBQUYVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAmoKyYheDgrwEVAigCQzMsF0BERDlYEGJOGBJkYXNoX2Jhc2VsaW5lXzFfdjERAHX-B2XmnQEA&_nc_gid=4-qgBMDF5wvKPT4ag3EOVQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQHvLiHbskm1_C1b9H2bntxA-IQDU4-XQ28yTXw-O6OxqQ&oe=6A909521",
+    "like_count": 22,
+    "classification": {
+      "path": "caption",
+      "reason": "Detailed caption (65 words) with design keywords: ui, wireframe, figma",
+      "word_count": 65,
+      "matched_keywords": [
+        "ui",
+        "wireframe",
+        "figma"
+      ]
+    },
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3328552764148110320",
+    "shortcode": "C4xZRqDMVPw",
+    "url": "https://www.instagram.com/p/C4xZRqDMVPw/",
+    "date": "2024-03-21",
+    "caption": "E-commerce web app design. Learn to design this UI: https://youtu.be/u6quiPYzFtI \n\n#figmaappdesign #figmadesign #figmadesigntemplate #figmadesigntips #figmadesign #figmatemplate #figmaforbeginner #figmatutorial #howtousefigma #webdesigncourse #webdesign #webdesigncourse #webbuilder #webdesigntips #webdesigntutorial #webdesigninspiration #websitedevelopment #websitedesigntips #webbuilder #webdesigntutorial #webdeveloper #websitedesign #websitedesigners #websitebuilder #websitebuilders",
+    "is_video": false,
+    "video_url": null,
+    "like_count": 15,
+    "classification": {
+      "path": "skip",
+      "reason": "Static image without substantial design caption (39 words, 1 keywords)",
+      "word_count": 39,
+      "matched_keywords": [
+        "ui"
+      ]
+    },
+    "principles": []
+  },
+  {
+    "post_id": "3327608015828786675",
+    "shortcode": "C4uCdwnN53z",
+    "url": "https://www.instagram.com/p/C4uCdwnN53z/",
+    "date": "2024-03-20",
+    "caption": "Midjourney UI design workflow. full course: https://designcode.io/midjourney-apps \n\nA comprehensive course on transforming Midjourney concepts into interactive prototypes using essential design techniques and AI tools \n\n#figmaappdesign #figmadesign #figmadesigntemplate #figmadesigntips #figmadesign #figmatemplate #figmaforbeginner #figmatutorial #howtousefigma #uidesign #uibucket #uidesginer #uiuxdesign #uiuxinspiration #interfacedesign #midjourney",
+    "is_video": false,
+    "video_url": null,
+    "like_count": 14,
+    "classification": {
+      "path": "caption",
+      "reason": "Detailed caption (44 words) with design keywords: ui",
+      "word_count": 44,
+      "matched_keywords": [
+        "ui"
+      ]
+    },
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3327103185087684473",
+    "shortcode": "C4sPrgWON95",
+    "url": "https://www.instagram.com/p/C4sPrgWON95/",
+    "date": "2024-03-19",
+    "caption": "A very shiny card in SwiftUI\n\n#appdevelopment #appdeveloper #xcode #swiftios #swiftui #swiftuiappdevelopment #swiftuideveloper #swiftuitutorials #iosappdevelopment #iosdeveloper #iosdevelopment #mobiledeveloper #mobiledevelopment",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m82/AQN_WMgICdq_NyLt4M6b0hItgh9k-eQuVV4PWi_u64_WqBV5_xs8fJijMZ5BwauDtDymliMkmhqkrzE1KpHF4J3tKlPYt0283tMNapk.mp4?_nc_cat=108&_nc_oc=AdqaIOFMpBL4e3tBRoygBpw6kLlPqMOcTvO01VGHPo6UbRNKq9tx1lX_58YnDNQtQo8oEcB4SYLNAl0WHZ0xcI1y&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=uO0pBGzY1I8Q7kNvwGYjf_1&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6OTM2MDYwMTgxMTExNzU3LCJhc3NldF9hZ2VfZGF5cyI6ODg5LCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6MjMsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=5a77bb749c885235&_nc_vs=HBksFQIYT2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfcHJvZC80ODQ5QUUzM0RFOUJFNTA5NjYwNTQ2NjExMDFFRDBCMl92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HT1llM3htQlFOYXd4REFEQUx4Ynh5MGFfMjlfYnFfRUFBQUYVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAmmo-r6e_VqQMVAigCQzMsF0A33bItDlYEGBJkYXNoX2Jhc2VsaW5lXzFfdjERAHX-B2XmnQEA&_nc_gid=2doyJ8qA6wf86kqL-fMFlQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQHl3n2OIBKCY66dp9_ZW8NzZVIWS2eLZma8s8SRfgIORA&oe=6A9084C1",
+    "like_count": 16,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 19,
+      "matched_keywords": [
+        "card"
+      ]
+    },
+    "transcript": "ktop shipgoating",
+    "principles": []
+  },
+  {
+    "post_id": "3326963725989521497",
+    "shortcode": "C4rv-G8NyhZ",
+    "url": "https://www.instagram.com/p/C4rv-G8NyhZ/",
+    "date": "2024-03-19",
+    "caption": "I made a 3d card with a liquid action button in SwiftUI\n\nFull tutorial here: https://buff.ly/4adlodf \n\n#appdevelopment #appdeveloper #xcode #swiftios #swiftui #swiftuiappdevelopment #swiftuideveloper #swiftuitutorials #iosappdevelopment #iosdeveloper #iosdevelopment #mobiledeveloper #mobiledevelopment",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m82/AQPxEonH1jlieZdJZJn4u2wDxMBipQGg-FXsGha_DVdmwkGt_WiwAjeMW2FSM0I_zkx-bZVefl2Qhc90rJKd2bpMs06jrGKT5fe_SY0.mp4?_nc_cat=102&_nc_oc=AdpxSsYJ8hbslT8DMHQRjqu9l2yXD0zEwoQd4SXsRyEvdII0lWjhrJjHhLZmkN79sLtuL7uT8ybt71OgifS25M5G&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=S5AVR1vPUJIQ7kNvwHlx-sO&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MjQ0MjQwNDAyMTEyNjM1LCJhc3NldF9hZ2VfZGF5cyI6ODkwLCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6MjUsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=eb099c923f41542e&_nc_vs=HBksFQIYT2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfcHJvZC80NTQ5RkFGOEI2QkZDNEY2Njk1RDM1N0U5ODcyQzhBRl92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HUG5BM0JrVzZfQ0NIcHdDQUZmeUxHOUFOd0FrYnFfRUFBQUYVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAm9oHD5tSIbxUCKAJDMywXQDldsi0OVgQYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=PbOQtv9tf3hSezNmV8mOWQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQEqpLTLQDtdU4zshkGI9XP1nH_FCsbdLE0R6a-ASiCA_A&oe=6A90983F",
+    "like_count": 17,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 32,
+      "matched_keywords": [
+        "button",
+        "card"
+      ]
+    },
+    "transcript": "Thanks for watching guys!",
+    "principles": []
+  },
+  {
+    "post_id": "3326883190160067474",
+    "shortcode": "C4rdqKGtYuS",
+    "url": "https://www.instagram.com/p/C4rdqKGtYuS/",
+    "date": "2024-03-19",
+    "caption": "Translucent UI using the back camera #appdevelopment #appdeveloper #xcode #swiftios #swiftui #swiftuiappdevelopment #swiftuideveloper #swiftuitutorials #iosappdevelopment #iosdeveloper #iosdevelopment #mobiledeveloper #mobiledevelopment",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m82/AQMUQVUe2AWwjR5CJTFRC2eNmzEiCbLV3mknrACWn3e7bhwWX8PyQkMRtPlau8azo9gkb9K79Z5uAF9bRtHMQ2eeLUduBYdHzMR9cQ8.mp4?_nc_cat=103&_nc_oc=AdprpGfuYLByrNTyrYzEWajb2zKw2zR5r85lC-4UBgjxi2IouClCWtWNcvLDkV_5_C09c8hDBFm5LQHmQPhl4QFa&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=kic2WdpNetgQ7kNvwHnXEJI&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTEyOTA2MjY1MTY3MTcyMywiYXNzZXRfYWdlX2RheXMiOjg5MCwidmlfdXNlY2FzZV9pZCI6MTAwOTksImR1cmF0aW9uX3MiOjI1LCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&vs=d72b5fd0570aa3bf&_nc_vs=HBksFQIYT2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfcHJvZC8zQjQ3RUVDQTBFOTQ3OTkyRDg5RDQ2ODQ5RkM0QjZCOF92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HS255M2huNXFVNmdfb1lCQUVjWk1aN3FpaUp1YnFfRUFBQUYVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAm1tLBpIy4gQQVAigCQzMsF0A5d0vGp--eGBJkYXNoX2Jhc2VsaW5lXzFfdjERAHX-B2XmnQEA&_nc_gid=PbOQtv9tf3hSezNmV8mOWQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQEsui37X6A7D1bPpu6Uf0r60cgi1hp8Smllu6jKBW_YkA&oe=6A908FF4",
+    "like_count": 14,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 19,
+      "matched_keywords": [
+        "ui"
+      ]
+    },
+    "transcript": "Thanks for watching guys!",
+    "principles": []
+  },
+  {
+    "post_id": "3325396924259408201",
+    "shortcode": "C4mLuJHqJlJ",
+    "url": "https://www.instagram.com/p/C4mLuJHqJlJ/",
+    "date": "2024-03-17",
+    "caption": "Will developers cry if we made this in Figma? Tutorial coming next week. 😱 \n\n#figmaappdesign #figmadesign #figmadesigntemplate #figmadesigntips #figmadesign #figmatemplate #figmaforbeginner #figmatutorial #howtousefigma #uidesign #uibucket #uidesginer #uiuxdesign #uiuxinspiration #interfacedesign",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m82/AQMghLSCD9L1jKuYBEpsUhdHLhdLENrht5BZPVVrO8uuvzRDSarJ0sC945KXIKO1lLWLZqF2pQiVeYsFkPWARZLCpF83G2y50F75DNc.mp4?_nc_cat=103&_nc_oc=AdqKMI-cQNmt4qteQTo5eeIGNMQLC2QO_OplxRXOmvTJ0PSHsjha-JO3FAyCBxKMFHoZfhzha6PkC4oLIUp6g8Uu&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=r2PCP5bhxscQ7kNvwGlrN1m&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6NzA4MjA4NzU4MTMyMTQxLCJhc3NldF9hZ2VfZGF5cyI6ODkyLCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6MTQsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=db4c5006a84615a9&_nc_vs=HBksFQIYT2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfcHJvZC80QzQ4Mzc5MUI0QkREMTMwOEZDMDZFMDFEODQ1OUE5OV92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HRXRoemhrVVo1aWJyVTBEQUtiTnA5UGY2RHMxYnFfRUFBQUYVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAm2rakt5aHwgIVAigCQzMsF0At7peNT987GBJkYXNoX2Jhc2VsaW5lXzFfdjERAHX-B2XmnQEA&_nc_gid=PbOQtv9tf3hSezNmV8mOWQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQGG5KKg8gOle9RlWjTyBIC98CeSjro91sBj9aMcQOy15Q&oe=6A909154",
+    "like_count": 17,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 28,
+      "matched_keywords": [
+        "figma"
+      ]
+    },
+    "transcript": "",
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3324789433853137828",
+    "shortcode": "C4kBl_lydOk",
+    "url": "https://www.instagram.com/p/C4kBl_lydOk/",
+    "date": "2024-03-16",
+    "caption": "🚀 Dive into web design with ZERO experience — and it's completely free. My course is perfectly crafted for beginners, no coding knowledge required. Here’s what you get:\n\n🎨 Step-by-step guidance from the very basics to your own stunning website.\n\n🌐 Explore the final site: https://buff.ly/4clmk0g\n \n🔄 Access to my remix link to duplicate the project directly into your account. https://buff.ly/4cfxfsz \n\n📚 Figma template: https://buff.ly/4cfxfsz \n\n#nocode #nocodeapps #nocodetools #nocodeneeded #webdesigncourse #webdesign #uiinteraction #interactivedesign #webdesigncourse #webbuilder #webdesigntips #webdesigntutorial #webdesigninspiration #websitedevelopment #websitedesigntips #webbuilder #webdesigntutorial #webdeveloper #websitedesign #websitedesigners #websitebuilder #websitebuilders #madeinframer #framertemplate #framerwebsite",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQNahwCIpcLbMQlfvxc7nmaZNtYYaUIdjit71I1y3l3eL3-wX5Hv00xRZEYsMwJCNgpx3p-dGVGldaX4ZCZCuP7i.mp4?_nc_cat=110&_nc_oc=Adprh3_h1SapBixAF68krKPS7K_ez7uS-GCzOF6SiRsx42BvbWsLsBScHSTljal0kvHkPJwb0j6CqJ6VigDhQXzZ&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=Q5OtO1mbPr8Q7kNvwG-QJ_Y&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuMTA4MC5kYXNoX2hpZ2hfMTA4MHBfdjEiLCJ4cHZfYXNzZXRfaWQiOjQyNzIzODYzMzA5MDI2NSwiYXNzZXRfYWdlX2RheXMiOjg5MywidmlfdXNlY2FzZV9pZCI6MTAwOTksImR1cmF0aW9uX3MiOjU1LCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&vs=ee2675604e4070bc&_nc_vs=HBksFQIYR2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC83MzMyNDUxNDcwMTU2NDQ5XzQ2MTQ2NjQ3NDU2NjMxOTExMjQubXA0FQACyAESABUCGDpwYXNzdGhyb3VnaF9ldmVyc3RvcmUvR0R2Snlobi0zQ0Z0elUwSkFOVElfb0s4eks1X2JxX0VBQUFGFQICyAESACgAGAAbAogHdXNlX29pbAExEnByb2dyZXNzaXZlX3JlY2lwZQExFQAAJrKzre_HpMIBFQIoAkMzLBdAS-IMSbpeNRgSZGFzaF9oaWdoXzEwODBwX3YxEQB1_gdl5p0BAA&_nc_gid=PbOQtv9tf3hSezNmV8mOWQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQHYVTw4QP-9cYfNVk05mESL-MQ0qgEmQc8tdmyweyMeTg&oe=6A907BF8",
+    "like_count": 34,
+    "classification": {
+      "path": "caption",
+      "reason": "Detailed caption (97 words) with design keywords: figma",
+      "word_count": 97,
+      "matched_keywords": [
+        "figma"
+      ]
+    },
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3324017880306394491",
+    "shortcode": "C4hSKaWtaV7",
+    "url": "https://www.instagram.com/p/C4hSKaWtaV7/",
+    "date": "2024-03-15",
+    "caption": "Tired of designing the same layout over and over again?\n\nUse the Repeaters tool instead.\n\nRepeaters in Wix Studio are efficient for managing repetitive elements on a website.\n\nFind it in the Layout Tools in the Add Elements menu.\n\nYou can design a single item, like a product card or blog post layout, and then replicate that design across your page, maintaining consistency and appearance.\n\nThe content changes, but not the layout.\n\nHere, I'm using the tool to build all the cards, all that's left is to customize the content.\n\nYou can customize each item, link them to your database, and they'll automatically update as your content changes.\n\nAll that without extra effort. \n\n#nocode #nocodeapps #nocodetools #nocodeneeded #webdesigncourse #webdesign #uiinteraction #interactivedesign #webdesigncourse #webbuilder #webdesigntips #webdesigntutorial #webdesigninspiration #websitedevelopment #websitedesigntips #webbuilder #webdesigntutorial #webdeveloper #websitedesign #websitedesigners #websitebuilder #websitebuilders #wixstudio #wixstudiotutorial",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m82/AQMLPxz-He4TOIFu0UrmDBYmDX4IkRbyGBG3zV-DmT601V9X8jxtNfYTbdCw94-FujKC00Kneo_WZVhLQRbcUnce0SLE24M-VpkqBmw.mp4?_nc_cat=108&_nc_oc=Ado98_YwjPbp_ujX3N1wMNS2C0crz0xIHX8ITgdX6wL4DSEWYLCUEra8yqWw8bPmwezGd3r4aCiSvszPtAq5lSA9&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=SafFf72u1eAQ7kNvwFUIuFK&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzE4LmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTQzMDYzMjIzMDg3NjI4NywiYXNzZXRfYWdlX2RheXMiOjg5NCwidmlfdXNlY2FzZV9pZCI6MTAwOTksImR1cmF0aW9uX3MiOjQxLCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&vs=577a6e5f124e830e&_nc_vs=HBksFQIYT2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfcHJvZC9FRDQ4MTNGNEE3OURBMjQ3RTIwN0JGRjQyQjcyNzY4Rl92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HTTJyelJraDA2c1NOUU1FQUUzTFFJMTBfVDVIYnFfRUFBQUYVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAm_tHn3uDJigUVAigCQzMsF0BE3dLxqfvnGBJkYXNoX2Jhc2VsaW5lXzFfdjERAHX-B2XmnQEA&_nc_gid=PbOQtv9tf3hSezNmV8mOWQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQHtwwfFHlJLRjr-bML6N2J7lC_Xk5XbLsOE7O3IZwdp9A&oe=6A909F4D",
+    "like_count": 11,
+    "classification": {
+      "path": "caption",
+      "reason": "Detailed caption (140 words) with design keywords: card",
+      "word_count": 140,
+      "matched_keywords": [
+        "card"
+      ]
+    },
+    "principles": [
+      {
+        "principle": "Master-Template Card Grid Layout",
+        "category": "layout",
+        "rule": "Standardize dynamic content feeds by designing a single master card template with fixed image aspect ratios and explicit text container constraints to maintain layout consistency across variable database inputs.",
+        "why": "Ensures visual uniformity and prevents layout breaking or uneven card heights when dynamic content of varying lengths is loaded from a database.",
+        "example": "A blog post repeater grid where every card maintains a strict 1:1 image aspect ratio, 16px internal padding, and a 2-line truncation limit for titles, ensuring all cards in the row align perfectly at the bottom.",
+        "confidence": "medium",
+        "sources": [
+          {
+            "handle": "designcode.io",
+            "date": "2024-03-15",
+            "url": "https://www.instagram.com/p/C4hSKaWtaV7/"
+          }
+        ]
+      }
+    ],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash",
+      "principles_count": 1
+    }
+  },
+  {
+    "post_id": "3323296146511009857",
+    "shortcode": "C4euDzYNphB",
+    "url": "https://www.instagram.com/p/C4euDzYNphB/",
+    "date": "2024-03-14",
+    "caption": "Radial gradients are a powerful tool for creating beautiful and interesting designs in Figma.\n\nThey can be used to create a variety of effects, from adding depth to an illustration, to creating a glossy effect on a logo.\n\nLearn the basics of radial gradient. And learn how to turn this plain background into this amazing effect. By adding radial gradients, strokes, and effects, layer by layer.\n\nGet the Figma file: https://buff.ly/3TxyZWK \n\n#figmatutorial #figmadesigntips #graphicdesigntutorial #graphicdesignlearning",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m82/AQO-D8Tg_Sio_p2Wze0WXqQLeJ7EkAAj3JY9qZ0SAN8qaP4lB6fiffnWbZumh4TSOBETicSeVyFEDD5aXiNtbjNuqtEXqIkGtVNAE9o.mp4?_nc_cat=108&_nc_oc=Ado1ij-p2pJO5U2KlzilcqfjbxwSolCNQmN8yJwl5IVJVeBRQQJa9KG0B833IHNsAz7G-LVZpss9Ylb71h_ewUkd&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=DUDouQ3qf8MQ7kNvwHVAA_n&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTU5MTA0Njc1MTY3OTYyNywiYXNzZXRfYWdlX2RheXMiOjg5NSwidmlfdXNlY2FzZV9pZCI6MTAwOTksImR1cmF0aW9uX3MiOjQwLCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&vs=ec87996092b766b9&_nc_vs=HBksFQIYT2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfcHJvZC8wMTQ3RUUzODc3QjVFODEyMDgzMTJFMTAzQzBEQkJCM192aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HQ1RIeWhrUXFaMmxlZ1FFQUpub3BWYzhxN2dsYnFfRUFBQUYVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAmltKjh47D0wUVAigCQzMsF0BEBP3ztkWiGBJkYXNoX2Jhc2VsaW5lXzFfdjERAHX-B2XmnQEA&_nc_gid=PbOQtv9tf3hSezNmV8mOWQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQEFzhefLUVgsvV6RLIATiDgrLTpzVAUhkYCgx3pweMg4Q&oe=6A908DAD",
+    "like_count": 8,
+    "classification": {
+      "path": "caption",
+      "reason": "Detailed caption (78 words) with design keywords: figma",
+      "word_count": 78,
+      "matched_keywords": [
+        "figma"
+      ]
+    },
+    "principles": [],
+    "extraction_metadata": {
+      "method": "llm",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash",
+      "principles_count": 0
+    }
+  },
+  {
+    "post_id": "3322909452410957152",
+    "shortcode": "C4dWIqbvi1g",
+    "url": "https://www.instagram.com/p/C4dWIqbvi1g/",
+    "date": "2024-03-13",
+    "caption": "how should we code this? 👀 #uidesign #figmadesign #uidesigninspiration #skeuomorphism #uiinspirations #dribbble",
+    "is_video": false,
+    "video_url": null,
+    "like_count": 12,
+    "classification": {
+      "path": "skip",
+      "reason": "Static image without substantial design caption (11 words, 0 keywords)",
+      "word_count": 11,
+      "matched_keywords": []
+    },
+    "principles": []
+  },
+  {
+    "post_id": "3319772002187677117",
+    "shortcode": "C4SMwwNrw29",
+    "url": "https://www.instagram.com/p/C4SMwwNrw29/",
+    "date": "2024-03-09",
+    "caption": "Design a heart icon using path and angular gradient in Figma #figmatutorial #figmadesign #uidesign #figma #uidesigntips",
+    "is_video": true,
+    "video_url": "https://instagram.fsxv1-1.fna.fbcdn.net/o1/v/t2/f2/m82/AQNK_XHXaDu75lHUKWsl6JD8h5eZY-5fgp9Yu20XBmnca3OAs3DNIyIshsYRswk3NlfywqZapfUPCGvxmkTdU-2-xKPyqPxmnOtW6Ng.mp4?_nc_cat=103&_nc_oc=AdrxQIj484E3fRLMIAUSdN8WzXrz_SVLDUAI1S_dP5nMbjfE-OTSMXJuwJdjzSMKkHcmi5y0mcNa7lWLJy7xcBi_&_nc_sid=5e9851&_nc_ht=instagram.fsxv1-1.fna.fbcdn.net&_nc_ohc=d4QcvbVMrIUQ7kNvwHI9-MY&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTIyNjU4NzYzNDk2ODA2OSwiYXNzZXRfYWdlX2RheXMiOjkwMCwidmlfdXNlY2FzZV9pZCI6MTAwOTksImR1cmF0aW9uX3MiOjQ5LCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&vs=6280ce31eff44a4c&_nc_vs=HBksFQIYT2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfcHJvZC82MzQ2RkZFQ0RBMUU0MUI1Qjk0RTVFNDcwNTQ4ODFBOV92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HREVueFJrVVBkRGR6NTBDQUdwS2dqM3RJdTB5YnFfRUFBQUYVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAmipilhObkrQQVAigCQzMsF0BI2ZmZmZmaGBJkYXNoX2Jhc2VsaW5lXzFfdjERAHX-B2XmnQEA&_nc_gid=PbOQtv9tf3hSezNmV8mOWQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQFDPNxLIqhBWWG1wqyi8L4yoqnKNMzN517YOyjf1hyFNg&oe=6A907058",
+    "like_count": 8,
+    "classification": {
+      "path": "audio",
+      "reason": "Video reel with brief caption; queued for audio transcription",
+      "word_count": 16,
+      "matched_keywords": [
+        "figma"
+      ]
+    },
+    "transcript": "",
+    "principles": []
+  }
+]

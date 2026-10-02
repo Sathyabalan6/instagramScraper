@@ -12,9 +12,9 @@ Reference these principles when architecting screens, refining typographic rhyth
 
 Before finalizing any interface layout or component hierarchy, audit against these verified fundamentals:
 
-- [ ] **Earthy Olive and Tomato Red Contrast**: Pair muted olive green backgrounds or structural elements with high-saturation tomato red accents for focal elements?
-- [ ] **Espresso and Baby Pink Palette Pairing**: Combine deep espresso brown neutrals with soft, desaturated baby pink for balanced surface-to-content contrast?
-- [ ] **Bright Yellow and Royal Blue Complementary Pairing**: Pair high-luminance bright yellow alongside deep royal blue to maximize chromatic contrast and visual impact?
+- [ ] **Earthy Olive and Tomato Red Contrast**: Pair muted olive green backgrounds or structural elements with high-saturation tomato red accents for focal elements.
+- [ ] **Espresso and Baby Pink Palette Pairing**: Combine deep espresso brown neutrals with soft, desaturated baby pink for balanced surface-to-content contrast.
+- [ ] **Bright Yellow and Royal Blue Complementary Pairing**: Pair high-luminance bright yellow alongside deep royal blue to maximize chromatic contrast and visual impact.
 
 ## Parametric Design Tokens
 
@@ -34,22 +34,22 @@ Before finalizing any interface layout or component hierarchy, audit against the
 ### Color
 
 #### Bright Yellow and Royal Blue Complementary Pairing
-- **Rule**: Pair high-luminance bright yellow alongside deep royal blue to maximize chromatic contrast and visual impact.
-- **Rationale**: Leverages opposing chromatic temperatures and extreme value differences to create energetic, highly memorable focal zones.
+- **Do this**: Pair high-luminance bright yellow alongside deep royal blue to maximize chromatic contrast and visual impact.
+- **Why it matters**: Leverages opposing chromatic temperatures and extreme value differences to create energetic, highly memorable focal zones.
 - **Implementation Pattern**: Highlighting key notification badges in bright yellow against a solid royal blue navigation bar.
 - **Status**: Single-Source Guideline (@createwithalena)
 - **Sources**: 1 citation(s) (latest: 2026-08-18) — [@createwithalena](https://www.instagram.com/p/DcLuspGxuR0/)
 
 #### Earthy Olive and Tomato Red Contrast
-- **Rule**: Pair muted olive green backgrounds or structural elements with high-saturation tomato red accents for focal elements.
-- **Rationale**: Balances a grounded, natural neutral tone with a vibrant, high-attention chromatic pop to direct user focus effectively.
+- **Do this**: Pair muted olive green backgrounds or structural elements with high-saturation tomato red accents for focal elements.
+- **Why it matters**: Balances a grounded, natural neutral tone with a vibrant, high-attention chromatic pop to direct user focus effectively.
 - **Implementation Pattern**: Using an olive green interface background with tomato red primary CTA buttons.
 - **Status**: Single-Source Guideline (@createwithalena)
 - **Sources**: 1 citation(s) (latest: 2026-08-18) — [@createwithalena](https://www.instagram.com/p/DcLuspGxuR0/)
 
 #### Espresso and Baby Pink Palette Pairing
-- **Rule**: Combine deep espresso brown neutrals with soft, desaturated baby pink for balanced surface-to-content contrast.
-- **Rationale**: Provides a high-contrast dark foundation while utilizing a delicate pastel accent to maintain visual softness and legibility.
+- **Do this**: Combine deep espresso brown neutrals with soft, desaturated baby pink for balanced surface-to-content contrast.
+- **Why it matters**: Provides a high-contrast dark foundation while utilizing a delicate pastel accent to maintain visual softness and legibility.
 - **Implementation Pattern**: Applying an espresso brown container background with baby pink typography or badge elements.
 - **Status**: Single-Source Guideline (@createwithalena)
 - **Sources**: 1 citation(s) (latest: 2026-08-18) — [@createwithalena](https://www.instagram.com/p/DcLuspGxuR0/)

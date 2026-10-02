@@ -42,13 +42,13 @@ try:
     from scripts.classify_posts import classify_posts
     from scripts.transcribe_audio import transcribe_posts
     from scripts.extract_principles import extract_principles
-    from scripts.merge_skill import merge_skill
+    from scripts.merge_skill import merge_skill, merge_multi_target
 except ImportError:
     from fetch_posts import fetch_posts
     from classify_posts import classify_posts
     from transcribe_audio import transcribe_posts
     from extract_principles import extract_principles
-    from merge_skill import merge_skill
+    from merge_skill import merge_skill, merge_multi_target
 
 
 def load_config(config_path: str = "config.yaml") -> dict:
@@ -204,18 +204,41 @@ def run_pipeline(
     skip_transcribe: bool = False,
     verbose: bool = False,
     refresh: bool = False,
-    refresh_low_confidence: bool = False
+    refresh_low_confidence: bool = False,
+    synthesize: list = None,
+    output_skill: str = "ui-ux-consensus",
+    min_sources: int = 1
 ):
     """
-    Run full extraction pipeline:
-    1. Resolve target (URL, @handle, or collection)
-    2. Fetch posts metadata (from creator handle or saved collection)
-    3. Classify posts (caption vs audio vs skip)
-    4. Transcribe audio (audio-only, temporary mp3 cleaned up immediately)
-    5. Extract structured principles via LLM analysis
-    6. Merge into principles.json and update SKILL.md
-    7. Record processed post IDs and stages in state/processed.json
+    Run full extraction pipeline or multi-target synthesis:
+    - If synthesize is provided, merges and clusters principles across specified targets.
+    - Otherwise runs standard 5-stage pipeline for single target:
+      1. Resolve target (URL, @handle, or collection)
+      2. Fetch posts metadata (from creator handle or saved collection)
+      3. Classify posts (caption vs audio vs skip)
+      4. Transcribe audio (audio-only, temporary mp3 cleaned up immediately)
+      5. Extract structured principles via LLM analysis
+      6. Merge into principles.json and update SKILL.md
+      7. Record processed post IDs and stages in state/processed.json
     """
+    if synthesize:
+        config = load_config(config_path)
+        paths_cfg = config.get("paths", {})
+        logs_dir = paths_cfg.get("logs_dir", "logs")
+        logger, log_file = setup_pipeline_logging(logs_dir, verbose)
+        logger.info("=== Multi-Target Synthesis Mode ===")
+        logger.info(f"Targets ({len(synthesize)}): {', '.join(synthesize)}")
+        logger.info(f"Output Skill Deliverable: {output_skill}")
+        logger.info(f"Minimum Consensus Citations: {min_sources}")
+        synthesized = merge_multi_target(
+            targets=synthesize,
+            output_skill_name=output_skill,
+            min_sources=min_sources,
+            config_path=config_path
+        )
+        logger.info(f"Multi-Target Synthesis completed successfully: {len(synthesized)} principles.")
+        return synthesized
+
     handle, collection = resolve_target(target=target, handle=handle, collection=collection)
 
     config = load_config(config_path)
@@ -315,6 +338,22 @@ def main():
         dest="collection",
         help="Instagram saved collection slug or URL"
     )
+    parser.add_argument(
+        "--synthesize",
+        nargs="+",
+        help="Multi-Target Synthesis: list of target handles or collections to cross-synthesize into a unified design system"
+    )
+    parser.add_argument(
+        "--output-skill",
+        default="ui-ux-consensus",
+        help="Output skill name for multi-target synthesis (default: ui-ux-consensus)"
+    )
+    parser.add_argument(
+        "--min-sources",
+        type=int,
+        default=1,
+        help="Minimum sources/citations required in synthesis mode (default: 1)"
+    )
     parser.add_argument("--limit", type=int, default=50, help="Maximum number of new posts to process")
     parser.add_argument("--config", default="config.yaml", help="Path to config.yaml")
     parser.add_argument("--skip-transcribe", action="store_true", help="Skip Whisper audio transcription")
@@ -324,8 +363,8 @@ def main():
 
     args = parser.parse_args()
 
-    if not args.target and not args.handle and not args.collection:
-        parser.error("At least one target must be provided via --target, --handle, or --collection.")
+    if not args.target and not args.handle and not args.collection and not args.synthesize:
+        parser.error("At least one target must be provided via --target, --handle, --collection, or --synthesize.")
 
     run_pipeline(
         target=args.target,
@@ -336,7 +375,10 @@ def main():
         skip_transcribe=args.skip_transcribe,
         verbose=args.verbose,
         refresh=args.refresh,
-        refresh_low_confidence=args.refresh_low_confidence
+        refresh_low_confidence=args.refresh_low_confidence,
+        synthesize=args.synthesize,
+        output_skill=args.output_skill,
+        min_sources=args.min_sources
     )
 
 

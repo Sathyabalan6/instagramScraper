@@ -12,8 +12,8 @@ Reference these principles when architecting screens, refining typographic rhyth
 
 Before finalizing any interface layout or component hierarchy, audit against these verified fundamentals:
 
-- [ ] **Platform-Native Overlay Safe Zones**: Position all critical on-screen text and key visual elements strictly within safe zones that remain completely clear of native platform interactive overlays, such as like, comment, share, and profile buttons?
-- [ ] **Frame-Accurate Kinetic Typography Synchronization**: Synchronize kinetic text animations to trigger precisely on the exact frame of the corresponding spoken word or audio beat, avoiding loose approximations?
+- [ ] **Platform-Native Overlay Safe Zones**: Position all critical on-screen text and key visual elements strictly within safe zones that remain completely clear of native platform interactive overlays, such as like, comment, share, and profile buttons.
+- [ ] **Frame-Accurate Kinetic Typography Synchronization**: Synchronize kinetic text animations to trigger precisely on the exact frame of the corresponding spoken word or audio beat, avoiding loose approximations.
 - [ ] **Spatial Consistency**: Are margins, gutters, and inner paddings adhering strictly to the 8-point spatial grid?
 - [ ] **Visual Separation**: Are cards and structural containers separated primarily via intentional negative space rather than heavy divider borders?
 - [ ] **Typographic Anchor**: Is body and title text left-aligned to establish a single vertical scanning anchor rather than centered jagged lines?
@@ -38,8 +38,8 @@ Before finalizing any interface layout or component hierarchy, audit against the
 ### Motion
 
 #### Frame-Accurate Kinetic Typography Synchronization
-- **Rule**: Synchronize kinetic text animations to trigger precisely on the exact frame of the corresponding spoken word or audio beat, avoiding loose approximations.
-- **Rationale**: Tight alignment between auditory and visual stimuli reduces cognitive processing lag, enhances reading comprehension, and creates a highly polished, immersive user experience.
+- **Do this**: Synchronize kinetic text animations to trigger precisely on the exact frame of the corresponding spoken word or audio beat, avoiding loose approximations.
+- **Why it matters**: Tight alignment between auditory and visual stimuli reduces cognitive processing lag, enhances reading comprehension, and creates a highly polished, immersive user experience.
 - **Implementation Pattern**:
   - **Avoid**: Captions appearing with a loose delay after the speaker says a word, causing a jarring visual lag.
   - **Do This**: Captions rendering instantly on the exact frame the audio waveform peaks for each spoken word.
@@ -49,8 +49,8 @@ Before finalizing any interface layout or component hierarchy, audit against the
 ### Layout
 
 #### Platform-Native Overlay Safe Zones
-- **Rule**: Position all critical on-screen text and key visual elements strictly within safe zones that remain completely clear of native platform interactive overlays, such as like, comment, share, and profile buttons.
-- **Rationale**: Placing essential content beneath interactive platform elements causes visual clutter, renders text unreadable, and leads to accidental triggers of platform actions when users attempt to read or interact with the content.
+- **Do this**: Position all critical on-screen text and key visual elements strictly within safe zones that remain completely clear of native platform interactive overlays, such as like, comment, share, and profile buttons.
+- **Why it matters**: Placing essential content beneath interactive platform elements causes visual clutter, renders text unreadable, and leads to accidental triggers of platform actions when users attempt to read or interact with the content.
 - **Implementation Pattern**:
   - **Avoid**: Placing captions in the bottom-right corner of a vertical video where they are obscured by the Instagram 'Like' and 'Comment' icons.
   - **Do This**: Centering captions in the lower-middle third of the screen, leaving the right-hand margin and bottom edge completely clear of text.

@@ -7,6 +7,7 @@ Performs fuzzy deduplication using rapidfuzz.
 import os
 import json
 import math
+import hashlib
 import argparse
 import logging
 from pathlib import Path
@@ -207,12 +208,23 @@ def merge_principles_list(
             if conf_rank.get(new_conf, 2) > conf_rank.get(old_conf, 2):
                 target["confidence"] = new_conf
 
+            # Merge instructive fields if missing on target
+            if not target.get("do_this") and (new_p.get("do_this") or new_p.get("rule")):
+                target["do_this"] = new_p.get("do_this") or new_p.get("rule")
+            if not target.get("dont_do_this") and new_p.get("dont_do_this"):
+                target["dont_do_this"] = new_p.get("dont_do_this")
+            if not target.get("trigger_context") and new_p.get("trigger_context"):
+                target["trigger_context"] = new_p.get("trigger_context")
+
         else:
             # Create new structured record
             record = {
                 "principle": new_p.get("principle"),
                 "category": new_p.get("category"),
                 "rule": new_p.get("rule"),
+                "do_this": new_p.get("do_this") or new_p.get("rule"),
+                "dont_do_this": new_p.get("dont_do_this") or "",
+                "trigger_context": new_p.get("trigger_context") or "",
                 "why": new_p.get("why"),
                 "example": new_p.get("example"),
                 "confidence": new_p.get("confidence", "medium"),
@@ -230,7 +242,36 @@ def compute_centroid(embs: list) -> list:
     if not valid:
         return None
     dim = len(valid[0])
-    return [sum(e[i] for e in valid) / len(valid) for i in range(dim)]
+    avg = [sum(e[i] for e in valid) / len(valid) for i in range(dim)]
+    norm = math.sqrt(sum(x * x for x in avg))
+    if norm == 0:
+        return avg
+    return [x / norm for x in avg]
+
+
+CACHE_DIR = Path("data/cache")
+EMBEDDINGS_CACHE_FILE = CACHE_DIR / "embeddings.json"
+
+
+def load_embedding_cache() -> dict:
+    """Load persistent embedding cache to guarantee 100% deterministic clustering."""
+    if EMBEDDINGS_CACHE_FILE.exists():
+        try:
+            with open(EMBEDDINGS_CACHE_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            return {}
+    return {}
+
+
+def save_embedding_cache(cache: dict):
+    """Save persistent embedding cache to disk."""
+    try:
+        CACHE_DIR.mkdir(parents=True, exist_ok=True)
+        with open(EMBEDDINGS_CACHE_FILE, "w", encoding="utf-8") as f:
+            json.dump(cache, f)
+    except Exception as e:
+        logger.debug(f"Could not persist embedding cache: {e}")
 
 
 def cluster_and_synthesize_principles(principles: list, similarity_threshold: float = 0.83) -> list:
@@ -239,7 +280,8 @@ def cluster_and_synthesize_principles(principles: list, similarity_threshold: fl
     Uses Gemini embeddings (if GEMINI_API_KEY is available) with dynamic centroid cosine similarity clustering,
     falling back to RapidFuzz token set ratio.
     In each cluster:
-    - Maintains dynamically updated centroid embeddings to eliminate seed-order dependency.
+    - Maintains dynamically updated normalized centroid embeddings to eliminate seed-order dependency.
+    - Employs persistent disk caching (data/cache/embeddings.json) for 100% reproducible re-runs.
     - Preserves non-canonical alternate rules and implementations as 'variants'.
     - Merges sources from all member principles into a canonical source list.
     - Upgrades confidence ranking to highest within the cluster.
@@ -253,23 +295,38 @@ def cluster_and_synthesize_principles(principles: list, similarity_threshold: fl
     embeddings = []
     if api_key:
         try:
+            cache = load_embedding_cache()
             texts = [f"{p.get('principle', '')}: {p.get('rule', '')} {p.get('why', '')}" for p in principles]
-            batch_reqs = [
-                {"model": "models/gemini-embedding-001", "content": {"parts": [{"text": t[:1000]}]}}
-                for t in texts
-            ]
-            url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents?key={api_key}"
-            resp = requests.post(url, json={"requests": batch_reqs}, timeout=10)
-            if resp.status_code == 200:
-                raw_embs = resp.json().get("embeddings", [])
-                extracted_embs = [e.get("values", []) for e in raw_embs]
-                # Only accept if all embeddings returned successfully to avoid mixed-scale comparisons
-                if len(extracted_embs) == len(principles) and all(e for e in extracted_embs):
-                    embeddings = extracted_embs
-                    logger.info(f"Generated {len(embeddings)} semantic embeddings for cross-creator synthesis.")
-                else:
-                    logger.warning("Partial embedding failure detected; falling back to lexical clustering across all principles.")
-                    embeddings = []
+            keys = [hashlib.sha256(f"gemini-embedding-001:{t[:1000]}".encode("utf-8")).hexdigest() for t in texts]
+
+            missing_indices = [i for i, k in enumerate(keys) if k not in cache]
+            if missing_indices:
+                batch_reqs = [
+                    {"model": "models/gemini-embedding-001", "content": {"parts": [{"text": texts[i][:1000]}]}}
+                    for i in missing_indices
+                ]
+                url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents?key={api_key}"
+                resp = requests.post(url, json={"requests": batch_reqs}, timeout=15)
+                if resp.status_code == 200:
+                    raw_embs = resp.json().get("embeddings", [])
+                    for idx_pos, raw_e in enumerate(raw_embs):
+                        orig_idx = missing_indices[idx_pos]
+                        val = raw_e.get("values", [])
+                        if val:
+                            cache[keys[orig_idx]] = val
+                    save_embedding_cache(cache)
+
+            # Retrieve embeddings from cache
+            all_cached = [cache.get(k) for k in keys]
+            if all(e for e in all_cached) and len(all_cached) == len(principles):
+                embeddings = all_cached
+                logger.info(
+                    f"Loaded/computed {len(embeddings)} semantic embeddings for cross-creator synthesis "
+                    f"({len(texts) - len(missing_indices)} from cache, {len(missing_indices)} fresh)."
+                )
+            else:
+                logger.warning("Partial embedding failure detected; falling back to lexical clustering across all principles.")
+                embeddings = []
         except Exception as e:
             logger.warning(f"Semantic embedding generation failed, using lexical dedup fallback: {e}")
             embeddings = []
@@ -368,6 +425,9 @@ def cluster_and_synthesize_principles(principles: list, similarity_threshold: fl
                 v = {
                     "principle": m.get("principle"),
                     "rule": m.get("rule"),
+                    "do_this": m.get("do_this") or m.get("rule"),
+                    "dont_do_this": m.get("dont_do_this") or "",
+                    "trigger_context": m.get("trigger_context") or "",
                     "why": m.get("why"),
                     "example": m.get("example"),
                     "sources": m.get("sources", [])
@@ -375,6 +435,18 @@ def cluster_and_synthesize_principles(principles: list, similarity_threshold: fl
                 variants.append(v)
         if variants:
             merged_principle["variants"] = variants
+
+        # Supplement instructive fields on merged_principle if missing
+        if not merged_principle.get("dont_do_this"):
+            for m in members:
+                if m.get("dont_do_this"):
+                    merged_principle["dont_do_this"] = m["dont_do_this"]
+                    break
+        if not merged_principle.get("trigger_context"):
+            for m in members:
+                if m.get("trigger_context"):
+                    merged_principle["trigger_context"] = m["trigger_context"]
+                    break
 
         all_sources = []
         seen_urls = set()
@@ -509,15 +581,22 @@ def generate_skill_markdown(
             total_principles += 1
             title = item.get("principle", "Principle")
             rule = item.get("rule", "")
+            do_this = item.get("do_this") or rule
+            dont_do_this = item.get("dont_do_this") or ""
+            trigger_context = item.get("trigger_context") or ""
             why = item.get("why", "")
             example = item.get("example", "")
             sources = item.get("sources", [])
             confidence = item.get("confidence", "medium").upper()
 
             lines.append(f"#### {title}")
-            lines.append(f"- **Rule**: {rule}")
+            if trigger_context:
+                lines.append(f"- **When to apply**: {trigger_context}")
+            lines.append(f"- **Do this**: {do_this}")
+            if dont_do_this:
+                lines.append(f"- **Don't do this**: {dont_do_this}")
             if why:
-                lines.append(f"- **Rationale**: {why}")
+                lines.append(f"- **Why it matters**: {why}")
             if example and example != "None specified":
                 if "Before:" in example and "After:" in example:
                     # Clean before/after breakdown
@@ -584,10 +663,12 @@ def generate_creator_summary_markdown(
     handle: str,
     principles: list,
     posts: list,
-    output_path: str
+    output_path: str,
+    is_synthesis: bool = False,
+    source_targets: list = None
 ):
     """
-    Generate a visual, comprehensive summary report for a specific creator.
+    Generate a visual, comprehensive summary report for a specific creator or multi-creator synthesis.
     """
     total_posts = len(posts)
     transcribed_count = sum(1 for p in posts if p.get("transcript"))
@@ -601,30 +682,58 @@ def generate_creator_summary_markdown(
         if cat in cat_counts:
             cat_counts[cat] += 1
 
-    lines = [
-        f"# Design Skill Extraction Report: @{handle}",
-        "",
-        f"> **Creator Profile:** [@{handle}](https://www.instagram.com/{handle}/)  ",
-        f"> **Extracted:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}  ",
-        f"> **Analyzed Post Range:** {date_range}",
-        "",
-        "---",
-        "",
-        "## Overview & Extraction Metrics",
-        "",
-        "| Metric | Count |",
-        "|---|---|",
-        f"| **Total Posts Analyzed** | `{total_posts}` |",
-        f"| **Video Reels Transcribed** | `{transcribed_count}` / `{video_count}` |",
-        f"| **Unique Design Principles** | `{len(principles)}` |",
-        f"| **Active Categories** | `{sum(1 for c, n in cat_counts.items() if n > 0)}` / `{len(CATEGORIES_ORDER)}` |",
-        f"| **Extraction Engine** | `LLM Analysis (No Templates)` |",
-        "",
-        "### Category Distribution",
-        "",
-        "| Category | Principles Extracted |",
-        "|---|---|",
-    ]
+    if is_synthesis:
+        target_list_str = ", ".join(source_targets) if source_targets else handle
+        lines = [
+            f"# Cross-Creator Design Skill Synthesis Report: {handle}",
+            "",
+            f"> **Synthesized Targets:** `{target_list_str}`  ",
+            f"> **Generated:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}  ",
+            f"> **Analyzed Post Range:** {date_range}",
+            "",
+            "---",
+            "",
+            "## Synthesis Overview & Consensus Metrics",
+            "",
+            "| Metric | Count |",
+            "|---|---|",
+            f"| **Contributing Target Count** | `{len(source_targets) if source_targets else 1}` |",
+            f"| **Total Posts Analyzed** | `{total_posts}` |",
+            f"| **Video Reels Transcribed** | `{transcribed_count}` / `{video_count}` |",
+            f"| **Synthesized Design Principles** | `{len(principles)}` |",
+            f"| **Active Categories** | `{sum(1 for c, n in cat_counts.items() if n > 0)}` / `{len(CATEGORIES_ORDER)}` |",
+            f"| **Synthesis Engine** | `Centroid Embedding Synthesis & Dedup` |",
+            "",
+            "### Category Distribution",
+            "",
+            "| Category | Principles Synthesized |",
+            "|---|---|",
+        ]
+    else:
+        lines = [
+            f"# Design Skill Extraction Report: @{handle}",
+            "",
+            f"> **Creator Profile:** [@{handle}](https://www.instagram.com/{handle}/)  ",
+            f"> **Extracted:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}  ",
+            f"> **Analyzed Post Range:** {date_range}",
+            "",
+            "---",
+            "",
+            "## Overview & Extraction Metrics",
+            "",
+            "| Metric | Count |",
+            "|---|---|",
+            f"| **Total Posts Analyzed** | `{total_posts}` |",
+            f"| **Video Reels Transcribed** | `{transcribed_count}` / `{video_count}` |",
+            f"| **Unique Design Principles** | `{len(principles)}` |",
+            f"| **Active Categories** | `{sum(1 for c, n in cat_counts.items() if n > 0)}` / `{len(CATEGORIES_ORDER)}` |",
+            f"| **Extraction Engine** | `LLM Analysis (No Templates)` |",
+            "",
+            "### Category Distribution",
+            "",
+            "| Category | Principles Extracted |",
+            "|---|---|",
+        ]
 
     for cat in CATEGORIES_ORDER:
         cnt = cat_counts.get(cat, 0)
@@ -655,16 +764,33 @@ def generate_creator_summary_markdown(
         for item in sorted(items, key=lambda x: x.get("principle", "")):
             title = item.get("principle", "Principle")
             rule = item.get("rule", "")
+            do_this = item.get("do_this") or rule
+            dont_do_this = item.get("dont_do_this") or ""
+            trigger_context = item.get("trigger_context") or ""
             why = item.get("why", "")
             example = item.get("example", "")
             sources = item.get("sources", [])
+            variants = item.get("variants", [])
 
             lines.append(f"#### {title}")
-            lines.append(f"- **Guideline**: {rule}")
+            if trigger_context:
+                lines.append(f"- **Trigger Scenario**: {trigger_context}")
+            lines.append(f"- **Guideline**: {do_this}")
+            if dont_do_this:
+                lines.append(f"- **Avoid (Anti-Pattern)**: {dont_do_this}")
             if why:
                 lines.append(f"- **Rationale**: {why}")
             if example and example != "None specified":
                 lines.append(f"- **Practical Application**: {example}")
+            if variants:
+                lines.append("- **Alternate Creator Perspectives & Implementations**:")
+                for v in variants:
+                    v_sources = v.get("sources", [])
+                    v_handles = [f"@{s.get('handle')}" for s in v_sources if s.get("handle")]
+                    handle_label = f" ({', '.join(v_handles)})" if v_handles else ""
+                    lines.append(f"  - *Perspective{handle_label}*: {v.get('rule')}")
+                    if v.get("example") and v.get("example") != "None specified":
+                        lines.append(f"    - *Implementation*: {v.get('example')}")
             if sources:
                 source_links = [f"[{s.get('date', 'Link')}]({s.get('url')})" for s in sources if s.get("url")]
                 citations = ", ".join(source_links) if source_links else f"{len(sources)} posts"
@@ -851,9 +977,226 @@ def merge_skill(
     return last_merged
 
 
+def merge_multi_target(
+    targets: list,
+    output_skill_name: str = "ui-ux-consensus",
+    min_sources: int = 1,
+    config_path: str = "config.yaml"
+) -> list:
+    """
+    Synthesize design principles across multiple creators and/or saved collections
+    into a unified, cross-creator design system skill.
+
+    Loads posts and principles from output/<target>, data/raw/<target>, and skills/<clean_target>.
+    Applies:
+    1. Lexical deduplication across all pooled principles.
+    2. Dynamic centroid semantic clustering with persistent disk embeddings cache.
+    3. Consensus threshold filtering (min_sources >= N).
+    4. Generation of skills/<output_skill_name>/ and output/<output_skill_name>/ deliverables.
+    """
+    config = load_config(config_path)
+    merge_cfg = config.get("merge", {})
+    paths_cfg = config.get("paths", {})
+
+    threshold = float(merge_cfg.get("dedup_similarity_threshold", 85))
+    output_dir_base = paths_cfg.get("output_dir", "output")
+    raw_data_dir_base = paths_cfg.get("raw_data_dir", "data/raw")
+    skills_dir_base = paths_cfg.get("skills_dir", "skills")
+
+    all_posts_map = {}
+    all_principles_raw = []
+    found_targets = []
+
+    for tgt in targets:
+        if not tgt:
+            continue
+        clean_name = get_clean_skill_name(tgt)
+        target_candidates = [
+            tgt,
+            tgt.lstrip("@"),
+            f"collection_{tgt.lstrip('@')}",
+            clean_name,
+            f"collection_{clean_name}",
+        ]
+
+        target_principles = []
+        matched_any = False
+
+        search_dirs = []
+        for cand in set(target_candidates):
+            for base in [Path(output_dir_base), Path(raw_data_dir_base), Path(skills_dir_base)]:
+                d = base / cand
+                if d.exists() and d.is_dir() and d not in search_dirs:
+                    search_dirs.append(d)
+
+        for d in search_dirs:
+            # Load posts.json
+            pfile = d / "posts.json"
+            if pfile.exists():
+                matched_any = True
+                try:
+                    with open(pfile, "r", encoding="utf-8") as f:
+                        data = json.load(f)
+                        if isinstance(data, list):
+                            for post in data:
+                                pid = str(post.get("post_id") or post.get("shortcode") or "")
+                                if not pid:
+                                    continue
+                                if pid not in all_posts_map:
+                                    all_posts_map[pid] = post
+                                else:
+                                    ex = all_posts_map[pid]
+                                    ep = ex.get("principles", []) or ex.get("extracted_principles", [])
+                                    ip = post.get("principles", []) or post.get("extracted_principles", [])
+                                    if len(ip) > len(ep):
+                                        ex["principles"] = ip
+                                    if post.get("transcript") and not ex.get("transcript"):
+                                        ex["transcript"] = post["transcript"]
+
+                                p_list = post.get("principles", []) or post.get("extracted_principles", [])
+                                for p in p_list:
+                                    target_principles.append((p, clean_name, post))
+                except Exception as e:
+                    logger.warning(f"Error reading {pfile}: {e}")
+
+            # Load principles.json
+            pr_file = d / "principles.json"
+            if pr_file.exists():
+                matched_any = True
+                try:
+                    with open(pr_file, "r", encoding="utf-8") as f:
+                        data = json.load(f)
+                        if isinstance(data, list):
+                            for p in data:
+                                target_principles.append((p, clean_name, None))
+                except Exception as e:
+                    logger.warning(f"Error reading {pr_file}: {e}")
+
+        if matched_any:
+            found_targets.append(clean_name)
+        else:
+            logger.warning(f"Target '{tgt}' not found in any search directories.")
+
+        for p, handle_name, post_ref in target_principles:
+            p_copy = dict(p)
+            sources = list(p_copy.get("sources", []))
+            if not sources:
+                src = {"handle": handle_name}
+                if post_ref:
+                    if post_ref.get("url"):
+                        src["url"] = post_ref["url"]
+                    elif post_ref.get("shortcode"):
+                        src["url"] = f"https://www.instagram.com/p/{post_ref['shortcode']}/"
+                    if post_ref.get("date"):
+                        src["date"] = post_ref["date"]
+                sources.append(src)
+            else:
+                for s in sources:
+                    if not s.get("handle"):
+                        s["handle"] = handle_name
+            p_copy["sources"] = sources
+            all_principles_raw.append(p_copy)
+
+    if not all_principles_raw:
+        logger.warning(f"No principles found across targets: {targets}")
+        return []
+
+    logger.info(
+        f"Multi-Target Synthesis: Pooling {len(all_principles_raw)} raw principles across {len(found_targets)} "
+        f"targets ({', '.join(found_targets)})."
+    )
+
+    # Step 1: Lexical deduplication
+    lexical_merged = merge_principles_list(all_principles_raw, [], threshold=threshold)
+    logger.info(f"Lexical deduplication reduced {len(all_principles_raw)} principles to {len(lexical_merged)}.")
+
+    # Step 2: Semantic clustering & synthesis (dynamic centroid + persistent cache)
+    synthesized = cluster_and_synthesize_principles(lexical_merged, similarity_threshold=0.83)
+    logger.info(f"Semantic clustering synthesized into {len(synthesized)} canonical principles.")
+
+    # Step 3: Filter by min_sources
+    if min_sources > 1:
+        before_cnt = len(synthesized)
+        synthesized = [p for p in synthesized if len(p.get("sources", [])) >= min_sources]
+        logger.info(
+            f"Filtered by min_sources={min_sources}: retained {len(synthesized)} of {before_cnt} principles."
+        )
+
+    clean_output_skill = get_clean_skill_name(output_skill_name)
+    skill_dir = Path(skills_dir_base) / clean_output_skill
+    skill_dir.mkdir(parents=True, exist_ok=True)
+    out_dir = Path(output_dir_base) / clean_output_skill
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    desc = (
+        f"Actionable cross-creator UI/UX design heuristics synthesized from {len(found_targets)} "
+        f"sources ({', '.join(found_targets)})."
+    )
+
+    # 1. Primary skill files
+    save_principles_store(synthesized, str(skill_dir / "principles.json"))
+    generate_skill_markdown(
+        principles=synthesized,
+        output_path=str(skill_dir / "SKILL.md"),
+        skill_name=clean_output_skill,
+        description=desc
+    )
+    all_posts = list(all_posts_map.values())
+    generate_creator_summary_markdown(
+        handle=clean_output_skill,
+        principles=synthesized,
+        posts=all_posts,
+        output_path=str(skill_dir / "SUMMARY.md"),
+        is_synthesis=True,
+        source_targets=found_targets
+    )
+
+    # 2. Mirror files to output/
+    save_principles_store(synthesized, str(out_dir / "principles.json"))
+    generate_skill_markdown(
+        principles=synthesized,
+        output_path=str(out_dir / "SKILL.md"),
+        skill_name=clean_output_skill,
+        description=desc
+    )
+    generate_creator_summary_markdown(
+        handle=clean_output_skill,
+        principles=synthesized,
+        posts=all_posts,
+        output_path=str(out_dir / "SUMMARY.md"),
+        is_synthesis=True,
+        source_targets=found_targets
+    )
+    if all_posts:
+        with open(out_dir / "posts.json", "w", encoding="utf-8") as f:
+            json.dump(all_posts, f, indent=2, ensure_ascii=False)
+
+    logger.info(
+        f"Multi-Target Synthesis Complete: Compiled unified skill '{clean_output_skill}' "
+        f"({len(synthesized)} principles) -> {skill_dir}/"
+    )
+    return synthesized
+
+
 def main():
     parser = argparse.ArgumentParser(description="Stage 4: Merge principles into SKILL.md with fuzzy deduplication.")
     parser.add_argument("--handle", default=None, help="Instagram username handle for creator-specific output")
+    parser.add_argument(
+        "--synthesize",
+        nargs="+",
+        help="Multi-Target Synthesis: list of target handles or collections to cross-synthesize into a unified design system"
+    )
+    parser.add_argument(
+        "--output-skill",
+        default="ui-ux-consensus",
+        help="Output skill name for multi-target synthesis (default: ui-ux-consensus)"
+    )
+    parser.add_argument(
+        "--min-sources",
+        type=int,
+        default=1,
+        help="Minimum sources/citations required in synthesis mode (default: 1)"
+    )
     parser.add_argument("--config", default="config.yaml", help="Path to config.yaml")
     parser.add_argument("--threshold", type=float, default=None, help="Override similarity threshold (0-100)")
     parser.add_argument("--verbose", "-v", action="store_true", help="Enable verbose debug logging")
@@ -865,7 +1208,15 @@ def main():
         format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
     )
 
-    merge_skill(handle=args.handle, config_path=args.config)
+    if args.synthesize:
+        merge_multi_target(
+            targets=args.synthesize,
+            output_skill_name=args.output_skill,
+            min_sources=args.min_sources,
+            config_path=args.config
+        )
+    else:
+        merge_skill(handle=args.handle, config_path=args.config)
 
 
 if __name__ == "__main__":

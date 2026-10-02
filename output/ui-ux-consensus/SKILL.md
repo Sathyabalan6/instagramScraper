@@ -1,6 +1,6 @@
 ---
-name: checkups
-description: "Actionable UI/UX design heuristics distilled from checkups."
+name: ui-ux-consensus
+description: "Actionable UI/UX design heuristics distilled from ui-ux-consensus."
 ---
 
 # UI/UX Design System & Heuristics
@@ -37,12 +37,42 @@ Before finalizing any interface layout or component hierarchy, audit against the
 
 ### Color
 
+#### Bright Yellow and Royal Blue Complementary Pairing
+- **Do this**: Pair high-luminance bright yellow alongside deep royal blue to maximize chromatic contrast and visual impact.
+- **Why it matters**: Leverages opposing chromatic temperatures and extreme value differences to create energetic, highly memorable focal zones.
+- **Implementation Pattern**: Highlighting key notification badges in bright yellow against a solid royal blue navigation bar.
+- **Status**: Single-Source Guideline (@createwithalena)
+- **Sources**: 1 citation(s) (latest: 2026-08-18) — [@createwithalena](https://www.instagram.com/p/DcLuspGxuR0/)
+
+#### Earthy Olive and Tomato Red Contrast
+- **Do this**: Pair muted olive green backgrounds or structural elements with high-saturation tomato red accents for focal elements.
+- **Why it matters**: Balances a grounded, natural neutral tone with a vibrant, high-attention chromatic pop to direct user focus effectively.
+- **Implementation Pattern**: Using an olive green interface background with tomato red primary CTA buttons.
+- **Status**: Single-Source Guideline (@createwithalena)
+- **Sources**: 1 citation(s) (latest: 2026-08-18) — [@createwithalena](https://www.instagram.com/p/DcLuspGxuR0/)
+
+#### Espresso and Baby Pink Palette Pairing
+- **Do this**: Combine deep espresso brown neutrals with soft, desaturated baby pink for balanced surface-to-content contrast.
+- **Why it matters**: Provides a high-contrast dark foundation while utilizing a delicate pastel accent to maintain visual softness and legibility.
+- **Implementation Pattern**: Applying an espresso brown container background with baby pink typography or badge elements.
+- **Status**: Single-Source Guideline (@createwithalena)
+- **Sources**: 1 citation(s) (latest: 2026-08-18) — [@createwithalena](https://www.instagram.com/p/DcLuspGxuR0/)
+
 #### Theme State Persistence on Back Navigation
 - **Do this**: Maintain consistent color token values and contrast ratios across dark and light mode transitions to prevent unreadable text states.
 - **Why it matters**: Abrupt theme switches can cause foreground text to blend into newly loaded backgrounds, breaking legibility.
 - **Implementation Pattern**: Using dynamic CSS custom properties (e.g., var(--text-primary)) that update cleanly without orphan color dependencies.
 - **Status**: Single-Source Guideline (@lincolndevine)
 - **Sources**: 1 citation(s) (latest: 2026-09-30) — [@lincolndevine](https://www.instagram.com/p/Dd6TWQ0hpfH/)
+
+### Typography
+
+#### Ellipsis-Based Text Truncation for Grid Preservation
+- **Do this**: Implement single-line or multi-line text truncation with an ellipsis (...) on dynamic text elements when they exceed the maximum width of their parent container.
+- **Why it matters**: Prevents unexpected text wrapping from pushing down adjacent UI elements, preserving the vertical rhythm and visual alignment of the layout.
+- **Implementation Pattern**: A dashboard data table cell with a fixed width of 150px truncates a long product name like 'Premium Wireless Noise-Canceling Headphones' to 'Premium Wireless Noise-Can...' to keep the row height uniform.
+- **Status**: Single-Source Guideline (@designcode.io)
+- **Sources**: 1 citation(s) (latest: 2024-04-14) — [@designcode.io](https://www.instagram.com/p/C5vilGoN3iN/)
 
 ### Hierarchy
 
@@ -69,7 +99,21 @@ Before finalizing any interface layout or component hierarchy, audit against the
 - **Status**: Single-Source Guideline (@lincolndevine)
 - **Sources**: 1 citation(s) (latest: 2026-09-30) — [@lincolndevine](https://www.instagram.com/p/Dd6TWQ0hpfH/)
 
+#### X-Ray Outline Mode for Occluded Canvas Elements
+- **Do this**: Implement a toggleable wireframe or outline rendering mode in canvas-based editing interfaces to expose and allow direct selection of occluded, clipped, or nested layers.
+- **Why it matters**: Prevents foreground elements from blocking interaction with background elements, reducing the interaction cost of selecting deeply nested or hidden layers without altering the layer stack.
+- **Implementation Pattern**: In a graphic editor, a background vector shape is completely covered by a text box. Instead of manually hiding the text box in the layers panel, the user toggles outline mode to click and select the background shape directly on the canvas.
+- **Status**: Single-Source Guideline (@designcode.io)
+- **Sources**: 1 citation(s) (latest: 2024-04-21) — [@designcode.io](https://www.instagram.com/p/C6BkH0IIysY/)
+
 ### Motion
+
+#### Ambient Background Particle Motion
+- **Do this**: Configure ambient UI particle animations with a low gravity scale (0.20), slow speed, and linear fade-out over a sustained lifetime (6 seconds) to maintain a non-distracting background layer.
+- **Why it matters**: Rapidly moving or abruptly disappearing elements draw involuntary user attention away from primary call-to-actions, whereas slow, fading, low-gravity motion preserves visual hierarchy.
+- **Implementation Pattern**: A landing page hero section utilizing a subtle, floating sphere particle system with magenta-to-blue randomized coloring instead of a static, high-contrast background image.
+- **Status**: Single-Source Guideline (@designcode.io)
+- **Sources**: 1 citation(s) (latest: 2024-04-13) — [@designcode.io](https://www.instagram.com/p/C5s9_8tiV29/)
 
 #### Immediate Touch Feedback for Interactive Elements
 - **Do this**: Trigger instant visual state changes (like scale or color shifts) on every tap, executing heavy tasks asynchronously.
@@ -110,6 +154,13 @@ Before finalizing any interface layout or component hierarchy, audit against the
 - **Implementation Pattern**: Change secondary gray text from #A0A0A0 to #595959 on a white background to achieve a 4.5:1 contrast ratio.
 - **Status**: Single-Source Guideline (@millee.md)
 - **Sources**: 1 citation(s) (latest: 2026-09-09) — [@millee.md](https://www.instagram.com/p/DdFJTtMganO/)
+
+#### Dual-Trigger Access for Power Utilities
+- **Do this**: Integrate a dual-trigger access pattern for complex utility modals, combining a right-click context menu action with a standardized keyboard shortcut (such as Cmd + R) to accommodate diverse user physical abilities and workflow speeds.
+- **Why it matters**: Providing both mouse-driven and keyboard-driven pathways reduces motor load, accommodates users with different accessibility needs, and accelerates high-frequency repetitive tasks for power users.
+- **Implementation Pattern**: A layer list component where right-clicking a layer displays a 'Rename' option, which can also be instantly opened by pressing Cmd + R when the layer is focused.
+- **Status**: Single-Source Guideline (@designcode.io)
+- **Sources**: 1 citation(s) (latest: 2024-04-12) — [@designcode.io](https://www.instagram.com/p/C5qZEakL_SP/)
 
 #### Human-Readable Fallback Error States
 - **Do this**: Intercept raw system exceptions (404, 500, stack traces) and display an actionable recovery message with clear next steps.
@@ -175,6 +226,20 @@ Before finalizing any interface layout or component hierarchy, audit against the
 - **Status**: Single-Source Guideline (@jploft.us)
 - **Sources**: 1 citation(s) (latest: 2026-09-16) — [@jploft.us](https://www.instagram.com/p/DdXFTBoPEHn/)
 
+#### Fluid Component Resizing via Parent-Child Constraints
+- **Do this**: Configure parent containers to dynamically wrap child elements using 'hug contents' while setting nested content layers to 'fill container' to ensure components scale fluidly across varying viewport widths.
+- **Why it matters**: Eliminates rigid, fixed-pixel dimensions that cause layout breakage, allowing components to automatically adapt to dynamic content lengths and screen sizes.
+- **Implementation Pattern**: A button component with horizontal padding of 16px set to 'hug contents' automatically expands or contracts its width based on the length of the button label text.
+- **Status**: Single-Source Guideline (@designcode.io)
+- **Sources**: 1 citation(s) (latest: 2024-04-14) — [@designcode.io](https://www.instagram.com/p/C5vilGoN3iN/)
+
+#### Master-Template Card Grid Layout
+- **Do this**: Standardize dynamic content feeds by designing a single master card template with fixed image aspect ratios and explicit text container constraints to maintain layout consistency across variable database inputs.
+- **Why it matters**: Ensures visual uniformity and prevents layout breaking or uneven card heights when dynamic content of varying lengths is loaded from a database.
+- **Implementation Pattern**: A blog post repeater grid where every card maintains a strict 1:1 image aspect ratio, 16px internal padding, and a 2-line truncation limit for titles, ensuring all cards in the row align perfectly at the bottom.
+- **Status**: Single-Source Guideline (@designcode.io)
+- **Sources**: 1 citation(s) (latest: 2024-03-15) — [@designcode.io](https://www.instagram.com/p/C4hSKaWtaV7/)
+
 #### Persistent Mobile Conversion Anchor
 - **Do this**: Implement a sticky bottom bar housing the primary conversion action on mobile viewports.
 - **Why it matters**: Keeps the primary conversion goal accessible at all times on small screens, preventing the user from needing to scroll back up to convert.
@@ -190,6 +255,13 @@ Before finalizing any interface layout or component hierarchy, audit against the
 - **Implementation Pattern**: Instead of a centered spinner, display grey pulsing rectangular blocks where cards or lists will load.
 - **Status**: Single-Source Guideline (@jploft.us)
 - **Sources**: 1 citation(s) (latest: 2026-09-16) — [@jploft.us](https://www.instagram.com/p/DdXFTBoPEHn/)
+
+#### Tokenized Dynamic Input Fields
+- **Do this**: Design batch-processing text inputs with adjacent, clickable variable tokens (such as original name or ascending/descending numbers) that inject dynamic placeholders directly into the input field at the current cursor position.
+- **Why it matters**: This layout pattern eliminates the need for users to memorize syntax or regular expressions, reducing input errors and cognitive friction during complex string formatting.
+- **Implementation Pattern**: A batch-export modal featuring a text input for file naming, accompanied by a row of pill buttons labeled 'Date', 'Sequence', and 'Project Name' that insert dynamic variables into the input field when clicked.
+- **Status**: Single-Source Guideline (@designcode.io)
+- **Sources**: 1 citation(s) (latest: 2024-04-12) — [@designcode.io](https://www.instagram.com/p/C5qZEakL_SP/)
 
 #### Viewport Auto-Scrolling for Active Inputs
 - **Do this**: Ensure focused input fields automatically scroll into view above the software keyboard when the virtual keyboard expands.

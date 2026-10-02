@@ -27,7 +27,7 @@ except ImportError:
 logger = logging.getLogger("extract_principles")
 
 EXTRACTION_SYSTEM_PROMPT = """
-You are an expert UI/UX design synthesizer. Your job is to analyze real Instagram post captions and video transcripts, and extract actionable UI/UX design principles actually taught or demonstrated in them.
+You are an expert design-systems engineer and senior UI/UX reviewer synthesizing creator content into an instructive, actionable Claude Skill.
 
 CATEGORIES ALLOWED:
 - spacing
@@ -38,27 +38,30 @@ CATEGORIES ALLOWED:
 - accessibility
 - layout
 
-HARD QUALITY & COPYRIGHT CONSTRAINTS:
-1. ALWAYS PARAPHRASE: Under no circumstances should you copy or quote text verbatim from the source. State the rule, why, and example clearly in your own concise, authoritative words.
-2. STRICT ACTIONABILITY & SPECIFICITY TEST:
-   - If the rule could apply to any UI decision without meaningfully constraining it (e.g. 'maintain visual balance', 'use consistent styling', 'structure elements cleanly', 'use systematic color rules'), DO NOT INCLUDE IT.
-   - The `rule` field MUST name a specific, checkable action, value, pairing, technique, ratio, or threshold (e.g. 'Pair warm earth tones with electric cool blue accents for focal pop', 'Structure hero layouts with a 12-column editorial grid and focal portrait photography', 'Apply backdrop-filter blur (12-16px) to sticky navigation headers over hero media').
-3. CONFIDENCE RATING:
+HARD QUALITY & ACTIONABILITY CONSTRAINTS:
+1. ALWAYS PARAPHRASE: Under no circumstances copy or quote text verbatim from the source. State the guidance clearly in your own authoritative, production-grade technical vocabulary.
+2. INSTRUCTIVE DIRECTIVE FORMAT:
+   - "trigger_context": Describe the exact UI scenario or component where this applies (e.g., 'any primary action button that fires a network request', 'sticky navigation header over hero media', 'multi-step form checkout flows').
+   - "do_this": Specific, imperative, checkable engineering action the agent must execute.
+   - "dont_do_this": Specific anti-pattern or mistake that this principle prevents.
+   - "rule": Concise imperative synthesis of the action.
+3. SPECIFICITY TEST: If a rule could apply to any UI decision without constraining it (e.g. 'maintain balance', 'clean layout'), DO NOT INCLUDE IT. Must specify concrete techniques, values, or thresholds.
+4. CONFIDENCE RATING:
    - 'high': Concrete, specific, highly actionable design rule or pairing taught directly.
    - 'medium': Actionable guideline with clear practical context.
-   - 'low': Vague, speculative, or loosely implied concept (will be quarantined).
-4. NO FABRICATION: If the post does not contain any concrete, actionable UI/UX design guideline (e.g. it is a personal vlog, general photo edit, lifestyle clip, sponsorship, meme, or vague promotional text), you MUST return an empty array `[]`.
-5. EVIDENCE FIDELITY & NO INVENTED MEASUREMENTS:
-   - Only include specific numerical values, percentages, opacities, or color hex codes (e.g. '16px', '10%', '#E2E8F0') if they are EXPLICITLY stated in the creator's transcript or caption text.
-   - If the creator demonstrates a visual technique conceptually without citing exact numbers, describe the technique (e.g. 'subtle low opacity', 'soft backdrop blur', 'light neutral border') rather than fabricating specific measurements.
+   - 'low': Vague, speculative, or loosely implied concept.
+5. NO FABRICATION: If the post does not contain any concrete UI/UX guideline, return an empty array `[]`.
 
 Return ONLY a JSON array matching this schema:
 [
   {
-    "principle": "<Concise, descriptive title, e.g. 'Warm Earth and Cool Accent Color Contrast'>",
+    "principle": "<Concise, descriptive title, e.g. 'Interactive Tap Debouncing'>",
     "category": "<one of: spacing|color|typography|hierarchy|motion|accessibility|layout>",
+    "trigger_context": "<Specific UI scenario or component when this principle applies>",
+    "do_this": "<Exact imperative action to execute>",
+    "dont_do_this": "<Specific anti-pattern or mistake to avoid>",
     "rule": "<Specific, imperative, checkable UI/UX rule>",
-    "why": "<Cognitive, visual, or ergonomic rationale>",
+    "why": "<Cognitive, visual, or ergonomic rationale and failure mode>",
     "example": "<Concrete UI implementation or component before/after>",
     "confidence": "<high|medium|low>"
   }
@@ -66,8 +69,8 @@ Return ONLY a JSON array matching this schema:
 Only output valid JSON. No conversational filler or markdown fences outside the JSON.
 """
 
-EXTRACTION_BATCH_SYSTEM_PROMPT = """You are an expert design-systems engineer and senior UI/UX reviewer.
-Your job is to analyze multiple social media creator posts (captions or spoken video transcripts) and extract production-ready, actionable UI/UX and interface design principles.
+EXTRACTION_BATCH_SYSTEM_PROMPT = """You are an expert design-systems engineer and senior UI/UX reviewer synthesizing creator content into an instructive, actionable Claude Skill.
+Your job is to analyze creator posts (captions or spoken video transcripts) and extract production-ready, actionable UI/UX and interface design principles.
 
 Analyze each provided post independently. A post may contain zero, one, or multiple design principles.
 
@@ -81,26 +84,32 @@ Allowed categories:
 - layout
 
 HARD QUALITY & COPYRIGHT CONSTRAINTS:
-1. ALWAYS PARAPHRASE: Under no circumstances should you copy or quote text verbatim from the source. State the rule, why, and example clearly in your own concise, authoritative words.
-2. STRICT ACTIONABILITY & SPECIFICITY TEST:
-   - If the rule could apply to any UI decision without meaningfully constraining it (e.g. 'maintain visual balance', 'use consistent styling', 'structure elements cleanly'), DO NOT INCLUDE IT.
-   - The `rule` field MUST name a specific, checkable action, value, pairing, technique, ratio, or threshold.
-3. CONFIDENCE RATING:
+1. ALWAYS PARAPHRASE: Under no circumstances copy or quote text verbatim from the source. State the guidance clearly in your own authoritative, production-grade technical vocabulary.
+2. INSTRUCTIVE DIRECTIVE FORMAT:
+   - "trigger_context": Describe the exact UI scenario or component where this applies (e.g., 'any primary action button that fires a network request', 'sticky navigation header over hero media', 'multi-step form checkout flows').
+   - "do_this": Specific, imperative, checkable engineering action the agent must execute.
+   - "dont_do_this": Specific anti-pattern or mistake that this principle prevents.
+   - "rule": Concise imperative synthesis of the action.
+3. SPECIFICITY TEST: If a rule could apply to any UI decision without constraining it (e.g. 'maintain balance', 'clean layout'), DO NOT INCLUDE IT. Must specify concrete techniques, values, or thresholds.
+4. CONFIDENCE RATING:
    - 'high': Concrete, specific, highly actionable design rule or pairing taught directly.
    - 'medium': Actionable guideline with clear practical context.
    - 'low': Vague, speculative, or loosely implied concept.
-4. NO FABRICATION: If a post does not contain any concrete, actionable UI/UX design guideline (e.g. it is a personal vlog, general photo edit, lifestyle clip, sponsorship, meme, or vague promotional text), you MUST NOT invent or return principles for it.
-5. SHORTCODE MATCHING: You MUST include the "shortcode" field matching the corresponding post's shortcode.
-6. FUSION DEDUPLICATION: If a post provides both a video transcript and a caption describing the same underlying design rule, synthesize them into a SINGLE comprehensive principle citing both aspects. Never output duplicate or overlapping principles for the same post.
+5. NO FABRICATION: If a post does not contain any concrete UI/UX guideline, return an empty array `[]`.
+6. SHORTCODE MATCHING: You MUST include the "shortcode" field matching the corresponding post's shortcode.
+7. FUSION DEDUPLICATION: If a post provides both a video transcript and a caption describing the same underlying design rule, synthesize them into a SINGLE comprehensive principle citing both aspects. Never output duplicate or overlapping principles for the same post.
 
 Return ONLY a JSON array matching this schema:
 [
   {
     "shortcode": "<post shortcode matching the input post, e.g. 'Dd6TWQ0hpfH'>",
-    "principle": "<Concise, descriptive title, e.g. 'Debounced Interactive Tap State'>",
+    "principle": "<Concise, descriptive title, e.g. 'Interactive Tap Debouncing'>",
     "category": "<one of: spacing|color|typography|hierarchy|motion|accessibility|layout>",
+    "trigger_context": "<Specific UI scenario or component when this principle applies>",
+    "do_this": "<Exact imperative action to execute>",
+    "dont_do_this": "<Specific anti-pattern or mistake to avoid>",
     "rule": "<Specific, imperative, checkable UI/UX rule>",
-    "why": "<Cognitive, visual, or ergonomic rationale>",
+    "why": "<Cognitive, visual, or ergonomic rationale and failure mode>",
     "example": "<Concrete UI implementation or component before/after>",
     "confidence": "<high|medium|low>"
   }
@@ -369,9 +378,16 @@ def extract_principles_batch(
             cat = "layout"
 
         p_name = (p.get("principle") or "Design Principle").strip()
-        rule = (p.get("rule") or "").strip()
+        do_this = (p.get("do_this") or "").strip()
+        dont_do_this = (p.get("dont_do_this") or p.get("anti_pattern") or "").strip()
+        trigger_context = (p.get("trigger_context") or "").strip()
+        rule = (p.get("rule") or do_this or "").strip()
+        if not do_this and rule:
+            do_this = rule
         why = (p.get("why") or "").strip()
         example = (p.get("example") or "None specified").strip()
+        if example == "None specified" and do_this and dont_do_this:
+            example = f"Before: {dont_do_this}\nAfter: {do_this}"
         confidence = (p.get("confidence") or "medium").lower()
 
         if not p_name or not rule:
@@ -380,6 +396,9 @@ def extract_principles_batch(
         results_by_shortcode[sc].append({
             "principle": p_name,
             "category": cat,
+            "trigger_context": trigger_context,
+            "do_this": do_this,
+            "dont_do_this": dont_do_this,
             "rule": rule,
             "why": why,
             "example": example,
@@ -420,9 +439,16 @@ def extract_principles_from_text(
             cat = "layout"
 
         p_name = (item.get("principle") or "Design Principle").strip()
-        rule = (item.get("rule") or "").strip()
+        do_this = (item.get("do_this") or "").strip()
+        dont_do_this = (item.get("dont_do_this") or item.get("anti_pattern") or "").strip()
+        trigger_context = (item.get("trigger_context") or "").strip()
+        rule = (item.get("rule") or do_this or "").strip()
+        if not do_this and rule:
+            do_this = rule
         why = (item.get("why") or "").strip()
         example = (item.get("example") or "None specified").strip()
+        if example == "None specified" and do_this and dont_do_this:
+            example = f"Before: {dont_do_this}\nAfter: {do_this}"
         confidence = (item.get("confidence") or "medium").lower()
 
         if not p_name or not rule:
@@ -431,6 +457,9 @@ def extract_principles_from_text(
         valid_principles.append({
             "principle": p_name,
             "category": cat,
+            "trigger_context": trigger_context,
+            "do_this": do_this,
+            "dont_do_this": dont_do_this,
             "rule": rule,
             "why": why,
             "example": example,
