@@ -107,6 +107,21 @@
         "date": "2026-09-15",
         "url": "https://www.instagram.com/p/DdQhclcxcL-/"
       }
+    ],
+    "variants": [
+      {
+        "principle": "Immediate Interactive Press Feedback",
+        "rule": "Provide instantaneous visual and haptic feedback when a user touches or clicks an interactive surface.",
+        "why": "Instantaneous feedback confirms touch registration and reassures the user that their input is being processed.",
+        "example": "Scale a button down to 98% and trigger a light haptic pulse immediately upon touch down.",
+        "sources": [
+          {
+            "handle": "julianxuofficial",
+            "date": "2026-09-15",
+            "url": "https://www.instagram.com/p/DdQhclcxcL-/"
+          }
+        ]
+      }
     ]
   },
   {

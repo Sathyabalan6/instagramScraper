@@ -395,4 +395,96 @@ def test_honest_consensus_labeling(tmp_path):
     assert "Multi-Source Consensus" not in content
 
 
+def test_classify_paths_list():
+    """Verify that classify_single_post outputs both path and paths list."""
+    config = load_config(str(_ROOT / "config.yaml"))
+    min_words = config.get("classify", {}).get("min_caption_words", 40)
+    keywords = config.get("classify", {}).get("keywords", [])
+
+    rich_caption = (
+        "Here are spacing rules and typography guidelines for responsive cards with good accessibility. "
+        "Always ensure sufficient contrast and hierarchy between headline and body text across all layouts."
+    )
+    # Video with rich caption -> both audio and caption in paths
+    res_video_rich = classify_single_post({"caption": rich_caption, "is_video": True}, min_words=min_words, keywords=keywords)
+    assert "audio" in res_video_rich["paths"]
+    assert "caption" in res_video_rich["paths"]
+
+    # Video with short caption -> only audio in paths
+    res_video_short = classify_single_post({"caption": "Short caption", "is_video": True}, min_words=min_words, keywords=keywords)
+    assert res_video_short["paths"] == ["audio"]
+
+
+def test_centroid_clustering_and_variants(tmp_path):
+    """Verify cluster_and_synthesize_principles uses centroids and preserves alternate variants."""
+    from scripts.merge_skill import cluster_and_synthesize_principles, generate_skill_markdown
+
+    principles = [
+        {
+            "principle": "Debounce Interactive Buttons",
+            "category": "motion",
+            "rule": "Disable action button triggers immediately on first tap.",
+            "why": "Prevents accidental duplicate orders and form submissions.",
+            "example": "Before: Button stays active. After: Button is disabled on click.",
+            "confidence": "high",
+            "sources": [{"handle": "creator1", "url": "https://instagram.com/p/1"}]
+        },
+        {
+            "principle": "Debounce Interactive Buttons",
+            "category": "motion",
+            "rule": "Gate form submissions behind an immediate visual loading state.",
+            "why": "Stops duplicate API requests and network spam.",
+            "example": "Before: Rapid taps trigger multiple requests. After: Loading spinner activates.",
+            "confidence": "medium",
+            "sources": [{"handle": "creator2", "url": "https://instagram.com/p/2"}]
+        }
+    ]
+
+    synthesized = cluster_and_synthesize_principles(principles)
+    assert len(synthesized) == 1
+    canonical = synthesized[0]
+    assert canonical["confidence"] == "high"
+    assert len(canonical["sources"]) == 2
+    assert "variants" in canonical
+    assert len(canonical["variants"]) == 1
+    assert "Gate form submissions" in canonical["variants"][0]["rule"]
+
+    # Verify rendering in SKILL.md
+    out_file = tmp_path / "VARIANTS_SKILL.md"
+    generate_skill_markdown(synthesized, str(out_file))
+    content = out_file.read_text(encoding="utf-8")
+    assert "- **Alternate Creator Perspectives & Implementations**:" in content
+    assert "Gate form submissions" in content
+
+
+def test_cross_category_guard():
+    """Verify that non-whitelisted cross-category pairs are strictly rejected from clustering."""
+    from scripts.merge_skill import cluster_and_synthesize_principles
+
+    # Color and Spacing are NOT in ALLOWED_CROSS_CATEGORY_PAIRS
+    color_p = {
+        "principle": "High Contrast Ratio",
+        "category": "color",
+        "rule": "Maintain high contrast ratio between foreground and background.",
+        "why": "Ensures readable text.",
+        "example": "4.5:1 ratio",
+        "confidence": "high",
+        "sources": [{"handle": "c1", "url": "https://instagram.com/p/1"}]
+    }
+    spacing_p = {
+        "principle": "High Contrast Ratio",
+        "category": "spacing",
+        "rule": "Maintain high contrast ratio between foreground and background.",
+        "why": "Ensures readable text.",
+        "example": "4.5:1 ratio",
+        "confidence": "high",
+        "sources": [{"handle": "c2", "url": "https://instagram.com/p/2"}]
+    }
+
+    synthesized = cluster_and_synthesize_principles([color_p, spacing_p])
+    # Must NOT merge across forbidden categories despite identical wording
+    assert len(synthesized) == 2
+
+
+
 

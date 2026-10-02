@@ -1,7 +1,7 @@
 instaloader>=4.11
 yt-dlp>=2024.1
 faster-whisper>=1.0.0
-av>=11.0.0
+av>=12.0.0,<14.0.0
 openai-whisper>=20231117
 pyyaml>=6.0
 rapidfuzz>=3.6

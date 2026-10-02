@@ -258,7 +258,8 @@ def transcribe_posts(
 
     audio_posts = [
         p for p in posts
-        if p.get("classification", {}).get("path") == "audio" and not p.get("transcript")
+        if ("audio" in p.get("classification", {}).get("paths", [p.get("classification", {}).get("path")]))
+        and not p.get("transcript")
     ]
 
     logger.info(f"Found {len(audio_posts)} video posts requiring audio transcription for @{handle}.")

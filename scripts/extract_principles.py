@@ -10,6 +10,7 @@ import os
 import re
 import sys
 import json
+import hashlib
 import argparse
 import logging
 from pathlib import Path
@@ -106,6 +107,8 @@ Return ONLY a JSON array matching this schema:
 ]
 Only output valid JSON. No conversational filler or markdown fences outside the JSON.
 """
+
+EXTRACTION_PROMPT_HASH = hashlib.sha256(EXTRACTION_BATCH_SYSTEM_PROMPT.strip().encode("utf-8")).hexdigest()[:12]
 
 
 def load_config(config_path: str = "config.yaml") -> dict:
@@ -351,12 +354,13 @@ def extract_principles_batch(
             continue
         sc = p.get("shortcode")
         if sc not in results_by_shortcode:
-            matching = [s for s in results_by_shortcode if s and s in str(p)]
-            if matching:
-                sc = matching[0]
-            elif len(batch_items) == 1:
+            if len(batch_items) == 1:
                 sc = batch_items[0].get("shortcode")
             else:
+                logger.warning(
+                    f"LLM returned principle '{p.get('principle')}' with missing or unmatched shortcode '{sc}' "
+                    f"in batch of {len(batch_items)} posts. Skipping principle to prevent misattribution."
+                )
                 continue
 
         meta = lookup.get(sc, {})
@@ -444,11 +448,13 @@ def extract_principles_from_text(
 def extract_principles(
     handle: str,
     config_path: str = "config.yaml",
-    refresh: bool = False
+    refresh: bool = False,
+    refresh_low_confidence: bool = False
 ) -> list:
     """
     Load classified & transcribed posts, extract principles via LLM analysis,
     and save creator-isolated output.
+    Supports granular refresh: full refresh, low-confidence re-extraction, or automatic prompt-hash update.
     """
     config = load_config(config_path)
     extract_cfg = config.get("extraction", {})
@@ -481,12 +487,28 @@ def extract_principles(
 
     posts_to_analyze = []
     for post in posts:
-        # If not refreshing and post already has extracted principles, skip
-        if not refresh and post.get("principles") is not None and len(post.get("principles", [])) > 0:
+        has_principles = post.get("principles") is not None and len(post.get("principles", [])) > 0
+        current_meta = post.get("extraction_metadata", {})
+        saved_hash = current_meta.get("prompt_hash")
+        has_low_conf = any(p.get("confidence") == "low" for p in post.get("principles", []))
+
+        if refresh:
+            should_extract = True
+        elif refresh_low_confidence:
+            should_extract = (not has_principles) or has_low_conf
+        else:
+            if has_principles and saved_hash and saved_hash != EXTRACTION_PROMPT_HASH:
+                logger.info(f"Post {post.get('shortcode')}: System prompt updated ({saved_hash} -> {EXTRACTION_PROMPT_HASH}). Re-extracting...")
+                should_extract = True
+            elif has_principles:
+                should_extract = False
+            else:
+                should_extract = True
+
+        if not should_extract:
             continue
 
         classification = post.get("classification", {})
-        path = classification.get("path")
         shortcode = post.get("shortcode")
         url = post.get("url")
         date = post.get("date")
@@ -500,7 +522,9 @@ def extract_principles(
             source_text = f"Spoken Video Transcript:\n{transcript}\n\nPost Caption:\n{caption}"
         elif transcript:
             source_text = transcript
-        elif caption:
+        elif caption and (classification.get("has_rich_caption") or "caption" in classification.get("paths", [classification.get("path")])):
+            source_text = caption
+        elif caption and len(caption.split()) >= 25:
             source_text = caption
         else:
             source_text = ""
@@ -523,6 +547,12 @@ def extract_principles(
 
     # Batch process in chunks (default 1 for maximum fidelity and zero cross-post contamination)
     batch_size = max(1, int(extract_cfg.get("batch_size", 1)))
+    if batch_size > 1:
+        logger.warning(
+            f"Batch size is {batch_size} > 1. Multi-post LLM batching carries risk of post attribution drift. "
+            f"Set batch_size: 1 in config.yaml for strictly isolated post analysis."
+        )
+
     for i in range(0, len(posts_to_analyze), batch_size):
         batch = posts_to_analyze[i:i + batch_size]
         batch_codes = [b["shortcode"] for b in batch]
@@ -546,7 +576,8 @@ def extract_principles(
                     "method": "llm_batch",
                     "provider": info.get("provider"),
                     "model": info.get("model"),
-                    "principles_count": len(p_list)
+                    "principles_count": len(p_list),
+                    "prompt_hash": EXTRACTION_PROMPT_HASH
                 }
                 extraction_stats["principles_found"] += len(p_list)
                 all_extracted.extend(p_list)
@@ -614,11 +645,17 @@ def main():
     parser.add_argument("--handle", required=True, help="Instagram handle (without @)")
     parser.add_argument("--config", default="config.yaml", help="Path to config.yaml")
     parser.add_argument("--refresh", action="store_true", help="Re-extract principles even if already extracted")
+    parser.add_argument("--refresh-low-confidence", action="store_true", help="Re-extract principles for posts with missing or low-confidence principles")
 
     args = parser.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 
-    extract_principles(args.handle, config_path=args.config, refresh=args.refresh)
+    extract_principles(
+        args.handle,
+        config_path=args.config,
+        refresh=args.refresh,
+        refresh_low_confidence=args.refresh_low_confidence
+    )
 
 
 if __name__ == "__main__":

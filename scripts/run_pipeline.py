@@ -203,7 +203,8 @@ def run_pipeline(
     config_path: str = "config.yaml",
     skip_transcribe: bool = False,
     verbose: bool = False,
-    refresh: bool = False
+    refresh: bool = False,
+    refresh_low_confidence: bool = False
 ):
     """
     Run full extraction pipeline:
@@ -267,7 +268,12 @@ def run_pipeline(
         extract_stage = 3 if skip_transcribe else 4
         pbar.set_description(f"Stage {extract_stage}: Extracting principles")
         logger.info(f"--- Stage {extract_stage}: Extracting design principles ---")
-        extracted = extract_principles(target_name, config_path=config_path, refresh=refresh)
+        extracted = extract_principles(
+            target_name,
+            config_path=config_path,
+            refresh=refresh,
+            refresh_low_confidence=refresh_low_confidence
+        )
         pbar.update(1)
 
         # Stage Merge
@@ -313,6 +319,7 @@ def main():
     parser.add_argument("--config", default="config.yaml", help="Path to config.yaml")
     parser.add_argument("--skip-transcribe", action="store_true", help="Skip Whisper audio transcription")
     parser.add_argument("--refresh", action="store_true", help="Force re-extraction of design principles on all posts")
+    parser.add_argument("--refresh-low-confidence", action="store_true", help="Re-extract principles for posts with missing or low-confidence principles")
     parser.add_argument("--verbose", "-v", action="store_true", help="Enable verbose debug logs")
 
     args = parser.parse_args()
@@ -328,7 +335,8 @@ def main():
         config_path=args.config,
         skip_transcribe=args.skip_transcribe,
         verbose=args.verbose,
-        refresh=args.refresh
+        refresh=args.refresh,
+        refresh_low_confidence=args.refresh_low_confidence
     )
 
 

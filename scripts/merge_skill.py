@@ -6,11 +6,16 @@ Performs fuzzy deduplication using rapidfuzz.
 
 import os
 import json
+import math
 import argparse
 import logging
 from pathlib import Path
 from datetime import datetime
 import yaml
+import requests
+from dotenv import load_dotenv
+
+load_dotenv()
 
 try:
     from rapidfuzz import fuzz
@@ -40,6 +45,15 @@ CATEGORIES_ORDER = [
     "accessibility",
     "layout"
 ]
+
+# Whitelist allowed cross-category semantic cluster pairings
+ALLOWED_CROSS_CATEGORY_PAIRS = {
+    frozenset({"layout", "spacing"}),
+    frozenset({"motion", "hierarchy"}),
+    frozenset({"color", "accessibility"}),
+    frozenset({"typography", "accessibility"}),
+    frozenset({"layout", "hierarchy"}),
+}
 
 
 def load_config(config_path: str = "config.yaml") -> dict:
@@ -210,12 +224,23 @@ def merge_principles_list(
     return merged
 
 
+def compute_centroid(embs: list) -> list:
+    """Compute normalized average centroid vector from a list of embeddings."""
+    valid = [e for e in embs if e]
+    if not valid:
+        return None
+    dim = len(valid[0])
+    return [sum(e[i] for e in valid) / len(valid) for i in range(dim)]
+
+
 def cluster_and_synthesize_principles(principles: list, similarity_threshold: float = 0.83) -> list:
     """
     Semantic clustering pass that groups principles by concept rather than lexical tokens alone.
-    Uses Gemini embeddings (if GEMINI_API_KEY is available) with cosine similarity clustering,
+    Uses Gemini embeddings (if GEMINI_API_KEY is available) with dynamic centroid cosine similarity clustering,
     falling back to RapidFuzz token set ratio.
     In each cluster:
+    - Maintains dynamically updated centroid embeddings to eliminate seed-order dependency.
+    - Preserves non-canonical alternate rules and implementations as 'variants'.
     - Merges sources from all member principles into a canonical source list.
     - Upgrades confidence ranking to highest within the cluster.
     - Retains the most articulate rule and structured implementation example.
@@ -223,11 +248,6 @@ def cluster_and_synthesize_principles(principles: list, similarity_threshold: fl
     if not principles or len(principles) <= 1:
         return principles
 
-    import os
-    import math
-    import requests
-    from dotenv import load_dotenv
-    load_dotenv()
     api_key = os.getenv("GEMINI_API_KEY")
 
     embeddings = []
@@ -242,8 +262,14 @@ def cluster_and_synthesize_principles(principles: list, similarity_threshold: fl
             resp = requests.post(url, json={"requests": batch_reqs}, timeout=10)
             if resp.status_code == 200:
                 raw_embs = resp.json().get("embeddings", [])
-                embeddings = [e.get("values", []) for e in raw_embs]
-                logger.info(f"Generated {len(embeddings)} semantic embeddings for cross-creator synthesis.")
+                extracted_embs = [e.get("values", []) for e in raw_embs]
+                # Only accept if all embeddings returned successfully to avoid mixed-scale comparisons
+                if len(extracted_embs) == len(principles) and all(e for e in extracted_embs):
+                    embeddings = extracted_embs
+                    logger.info(f"Generated {len(embeddings)} semantic embeddings for cross-creator synthesis.")
+                else:
+                    logger.warning("Partial embedding failure detected; falling back to lexical clustering across all principles.")
+                    embeddings = []
         except Exception as e:
             logger.warning(f"Semantic embedding generation failed, using lexical dedup fallback: {e}")
             embeddings = []
@@ -259,25 +285,41 @@ def cluster_and_synthesize_principles(principles: list, similarity_threshold: fl
         return dot / (norm1 * norm2)
 
     clusters = []  # list of lists of principle dicts
-    cluster_embeddings = []  # representative embedding for cluster
+    cluster_member_embeddings = []  # list of lists of member embeddings
+    cluster_centroids = []  # list of centroid embeddings
+
+    has_full_embeddings = bool(embeddings and len(embeddings) == len(principles))
 
     for idx, p in enumerate(principles):
-        p_emb = embeddings[idx] if idx < len(embeddings) else None
+        p_emb = embeddings[idx] if has_full_embeddings else None
+        p_cat = (p.get("category") or "layout").lower()
         best_cluster_idx = -1
         best_sim = 0.0
 
         for c_idx, c_members in enumerate(clusters):
-            c_rep = c_members[0]
-            same_cat = (p.get("category") == c_rep.get("category"))
-            threshold = similarity_threshold if same_cat else 0.88
+            c_cat = (c_members[0].get("category") or "layout").lower()
+            same_cat = (p_cat == c_cat)
 
-            sim = 0.0
-            if p_emb and cluster_embeddings[c_idx]:
-                sim = cosine_sim(p_emb, cluster_embeddings[c_idx])
+            # Category Guard: Only allow same category or whitelisted cross-category pairs
+            if not same_cat:
+                if frozenset({p_cat, c_cat}) not in ALLOWED_CROSS_CATEGORY_PAIRS:
+                    continue  # Strict rejection for non-whitelisted cross-category pairs
+                threshold = 0.88 if has_full_embeddings else 88.0
             else:
-                t_score = compute_similarity(p.get("principle", ""), c_rep.get("principle", ""))
-                r_score = compute_similarity(p.get("rule", ""), c_rep.get("rule", ""))
-                sim = max(t_score, r_score) / 100.0
+                threshold = similarity_threshold if has_full_embeddings else 82.0
+
+            if has_full_embeddings and cluster_centroids[c_idx]:
+                sim = cosine_sim(p_emb, cluster_centroids[c_idx])
+            else:
+                # Lexical single-linkage against cluster members
+                member_sims = [
+                    max(
+                        compute_similarity(p.get("principle", ""), m.get("principle", "")),
+                        compute_similarity(p.get("rule", ""), m.get("rule", ""))
+                    )
+                    for m in c_members
+                ]
+                sim = max(member_sims) if member_sims else 0.0
 
             if sim > best_sim and sim >= threshold:
                 best_sim = sim
@@ -285,13 +327,22 @@ def cluster_and_synthesize_principles(principles: list, similarity_threshold: fl
 
         if best_cluster_idx >= 0:
             clusters[best_cluster_idx].append(p)
+            if has_full_embeddings and p_emb:
+                cluster_member_embeddings[best_cluster_idx].append(p_emb)
+                cluster_centroids[best_cluster_idx] = compute_centroid(cluster_member_embeddings[best_cluster_idx])
+            sim_display = f"{best_sim:.2f}" if has_full_embeddings else f"{best_sim:.1f}%"
             logger.info(
-                f"Semantically clustered '{p.get('principle')}' with "
-                f"'{clusters[best_cluster_idx][0].get('principle')}' (similarity: {best_sim:.2f})"
+                f"Semantically clustered '{p.get('principle')}' into cluster '{clusters[best_cluster_idx][0].get('principle')}' "
+                f"(centroid similarity: {sim_display})"
             )
         else:
             clusters.append([p])
-            cluster_embeddings.append(p_emb)
+            if has_full_embeddings and p_emb:
+                cluster_member_embeddings.append([p_emb])
+                cluster_centroids.append(p_emb)
+            else:
+                cluster_member_embeddings.append([])
+                cluster_centroids.append(None)
 
     synthesized = []
     conf_rank = {"high": 3, "medium": 2, "low": 1}
@@ -309,6 +360,21 @@ def cluster_and_synthesize_principles(principles: list, similarity_threshold: fl
 
         canonical = max(members, key=member_quality)
         merged_principle = dict(canonical)
+
+        # Preserve alternate perspectives & implementations as variants
+        variants = []
+        for m in members:
+            if m is not canonical:
+                v = {
+                    "principle": m.get("principle"),
+                    "rule": m.get("rule"),
+                    "why": m.get("why"),
+                    "example": m.get("example"),
+                    "sources": m.get("sources", [])
+                }
+                variants.append(v)
+        if variants:
+            merged_principle["variants"] = variants
 
         all_sources = []
         seen_urls = set()
@@ -463,6 +529,18 @@ def generate_skill_markdown(
                     lines.append(f"  - **Do This**: {after_part}")
                 else:
                     lines.append(f"- **Implementation Pattern**: {example}")
+
+            # Alternate Creator Perspectives & Implementations (from synthesized clusters)
+            variants = item.get("variants", [])
+            if variants:
+                lines.append("- **Alternate Creator Perspectives & Implementations**:")
+                for v in variants:
+                    v_sources = v.get("sources", [])
+                    v_handles = [f"@{s.get('handle')}" for s in v_sources if s.get("handle")]
+                    handle_label = f" ({', '.join(v_handles)})" if v_handles else ""
+                    lines.append(f"  - *Perspective{handle_label}*: {v.get('rule')}")
+                    if v.get("example") and v.get("example") != "None specified":
+                        lines.append(f"    - *Implementation*: {v.get('example')}")
 
             # Source Diversity & Consensus Weighting
             if sources:

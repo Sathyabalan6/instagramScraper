@@ -740,24 +740,26 @@ def fetch_posts_direct_api(
     1. Resolve user ID via web search endpoint
     2. Paginate user feed via /api/v1/feed/user/{user_id}/
     """
-    import requests
     import datetime
 
     if processed_ids is None:
         processed_ids = set()
 
-    resolved_cookie_file = resolve_cookie_file(cookies_file)
-    session = requests.Session()
-    if resolved_cookie_file and os.path.exists(resolved_cookie_file):
-        try:
-            jar = MozillaCookieJar(resolved_cookie_file)
-            jar.load(ignore_discard=True, ignore_expires=True)
-            session.cookies = jar
-        except Exception as e:
-            logger.warning(f"Failed to load cookies for direct API: {e}")
+    cookies_dict = load_cookies_as_dict(cookies_file)
+
+    if HAVE_CURL_CFFI and cffi_requests is not None:
+        session = cffi_requests.Session(impersonate="chrome124")
+        logger.info("Initialized curl_cffi session for direct API with Chrome 124 TLS/JA4 impersonation.")
+    else:
+        import requests
+        session = requests.Session()
+        logger.warning("curl_cffi not available; using standard requests session for direct API.")
+
+    if cookies_dict:
+        session.cookies.update(cookies_dict)
 
     session.headers.update({
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
         "X-IG-App-ID": "936619743392459",
         "X-ASBD-ID": "129477",
         "X-Requested-With": "XMLHttpRequest",

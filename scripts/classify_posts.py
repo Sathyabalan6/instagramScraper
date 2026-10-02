@@ -58,24 +58,28 @@ def classify_single_post(
 
     kw_summary = f", keywords: {', '.join(matched_keywords[:4])}" if matched_keywords else ", 0 keywords"
 
-    if has_substance and not post.get("is_video", False):
+    paths = []
+    if post.get("is_video", False):
+        paths.append("audio")
+        if has_rich_caption:
+            paths.append("caption")
+            path = "audio"
+            reason = f"Video reel with detailed caption ({word_count} words{kw_summary}); routed to audio transcription and rich caption extraction"
+        else:
+            path = "audio"
+            reason = f"Video reel with brief caption ({word_count} words{kw_summary}); queued for audio transcription"
+    elif has_rich_caption:
+        paths.append("caption")
         path = "caption"
         reason = f"Detailed static post caption ({word_count} words{kw_summary})"
-    elif post.get("is_video", False):
-        path = "audio"
-        if has_substance:
-            reason = f"Video reel with detailed caption ({word_count} words{kw_summary}); queued for audio transcription with caption retention"
-        else:
-            reason = f"Video reel with brief caption ({word_count} words{kw_summary}); queued for audio transcription"
-    elif word_count >= 25 and len(matched_keywords) > 0:
-        path = "caption"
-        reason = f"Moderate caption ({word_count} words{kw_summary})"
     else:
+        paths.append("skip")
         path = "skip"
         reason = f"Static image without substantial design caption ({word_count} words{kw_summary})"
 
     return {
         "path": path,
+        "paths": paths,
         "reason": reason,
         "word_count": word_count,
         "matched_keywords": matched_keywords,
