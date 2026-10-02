@@ -12,26 +12,18 @@
     "owner_username": "lincolndevine",
     "classification": {
       "path": "audio",
-      "paths": [
-        "audio"
-      ],
-      "reason": "Video reel with brief caption (23 words, 0 keywords); queued for audio transcription",
+      "reason": "Video reel with brief caption; queued for audio transcription",
       "word_count": 23,
-      "matched_keywords": [],
-      "has_rich_caption": false,
-      "has_substance": false
+      "matched_keywords": []
     },
     "transcript": "Five more tells your app was vibe coded.  You know who you are.  First, tapping the thing twice does the thing twice.  Two purchases, two saves, one annoyed user.  Second, raw error text on the screen.  Use toasts, no one wants to see undefined  or some weird database error.  Third, the keyboard covers the field you're typing in.  This is the worst.  Fourth, switching between dark and light mode  suddenly makes things unreadable.  Fifth, you hit the back button  and everything you entered or typed is gone.  You don't always catch these things in testing  because you know how things are supposed to work,  but your users don't.  Comment, polish, I'll send you these five  plus another five and the prompts  to fix all of this stuff.",
     "principles": [
       {
         "principle": "Interactive Tap Debouncing",
-        "category": "accessibility",
-        "trigger_context": "Any primary action button or interactive element that triggers a mutation or network request",
-        "do_this": "Debounce tap handlers or immediately disable interactive elements upon first trigger until the asynchronous action resolves",
-        "dont_do_this": "Allow rapid successive taps to fire duplicate network requests or trigger redundant actions",
-        "rule": "Debounce all interactive triggers to prevent double submissions from rapid tapping.",
-        "why": "Rapid double-tapping causes duplicate transactions, double data saves, and severe user frustration.",
-        "example": "Before: Button fires purchase API on every click. After: Button enters loading state and disables on first click.",
+        "category": "motion",
+        "rule": "Disable action triggers immediately upon activation to prevent duplicate submissions or purchases from rapid double-tapping.",
+        "why": "Rapid or impatient double-taps cause unintended duplicate requests, leading to user frustration and state corruption.",
+        "example": "Button component enters a disabled loading state on first tap: onClick={() => { setLoading(true); submitForm(); }}",
         "confidence": "high",
         "sources": [
           {
@@ -42,14 +34,11 @@
         ]
       },
       {
-        "principle": "User-Friendly Error Presentation",
+        "principle": "User-Friendly Error Notification Toasts",
         "category": "hierarchy",
-        "trigger_context": "Any component handling API errors, network failures, or validation exceptions",
-        "do_this": "Display contextual toast notifications or inline banners containing human-readable error messages",
-        "dont_do_this": "Expose raw database exceptions, stack traces, or variable values like undefined directly to the UI",
-        "rule": "Display human-readable toast notifications for errors instead of raw system output.",
-        "why": "Raw technical errors confuse users, break visual polish, and erode trust in the application stability.",
-        "example": "Before: Screen displays 'TypeError: undefined is not a function'. After: Toast displays 'Unable to save changes. Please try again.'",
+        "rule": "Replace raw technical error logs or undefined strings with contextual, human-readable notification toasts.",
+        "why": "Exposing raw database errors creates cognitive overload and damages product trust.",
+        "example": "Displaying 'Something went wrong saving your changes. Try again.' instead of 'Error: TypeError: undefined at Object...'",
         "confidence": "high",
         "sources": [
           {
@@ -60,14 +49,11 @@
         ]
       },
       {
-        "principle": "Dynamic Viewport Keyboard Padding",
+        "principle": "Viewport Auto-Scrolling for Active Inputs",
         "category": "layout",
-        "trigger_context": "Form inputs, textareas, and chat inputs positioned near the bottom of mobile viewports",
-        "do_this": "Adjust container padding or scroll the active input into view dynamically when the software keyboard appears",
-        "dont_do_this": "Let the software keyboard obscure the active input field entirely",
-        "rule": "Pad or scroll viewports dynamically so the virtual keyboard never obscures active input fields.",
-        "why": "Obscuring the input field prevents users from seeing what they are typing, leading to input abandonment.",
-        "example": "Before: Bottom input field is hidden beneath the OS keyboard. After: Form scrolls up automatically to keep the focused input visible.",
+        "rule": "Ensure focused input fields automatically scroll into view above the software keyboard when the virtual keyboard expands.",
+        "why": "When keyboards obscure input fields, users cannot see what they are typing, leading to input errors and abandonment.",
+        "example": "Applying scrollIntoView({ behavior: 'smooth', block: 'center' }) on input focus events within mobile viewports.",
         "confidence": "high",
         "sources": [
           {
@@ -78,15 +64,12 @@
         ]
       },
       {
-        "principle": "Theme Contrast Verification",
+        "principle": "Theme State Persistence on Back Navigation",
         "category": "color",
-        "trigger_context": "UI components, text, and icons that dynamically switch between dark and light themes",
-        "do_this": "Audit all token values across both dark and light modes to maintain WCAG compliant contrast ratios in every state",
-        "dont_do_this": "Hardcode color values or rely on inversion algorithms that result in unreadable low-contrast text",
-        "rule": "Verify accessible contrast ratios for all elements across both light and dark theme toggles.",
-        "why": "Unverified theme switching causes text to blend into backgrounds, rendering the interface completely unreadable.",
-        "example": "Before: Gray text remains dark gray when switching to dark mode, disappearing into the background. After: Text tokens dynamically switch to light gray for high contrast.",
-        "confidence": "high",
+        "rule": "Maintain consistent color token values and contrast ratios across dark and light mode transitions to prevent unreadable text states.",
+        "why": "Abrupt theme switches can cause foreground text to blend into newly loaded backgrounds, breaking legibility.",
+        "example": "Using dynamic CSS custom properties (e.g., var(--text-primary)) that update cleanly without orphan color dependencies.",
+        "confidence": "medium",
         "sources": [
           {
             "handle": "lincolndevine",
@@ -96,14 +79,11 @@
         ]
       },
       {
-        "principle": "Form State Persistence",
+        "principle": "Client-Side Input State Caching",
         "category": "layout",
-        "trigger_context": "Multi-step workflows, forms, and input screens where a user might navigate backward",
-        "do_this": "Persist user input state in local storage, route state, or form management stores across navigation events",
-        "dont_do_this": "Clear input values or unmount state when a user hits the back button",
-        "rule": "Persist form input state locally so user entries are preserved when navigating backward.",
-        "why": "Losing typed data upon hitting the back button destroys user effort and causes extreme friction.",
-        "example": "Before: Hitting back clears all entered form fields. After: Returning to the form restores previously typed inputs from state cache.",
+        "rule": "Persist form input states and user entries locally on page or route transitions so data is not lost when hitting the back button.",
+        "why": "Losing typed inputs upon navigating backward causes severe user friction and forces repetitive data entry.",
+        "example": "Autosaving form state to sessionStorage or localStorage on input change events.",
         "confidence": "high",
         "sources": [
           {
@@ -118,8 +98,7 @@
       "method": "llm_batch",
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
-      "principles_count": 5,
-      "prompt_hash": "ad46e79302ae"
+      "principles_count": 5
     }
   },
   {
@@ -135,14 +114,9 @@
     "owner_username": "okaashish",
     "classification": {
       "path": "audio",
-      "paths": [
-        "audio"
-      ],
-      "reason": "Video reel with brief caption (18 words, 0 keywords); queued for audio transcription",
+      "reason": "Video reel with brief caption; queued for audio transcription",
       "word_count": 18,
-      "matched_keywords": [],
-      "has_rich_caption": false,
-      "has_substance": false
+      "matched_keywords": []
     },
     "transcript": "Privacy Policy, Terms and Conditions, Cookie Policy, Refund Policy, Cookie plus Form Consent,  what user data do you collect?  3rd party embeds, Alltext plus Color Contrast, Keyboard Friendly Forms plus Clear Buttons,  Fake Reviews plus Unsupported Claims plus Business Details, Copyrighted Images plus Applicable  Local Loss.",
     "principles": [],
@@ -150,8 +124,7 @@
       "method": "llm_batch",
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
-      "principles_count": 0,
-      "prompt_hash": "ad46e79302ae"
+      "principles_count": 0
     }
   },
   {
@@ -167,15 +140,9 @@
     "owner_username": "kevini.mai",
     "classification": {
       "path": "audio",
-      "paths": [
-        "audio",
-        "caption"
-      ],
-      "reason": "Video reel with detailed caption (123 words, 0 keywords); routed to audio transcription and rich caption extraction",
+      "reason": "Video reel with brief caption; queued for audio transcription",
       "word_count": 123,
-      "matched_keywords": [],
-      "has_rich_caption": true,
-      "has_substance": true
+      "matched_keywords": []
     },
     "transcript": "I just vibe coded an entire app in two hours. It works. It looks great, but I have no idea if it's actually secure. Like, could someone hack this thing?  Oh, they absolutely could. And they will. Unless you use these five prompts to lock it down before it's too late.  Prompt number one. Tell your AI to implement rate limiting on all endpoints. Five attempts max per 15 minutes on login routes. That way hackers can't brute force their way in.  Oh yeah, that's smart. What about the passwords I left in the code?  You did what? That's prompt number two, you buffoon. Tell the AI to scan your entire code base for any hard code.  And prompt three. Move all sensitive data to environment variables. Make sure nothing is exposed in the front end or committed to get. You absolute walnut.  Okay. Okay. I'm writing this down. What else?  Prompt four. Sanitize all user inputs and reject anything oversized or malformed. Unless you want someone injecting code straight into your database.  That sounds bad.  It is bad, Peter. And finally, prompt five. Run a full security audit and report any remaining vulnerabilities. Think of it as a final health check before you unleash your little creation on the world.  Thanks, Stewie. You just saved my app and probably my identity.  You're welcome. Now if you found this useful, follow this page for more tips so you don't get destroyed on the internet. Do it now.",
     "principles": [],
@@ -183,8 +150,7 @@
       "method": "llm_batch",
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
-      "principles_count": 0,
-      "prompt_hash": "ad46e79302ae"
+      "principles_count": 0
     }
   },
   {
@@ -199,120 +165,21 @@
     "like_count": 352,
     "owner_username": "murphmaxxing",
     "classification": {
-      "path": "audio",
-      "paths": [
-        "audio",
-        "caption"
-      ],
-      "reason": "Video reel with detailed caption (126 words, keywords: grid, landing); routed to audio transcription and rich caption extraction",
+      "path": "caption",
+      "reason": "Detailed caption (126 words) with design keywords: grid, landing",
       "word_count": 126,
       "matched_keywords": [
         "grid",
         "landing"
-      ],
-      "has_rich_caption": true,
-      "has_substance": true
+      ]
     },
-    "principles": [
-      {
-        "principle": "Hero Section Background Differentiation",
-        "category": "color",
-        "trigger_context": "The primary landing page hero section background layer",
-        "do_this": "Utilize bespoke, context-driven surface treatments, custom brand palette pairings, or subtle mesh gradients instead of defaulting to a dark slate background with a centered generic purple radial blur.",
-        "dont_do_this": "Default to Tailwind slate-900 combined with a centralized, blurred purple radial gradient orb.",
-        "rule": "Avoid generic dark slate and centered purple blur hero backgrounds in favor of unique brand-aligned surface treatments.",
-        "why": "Relying on default AI-generated background aesthetics immediately signals uninspired template creation, eroding user trust before they read the value proposition.",
-        "example": "Before: Slate-900 canvas with an obnoxious fuchsia center blob. After: Deep charcoal textured surface paired with subtle, asymmetric contextual illumination.",
-        "confidence": "high",
-        "sources": [
-          {
-            "handle": "murphmaxxing",
-            "date": "2026-09-18",
-            "url": "https://www.instagram.com/p/DdcIywaBDtY/"
-          }
-        ]
-      },
-      {
-        "principle": "Feature List Icon Container Design",
-        "category": "layout",
-        "trigger_context": "Feature checklist or benefit bullet-point lists utilizing icons",
-        "do_this": "Pair standalone icons directly with typography, use minimalist inline indicators, or design purpose-built structured containers that match the exact visual weight of the accompanying text.",
-        "dont_do_this": "Enclose every single feature list icon inside an identical, generic rounded square background badge.",
-        "rule": "Eliminate redundant rounded square icon containers for feature bullet points.",
-        "why": "Enclosing every single icon in an identical container creates visual noise and repetitive chunking that reduces scannability.",
-        "example": "Before: Every bullet point features a standalone icon inside a rounded grey container box. After: Clean typographic hierarchy with minimal inline vector glyphs.",
-        "confidence": "high",
-        "sources": [
-          {
-            "handle": "murphmaxxing",
-            "date": "2026-09-18",
-            "url": "https://www.instagram.com/p/DdcIywaBDtY/"
-          }
-        ]
-      },
-      {
-        "principle": "Pricing Tier Card Elevation & Sizing",
-        "category": "hierarchy",
-        "trigger_context": "Multi-tier product pricing matrix components",
-        "do_this": "Establish emphasis through thoughtful hierarchy, explicit value propositions, clean typography, and restrained badge placement rather than arbitrary dimensional scaling and glowing outlines.",
-        "dont_do_this": "Scale the featured pricing card to be precisely 10 pixels taller and wrap it in an artificial glowing border.",
-        "rule": "Avoid arbitrary height inflation and glowing borders for featured pricing cards.",
-        "why": "Literal height offsets and glowing borders look gimmicky and distract from evaluating actual plan features and pricing metrics.",
-        "example": "Before: Middle pricing card scaled up +10px with a neon border. After: Subtle shadow elevation, distinct surface tint, and a clean 'Recommended' badge.",
-        "confidence": "high",
-        "sources": [
-          {
-            "handle": "murphmaxxing",
-            "date": "2026-09-18",
-            "url": "https://www.instagram.com/p/DdcIywaBDtY/"
-          }
-        ]
-      },
-      {
-        "principle": "Bento Grid Content Density",
-        "category": "layout",
-        "trigger_context": "Marketing bento grid layouts and feature showcases",
-        "do_this": "Populate grid cells with authentic product data, real-time metrics, actual code snippets, or functional UI widgets.",
-        "dont_do_this": "Construct empty bento grid cards containing purely decorative static CSS charts and pointless bouncing toggles.",
-        "rule": "Ensure every cell in a bento grid contains genuine, informative product data rather than empty decorative animations.",
-        "why": "Empty placeholder metrics and looping mock animations degrade user confidence by exposing a lack of substantive product depth.",
-        "example": "Before: Bento card with a static bar chart and an idle looping toggle. After: Bento card showing live API latency metrics and functional telemetry graphs.",
-        "confidence": "high",
-        "sources": [
-          {
-            "handle": "murphmaxxing",
-            "date": "2026-09-18",
-            "url": "https://www.instagram.com/p/DdcIywaBDtY/"
-          }
-        ]
-      },
-      {
-        "principle": "Perspectives & Transforms on Product Mockups",
-        "category": "motion",
-        "trigger_context": "Hero dashboard previews and application UI mockups",
-        "do_this": "Render product interfaces flat or at clean, readable isometric angles with soft, physically plausible ambient drop shadows.",
-        "dont_do_this": "Tilt dashboard preview mockups at an extreme 15-degree 3D perspective paired with heavy 40-pixel blurred drop shadows.",
-        "rule": "Keep UI preview mockups flat or subtly angled, avoiding extreme 3D perspectives with heavy blur shadows.",
-        "why": "Exaggerated perspective distortion sacrifices legibility of the actual interface content just for cheap visual flair.",
-        "example": "Before: Dashboard preview skewed at a steep 15-degree angle with a blown-out dark drop shadow. After: Clean, front-facing UI shot with crisp edge rendering.",
-        "confidence": "high",
-        "sources": [
-          {
-            "handle": "murphmaxxing",
-            "date": "2026-09-18",
-            "url": "https://www.instagram.com/p/DdcIywaBDtY/"
-          }
-        ]
-      }
-    ],
+    "principles": [],
     "extraction_metadata": {
       "method": "llm_batch",
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
-      "principles_count": 5,
-      "prompt_hash": "ad46e79302ae"
-    },
-    "transcript": "10 out of 10 signs your website is straight, vibe-coded AI slop, but they get increasingly  more niche.  1.  The hero background is Tailwind Slate 900 with the purple radial gradient blob blurred in  the center.  2.  Every feature bullet has a loose-eyed icon trapped inside a rounded square badge.  3.  The headline says Supercharger Workflow with our seamless AI-powered platform.  Claude fucking loves that sentence.  4.  The three-tier pricing table where the middle card is 10 pixels taller and has a glowing  border and says most popular.  5.  A bento grid that contains zero real information, just four cards with static CSS charts and a  bouncing toggle.  6.  Testimonials from Sarah, Head of Growth, using an unsplash photo that everyone has seen  40 times.  7.  The dashboard preview is tilted at a 15-degree 3D perspective with 40 pixel blur drop shadow.  8.  A trusted by 10,000 plus teams bar with grayscale logos of companies that don't fucking  exist.  Now the good news is vibe-coding does not have to look like straight slop.  8.  The design and I will send you the exact UI prompt rules I feed Claude so it stops spitting  out generic tailwind slop."
+      "principles_count": 0
+    }
   },
   {
     "post_id": "3987679292711256551",
@@ -326,30 +193,21 @@
     "like_count": 105,
     "owner_username": "jploft.us",
     "classification": {
-      "path": "audio",
-      "paths": [
-        "audio",
-        "caption"
-      ],
-      "reason": "Video reel with detailed caption (169 words, keywords: ui, button); routed to audio transcription and rich caption extraction",
+      "path": "caption",
+      "reason": "Detailed caption (169 words) with design keywords: ui, button",
       "word_count": 169,
       "matched_keywords": [
         "ui",
         "button"
-      ],
-      "has_rich_caption": true,
-      "has_substance": true
+      ]
     },
     "principles": [
       {
-        "principle": "Skeleton Loaders for Perceived Performance",
+        "principle": "Skeleton Screen Content Placeholders",
         "category": "layout",
-        "trigger_context": "Any asynchronous content fetching or data-loading screen state",
-        "do_this": "Replace generic spinning loaders with structural skeleton loaders that mirror the layout and dimensions of the incoming content.",
-        "dont_do_this": "Use generic spinning indicators or blank white screens for predictable layout content fetches.",
-        "rule": "Always implement content-matching skeleton loaders instead of spinners to improve perceived loading speed.",
-        "why": "Spinners create a sense of stalling and disconnect user focus, whereas structural skeletons provide a spatial preview that tricks the brain into perceiving faster load times.",
-        "example": "Before: Centered spinner icon. After: Gray pulsing placeholder blocks matching cards and text lines.",
+        "rule": "Replace generic spinners with structural skeleton loaders that mimic the dimensions and layout of the incoming content.",
+        "why": "Mimicking the final layout shape reduces perceived waiting time and prevents layout shifts when data resolves.",
+        "example": "Instead of a centered spinner, display grey pulsing rectangular blocks where cards or lists will load.",
         "confidence": "high",
         "sources": [
           {
@@ -360,14 +218,11 @@
         ]
       },
       {
-        "principle": "Instant Touch Feedback and Optimistic UI",
+        "principle": "Immediate Touch Feedback for Interactive Elements",
         "category": "motion",
-        "trigger_context": "Any interactive button or touch target that fires a network request or heavy background task",
-        "do_this": "Acknowledge every user tap immediately with visual state changes, executing heavy processes asynchronously in the background.",
-        "dont_do_this": "Leave the UI frozen or unresponsive during network latency while waiting for server confirmation.",
-        "rule": "Provide immediate visual state changes upon tap interaction and handle heavy processing asynchronously in the background.",
-        "why": "Unresponsive interfaces break the illusion of direct manipulation and make the application feel broken or sluggish.",
-        "example": "Before: Button hangs with no state change for 3 seconds during upload. After: Button instantly transitions to a loading/success state while the upload runs asynchronously.",
+        "rule": "Trigger instant visual state changes (like scale or color shifts) on every tap, executing heavy tasks asynchronously.",
+        "why": "Immediate visual confirmation reassures the user that their input was registered, eliminating perceived lag.",
+        "example": "An action button shows a pressed/active state instantly while the network request is handled in the background.",
         "confidence": "high",
         "sources": [
           {
@@ -378,14 +233,26 @@
         ]
       },
       {
-        "principle": "Consistent Primary Action Placement in Flows",
+        "principle": "Fixed Primary CTA Positioning in Stepper Flows",
         "category": "layout",
-        "trigger_context": "Multi-step onboarding flows, checkout wizards, or sequential form screens",
-        "do_this": "Anchor the primary continue or advance action button to the exact same screen coordinate across every step of the flow.",
-        "dont_do_this": "Shift primary action buttons to different vertical or horizontal positions between sequential screens.",
-        "rule": "Maintain absolute positional consistency for primary action buttons throughout multi-step sequences.",
-        "why": "Shifting buttons forces users to visually hunt for the target on every step, breaking muscle memory and increasing cognitive load.",
-        "example": "Before: Continue button is at the bottom in step one and in the middle in step two. After: Continue button remains pinned to the bottom-fixed action bar across all steps.",
+        "rule": "Anchor the primary progression button (e.g., 'Continue') to the exact same screen coordinates across every step of an onboarding flow.",
+        "why": "Maintaining spatial consistency builds muscle memory, allowing users to progress rapidly without visually searching for the button.",
+        "example": "Pin the primary 'Next' button to the bottom sticky container across all 4 onboarding screens.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "jploft.us",
+            "date": "2026-09-16",
+            "url": "https://www.instagram.com/p/DdXFTBoPEHn/"
+          }
+        ]
+      },
+      {
+        "principle": "Human-Readable Fallback Error States",
+        "category": "accessibility",
+        "rule": "Intercept raw system exceptions (404, 500, stack traces) and display an actionable recovery message with clear next steps.",
+        "why": "Technical error codes cause confusion and erode trust, whereas plain-language instructions guide the user toward recovery.",
+        "example": "Instead of 'Error 500: SQL Timeout', show 'We're having trouble connecting. Try again in a moment.' with a retry button.",
         "confidence": "high",
         "sources": [
           {
@@ -400,10 +267,8 @@
       "method": "llm_batch",
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
-      "principles_count": 3,
-      "prompt_hash": "ad46e79302ae"
-    },
-    "transcript": "Here are five things you should be embarrassed to have in your app.  And if your app has the last one, you probably shouldn't be launching yet.  Number one, spinning loaders.  If you know what content is about to appear, use skeleton loaders that match the layout  of the actual screen.  The app immediately feels faster and more polished, even when the loading time itself  hasn't changed.  Number two, dark patterns.  Making subscriptions easy to start but difficult to cancel might make you a little more  money in the short term, but you're trading that revenue for user trust and that's never  worth it.  Number three, buttons that don't respond instantly.  When someone taps something, the UI should acknowledge it immediately, even if the actual  process takes another five seconds.  For longer actions like uploading, deleting or processing data, update the interface first  when appropriate and handle the heavier work in the background.  Number four, buttons that move around during onboarding.  Your continue button shouldn't be at the bottom on one screen, in the middle on another and  somewhere completely different on the next.  Keep primary actions in consistent positions so users can move through onboarding without  having to think about every tap.  And number five, showing users your back end."
+      "principles_count": 4
+    }
   },
   {
     "post_id": "3963214328433643698",
@@ -418,61 +283,17 @@
     "owner_username": "danielwelsh_routiq",
     "classification": {
       "path": "audio",
-      "paths": [
-        "audio",
-        "caption"
-      ],
-      "reason": "Video reel with detailed caption (125 words, 0 keywords); routed to audio transcription and rich caption extraction",
+      "reason": "Video reel with brief caption; queued for audio transcription",
       "word_count": 125,
-      "matched_keywords": [],
-      "has_rich_caption": true,
-      "has_substance": true
+      "matched_keywords": []
     },
     "transcript": "You're launching your app.  Three things first and one you can't fix later.  So one, your preview image.  Make sure it looks good, sort this out.  Two, onboarding, you won't gain traction  if people don't know what to do.  And the one that you can't fix later,  three, analytics, post-hoc.  Record what the user actually does,  but you can add it later,  but the sessions that you didn't record are gone forever.  None of them take longer than drinking the cup of coffee.",
-    "principles": [
-      {
-        "principle": "OpenGraph Link Preview Asset Implementation",
-        "category": "layout",
-        "trigger_context": "any web application URL or product link shared across social media or messaging platforms",
-        "do_this": "Define explicit OpenGraph and Twitter card image metadata tags accompanied by a descriptive title and subtitle so shared links render a rich visual card instead of a generic placeholder frame.",
-        "dont_do_this": "Leave link metadata unconfigured, resulting in a fallback blank grey box or missing thumbnail when users share the application URL.",
-        "rule": "Provide a high-resolution preview image and standard metadata tags for all shared product links.",
-        "why": "Missing link previews diminish perceived professional quality and reduce click-through rates on external platforms.",
-        "example": "Adding og:image, og:title, and twitter:image tags to the document head of the landing page.",
-        "confidence": "high",
-        "sources": [
-          {
-            "handle": "danielwelsh_routiq",
-            "date": "2026-08-14",
-            "url": "https://www.instagram.com/p/DcAKm8HBpCy/"
-          }
-        ]
-      },
-      {
-        "principle": "Immediate Value Onboarding Path",
-        "category": "hierarchy",
-        "trigger_context": "first-time user authentication and post-signup application entry flows",
-        "do_this": "Guide the user directly to a single, high-value primary action that immediately demonstrates the core utility of the application.",
-        "dont_do_this": "Drop unguided new users into an empty state or generic dashboard without clear direction toward the primary value proposition.",
-        "rule": "Direct first-time users to a singular primary action explaining the application value within the initial screen.",
-        "why": "Unguided initial states cause high abandonment rates because users fail to discover the core product utility.",
-        "example": "Presenting a prominent prompt to create a first project instantly upon logging in rather than showing a blank dashboard.",
-        "confidence": "high",
-        "sources": [
-          {
-            "handle": "danielwelsh_routiq",
-            "date": "2026-08-14",
-            "url": "https://www.instagram.com/p/DcAKm8HBpCy/"
-          }
-        ]
-      }
-    ],
+    "principles": [],
     "extraction_metadata": {
       "method": "llm_batch",
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
-      "principles_count": 2,
-      "prompt_hash": "ad46e79302ae"
+      "principles_count": 0
     }
   },
   {
@@ -488,15 +309,9 @@
     "owner_username": "corecodevibes",
     "classification": {
       "path": "audio",
-      "paths": [
-        "audio",
-        "caption"
-      ],
-      "reason": "Video reel with detailed caption (74 words, 0 keywords); routed to audio transcription and rich caption extraction",
+      "reason": "Video reel with brief caption; queued for audio transcription",
       "word_count": 74,
-      "matched_keywords": [],
-      "has_rich_caption": true,
-      "has_substance": true
+      "matched_keywords": []
     },
     "transcript": "Throw a lot, let me show you how to move, let me show you how  Get that bad, you ain't never coming last  Fuck your man, you know this gon' make him mad",
     "principles": [],
@@ -504,8 +319,7 @@
       "method": "llm_batch",
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
-      "principles_count": 0,
-      "prompt_hash": "ad46e79302ae"
+      "principles_count": 0
     }
   },
   {
@@ -521,42 +335,17 @@
     "owner_username": "aj.on.ai",
     "classification": {
       "path": "audio",
-      "paths": [
-        "audio"
-      ],
-      "reason": "Video reel with brief caption (49 words, 0 keywords); queued for audio transcription",
+      "reason": "Video reel with brief caption; queued for audio transcription",
       "word_count": 49,
-      "matched_keywords": [],
-      "has_rich_caption": false,
-      "has_substance": false
+      "matched_keywords": []
     },
     "transcript": "Harsh gradients, loose side icons, pure white background, rainbow coloring, drop shadow and  everything.  Three feature cards in a row.  Emojis, liquid glass, M dashes, using inter, geist or space grotesque fonts.  This colored stripe, fake testimonials, bento grids, terminal window, it's not X, it's  Y, check mark bullets, three pricing tiers, no real product demos, soft corner radius,  purple and black, no skeleton loaders, radio orbs, dot grids, sparkle icons, animated  arrows, no TOS, no privacy policy, hover animations for everything, neon colors and basic  pastel colors, drop a follow if this helped.",
-    "principles": [
-      {
-        "principle": "Avoid Overused AI-Generated UI Tropes and Generic Layout Patterns",
-        "category": "layout",
-        "trigger_context": "marketing landing pages, feature grids, and pricing sections generated via AI tools",
-        "do_this": "design bespoke layouts with purpose-driven typography, authentic content, and restrained visual styling tailored to the specific product identity",
-        "dont_do_this": "rely on cliché AI styling tropes such as default bento grids, liquid glass effects, random sparkle icons, neon-on-dark palettes, and generic three-tier pricing cards without actual product differentiation",
-        "rule": "Eliminate unoriginal template aesthetics and generic boilerplate interface components that signal low-effort automated generation.",
-        "why": "Overused aesthetic tropes create visual fatigue, reduce brand trust, and make interfaces look indistinguishable from low-effort automated clones.",
-        "example": "Before: A dark mode landing page featuring purple glow effects, floating dot grids, terminal windows, and floating checkmark bullets. After: A clean, content-first layout with high-contrast neutral typography and contextual product screenshots.",
-        "confidence": "high",
-        "sources": [
-          {
-            "handle": "aj.on.ai",
-            "date": "2026-08-15",
-            "url": "https://www.instagram.com/p/DcEJDHBTyPY/"
-          }
-        ]
-      }
-    ],
+    "principles": [],
     "extraction_metadata": {
       "method": "llm_batch",
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
-      "principles_count": 1,
-      "prompt_hash": "ad46e79302ae"
+      "principles_count": 0
     }
   },
   {
@@ -572,23 +361,33 @@
     "owner_username": "quentin_aimarketing",
     "classification": {
       "path": "audio",
-      "paths": [
-        "audio"
-      ],
-      "reason": "Video reel with brief caption (43 words, 0 keywords); queued for audio transcription",
+      "reason": "Video reel with brief caption; queued for audio transcription",
       "word_count": 43,
-      "matched_keywords": [],
-      "has_rich_caption": false,
-      "has_substance": false
+      "matched_keywords": []
     },
     "transcript": "",
-    "principles": [],
+    "principles": [
+      {
+        "principle": "Dedicated 404 Error State Design",
+        "category": "layout",
+        "rule": "Provide a fully styled, custom 404 error page complete with navigation pathways back to primary site sections rather than falling back to unstyled server defaults.",
+        "why": "Prevents user disorientation and abandonment when encountering broken URLs or deprecated links by offering immediate re-engagement options.",
+        "example": "Before: Browser default white screen with 'Server Not Found'. After: A branded illustration, search bar, and direct links to Home, Pricing, and Support.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "quentin_aimarketing",
+            "date": "2026-08-14",
+            "url": "https://www.instagram.com/p/DcBqrPsR6BB/"
+          }
+        ]
+      }
+    ],
     "extraction_metadata": {
       "method": "llm_batch",
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
-      "principles_count": 0,
-      "prompt_hash": "ad46e79302ae"
+      "principles_count": 1
     }
   },
   {
@@ -604,14 +403,9 @@
     "owner_username": "millee.md",
     "classification": {
       "path": "audio",
-      "paths": [
-        "audio"
-      ],
-      "reason": "Video reel with brief caption (10 words, 0 keywords); queued for audio transcription",
+      "reason": "Video reel with brief caption; queued for audio transcription",
       "word_count": 10,
-      "matched_keywords": [],
-      "has_rich_caption": false,
-      "has_substance": false
+      "matched_keywords": []
     },
     "transcript": "Hide API key, purge get secret, use public database key, enable RLS, encrypt sensitive  data, enforce server-side auth, lock record access, block field tampering, secure session  cookies, hash passwords, rate limit login, add bot protection, parameterize queries,  validate all input, escape user content, restrict field uploads, trim API responses,  add security headers, force HTTPS scan dependencies.",
     "principles": [],
@@ -619,8 +413,7 @@
       "method": "llm_batch",
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
-      "principles_count": 0,
-      "prompt_hash": "ad46e79302ae"
+      "principles_count": 0
     }
   },
   {
@@ -636,14 +429,9 @@
     "owner_username": "millee.md",
     "classification": {
       "path": "audio",
-      "paths": [
-        "audio"
-      ],
-      "reason": "Video reel with brief caption (21 words, 0 keywords); queued for audio transcription",
+      "reason": "Video reel with brief caption; queued for audio transcription",
       "word_count": 21,
-      "matched_keywords": [],
-      "has_rich_caption": false,
-      "has_substance": false
+      "matched_keywords": []
     },
     "transcript": "Add HSTS, add CSRF tokens, reset sessions on password change, expire reset links, prevent user  enumeration, whitelist upload types, verify payment webhooks, set prices service site,  block prompt injection, cap AI usage, limit request size, rate limit password resets, sanitize  before storing, lock down cores, disable directory listing, remove default admin routes,  lock accounts after failed logins, log security events, set secure cookies, restrict database  permissions.",
     "principles": [],
@@ -651,8 +439,7 @@
       "method": "llm_batch",
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
-      "principles_count": 0,
-      "prompt_hash": "ad46e79302ae"
+      "principles_count": 0
     }
   },
   {
@@ -668,14 +455,9 @@
     "owner_username": "theecommguy",
     "classification": {
       "path": "audio",
-      "paths": [
-        "audio"
-      ],
-      "reason": "Video reel with brief caption (17 words, 0 keywords); queued for audio transcription",
+      "reason": "Video reel with brief caption; queued for audio transcription",
       "word_count": 17,
-      "matched_keywords": [],
-      "has_rich_caption": false,
-      "has_substance": false
+      "matched_keywords": []
     },
     "transcript": "Top 10 non-negotiable items you have to have on your website after you launch it.  Make sure you set up Google Search Console, test your website speed, ensure conversion  tracking is set up for your ads, compress all your images, install GA4, make sure you  set up email capture, collect product reviews, find a great heatmap tool, and get an AB  testing platform.  If you want the 10th one, comment bonus and I'll send it over.",
     "principles": [],
@@ -683,8 +465,7 @@
       "method": "llm_batch",
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
-      "principles_count": 0,
-      "prompt_hash": "ad46e79302ae"
+      "principles_count": 0
     }
   },
   {
@@ -700,44 +481,18 @@
     "owner_username": "yatesvids",
     "classification": {
       "path": "audio",
-      "paths": [
-        "audio"
-      ],
-      "reason": "Video reel with brief caption (16 words, 0 keywords); queued for audio transcription",
+      "reason": "Video reel with brief caption; queued for audio transcription",
       "word_count": 16,
-      "matched_keywords": [],
-      "has_rich_caption": false,
-      "has_substance": false
+      "matched_keywords": []
     },
     "transcript": "Remove horizontal scrolling, find broken links at a mobile menu, at a Favicon, fix page titles,  add meta descriptions, fix footer links, add a custom 404 page, fix the copyright year,  compress images, fix broken buttons, add success messages and add error messages,  remove placeholder text, remove unused navigation, fix mobile overflow, make the logo clickable,  make the phone number clickable, make the email clickable and every page to be mobile optimized.",
     "principles": [
       {
-        "principle": "Mobile Viewport Overflow Prevention",
-        "category": "layout",
-        "trigger_context": "Responsive web layouts viewed on mobile devices with constrained viewport widths",
-        "do_this": "Audit and eliminate any elements or layout containers that extend horizontally beyond the primary viewport boundary.",
-        "dont_do_this": "Allow wide content blocks, unconstrained images, or fixed-width containers to force horizontal scrolling on mobile viewports.",
-        "rule": "Ensure all layout containers fit strictly within the mobile viewport width to completely prevent horizontal scrolling.",
-        "why": "Horizontal scrolling on mobile creates a broken, jarring user experience and indicates layout containment failure.",
-        "example": "Before: A fixed-width data table causing horizontal page panning. After: A responsive container with CSS overflow handling or stacked mobile representation.",
-        "confidence": "high",
-        "sources": [
-          {
-            "handle": "yatesvids",
-            "date": "2026-08-18",
-            "url": "https://www.instagram.com/p/DcKiRe3TvdB/"
-          }
-        ]
-      },
-      {
-        "principle": "Interactive Contact Information Styling",
+        "principle": "Interactive Contact Triggers",
         "category": "accessibility",
-        "trigger_context": "Phone numbers and email addresses displayed in headers, footers, or contact sections",
-        "do_this": "Wrap phone numbers in 'tel:' anchors and email addresses in 'mailto:' anchors with clear interactive affordances.",
-        "dont_do_this": "Render phone numbers and email addresses as static, unlinked plain text.",
-        "rule": "Convert all visible phone numbers and email addresses into functional interactive links.",
-        "why": "Users on mobile devices expect touch targets to immediately initiate phone calls or open their default email client.",
-        "example": "Before: Plain text string '+1 (555) 019-2834'. After: An interactive anchor tag `<a href=\"tel:+15550192834\">+1 (555) 019-2834</a>`.",
+        "rule": "Convert text-based phone numbers and email addresses into active tel: and mailto: hyperlinks to enable direct device action.",
+        "why": "Reduces user friction by eliminating the need to manually copy and paste contact details into external applications on mobile devices.",
+        "example": "Before: <span>Call us at 555-0199</span>\nAfter: <a href=\"tel:5550199\">Call us at 555-0199</a>",
         "confidence": "high",
         "sources": [
           {
@@ -750,12 +505,9 @@
       {
         "principle": "Form Submission Feedback States",
         "category": "hierarchy",
-        "trigger_context": "Interactive forms, newsletter signups, or contact modals handling user submissions",
-        "do_this": "Provide immediate, visually distinct success messages upon completion and explicit error messages for failed submissions.",
-        "dont_do_this": "Leave the interface completely static or silent after a user submits a form, causing uncertainty.",
-        "rule": "Display clear, contextual success and error message components upon form interaction.",
-        "why": "Users require explicit system feedback to confirm whether their action was successfully processed or requires correction.",
-        "example": "Before: Form clears silently on submit with no confirmation. After: Form renders an inline green success banner stating 'Message sent successfully!'.",
+        "rule": "Provide explicit, visible success and error messaging components immediately following user form interactions.",
+        "why": "Prevents user confusion and uncertainty by confirming system status or clearly highlighting required corrections.",
+        "example": "Before: Form clears silently on error.\nAfter: Inline red error alert displays above the submit button stating 'Please enter a valid email address.'",
         "confidence": "high",
         "sources": [
           {
@@ -770,8 +522,7 @@
       "method": "llm_batch",
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
-      "principles_count": 3,
-      "prompt_hash": "ad46e79302ae"
+      "principles_count": 2
     }
   },
   {
@@ -787,14 +538,9 @@
     "owner_username": "byarnieverma",
     "classification": {
       "path": "audio",
-      "paths": [
-        "audio"
-      ],
-      "reason": "Video reel with brief caption (23 words, 0 keywords); queued for audio transcription",
+      "reason": "Video reel with brief caption; queued for audio transcription",
       "word_count": 23,
-      "matched_keywords": [],
-      "has_rich_caption": false,
-      "has_substance": false
+      "matched_keywords": []
     },
     "transcript": "exposed database credentials, public.env files,  hard-coded API keys or secrets,  weak or missing authentication, missing server-side ortho checks,  users able to access other users' data,  open or overly permissive database read and write permissions,  misconfigured Firebase, SuperBase S3 or storage buckets,  admin routes left unprotected,  debug pages or developer tools exposed in prod,  build logs leaking secrets,  but both error messages leaking stack traces  or internal details,  secrets or sensitive data committed to get or get history,  secrets involved in front-end JavaScript,  client-side-only security checks,  missing input validation, SQL injection, no SQL injection.",
     "principles": [],
@@ -802,8 +548,7 @@
       "method": "llm_batch",
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
-      "principles_count": 0,
-      "prompt_hash": "ad46e79302ae"
+      "principles_count": 0
     }
   },
   {
@@ -818,29 +563,20 @@
     "like_count": 1713,
     "owner_username": "techbypriyanka",
     "classification": {
-      "path": "audio",
-      "paths": [
-        "audio",
-        "caption"
-      ],
-      "reason": "Video reel with detailed caption (170 words, keywords: cta); routed to audio transcription and rich caption extraction",
+      "path": "caption",
+      "reason": "Detailed caption (170 words) with design keywords: cta",
       "word_count": 170,
       "matched_keywords": [
         "cta"
-      ],
-      "has_rich_caption": true,
-      "has_substance": true
+      ]
     },
     "principles": [
       {
-        "principle": "Above-the-Fold Primary Conversion Anchor",
+        "principle": "Above-the-Fold Primary Call to Action",
         "category": "layout",
-        "trigger_context": "Any landing page, marketing site, or conversion-focused web view viewport initialization.",
-        "do_this": "Position the primary conversion trigger or call-to-action within the initial viewport before any vertical scrolling is required.",
-        "dont_do_this": "Bury the primary conversion action below secondary content blocks or deep down the page layout.",
-        "rule": "Always place the primary call-to-action above the fold to ensure immediate user engagement upon viewport load.",
-        "why": "Users evaluate page value within seconds of arrival; hiding primary actions below the fold drastically increases bounce rates and reduces conversion velocity.",
-        "example": "Hero section featuring a prominent primary 'Get Started' button visible immediately without scrolling versus a hero section showing only text where the button sits far down.",
+        "rule": "Position the primary conversion action within the initial viewport so it is visible without requiring vertical scrolling.",
+        "why": "Maximizes conversion potential by capturing immediate user intent before they scroll past the hero section.",
+        "example": "Before: CTA placed at the bottom of a long landing page hero.\nAfter: Primary 'Get Started' button anchored directly beside the main hero headline inside the 100vh container.",
         "confidence": "high",
         "sources": [
           {
@@ -851,50 +587,11 @@
         ]
       },
       {
-        "principle": "Persistent Mobile Conversion Action Bar",
+        "principle": "Persistent Mobile Conversion Anchor",
         "category": "layout",
-        "trigger_context": "Mobile web layouts and responsive viewports where vertical scrolling spans multiple content sections.",
-        "do_this": "Implement a pinned or sticky bottom action bar containing the primary conversion trigger on mobile viewports.",
-        "dont_do_this": "Force mobile users to scroll back to the top of long-form pages or hunt through navigation menus to complete a conversion action.",
-        "rule": "Fix the primary conversion action to the bottom of mobile viewports as a sticky element during scroll.",
-        "why": "Mobile viewports have restricted vertical space; keeping the conversion trigger persistently accessible reduces interaction cost and friction.",
-        "example": "A sticky bottom bar featuring a 'Buy Now' button that remains anchored while scrolling through product details.",
-        "confidence": "high",
-        "sources": [
-          {
-            "handle": "techbypriyanka",
-            "date": "2026-08-30",
-            "url": "https://www.instagram.com/p/DcEqXsySUaP/"
-          }
-        ]
-      },
-      {
-        "principle": "Comprehensive Asynchronous Loading States",
-        "category": "motion",
-        "trigger_context": "Any interface component, button, or container that fetches asynchronous data or submits a network request.",
-        "do_this": "Provide dedicated visual indicators, skeleton screens, or spinners for all pending asynchronous actions and data loads.",
-        "dont_do_this": "Leave the interface completely static and unresponsive while network requests or background data fetches are processing.",
-        "rule": "Display explicit loading states for every async data fetch or user action to prevent perceived unresponsiveness.",
-        "why": "Without visual feedback during latency spikes, users assume the system froze and will repeatedly tap or abandon the interface.",
-        "example": "Transforming a button into a spinner state immediately upon tap while network requests resolve.",
-        "confidence": "high",
-        "sources": [
-          {
-            "handle": "techbypriyanka",
-            "date": "2026-08-30",
-            "url": "https://www.instagram.com/p/DcEqXsySUaP/"
-          }
-        ]
-      },
-      {
-        "principle": "Inline Form Validation and Error States",
-        "category": "hierarchy",
-        "trigger_context": "Any user input form, multi-step checkout flow, or interactive data submission interface.",
-        "do_this": "Design explicit, contextual error states with clear recovery instructions directly adjacent to invalid form fields.",
-        "dont_do_this": "Rely solely on generic, unhelpful system alerts or leave fields unstyled when validation fails.",
-        "rule": "Provide clear, contextual error states and inline validation messages for every form input failure.",
-        "why": "Vague or absent error states cause user confusion, form abandonment, and high cognitive load during data entry.",
-        "example": "Highlighting an invalid email input field with a distinct red border and explanatory text reading 'Please enter a valid email format' below it.",
+        "rule": "Implement a sticky bottom bar housing the primary conversion action on mobile viewports.",
+        "why": "Keeps the primary conversion goal accessible at all times on small screens, preventing the user from needing to scroll back up to convert.",
+        "example": "Before: Static CTA that scrolls away with the content.\nAfter: position: fixed; bottom: 0; width: 100%; z-index: 100; container holding a full-width purchase button.",
         "confidence": "high",
         "sources": [
           {
@@ -909,10 +606,8 @@
       "method": "llm_batch",
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
-      "principles_count": 4,
-      "prompt_hash": "ad46e79302ae"
-    },
-    "transcript": "Here we go."
+      "principles_count": 2
+    }
   },
   {
     "post_id": "3851275105683486304",
@@ -927,14 +622,9 @@
     "owner_username": "angus.sewell",
     "classification": {
       "path": "audio",
-      "paths": [
-        "audio"
-      ],
-      "reason": "Video reel with brief caption (23 words, 0 keywords); queued for audio transcription",
+      "reason": "Video reel with brief caption; queued for audio transcription",
       "word_count": 23,
-      "matched_keywords": [],
-      "has_rich_caption": false,
-      "has_substance": false
+      "matched_keywords": []
     },
     "transcript": "You know it's crazy if you vibe coded your landing page you can low-key give it a consciousness now to this website right here  That's gonna look kind of scary, but do not fret my friend use any analytic software dude  This one's just free now go to your landing page give Claude code this prompt or whatever you use to vibe coded  It does not matter Claude code will literally figure it out have faith my friend. It's done  Give it this prompt is now officially analytics time final prompt here  This will create an ab split test version of your landing page go to the connectors section and claw find  Posthog now go say some shit like Claude go tell me where people are leaving my website  Which version of my landing page is working less badly now if you're feeling super diabolical  You could set up a Claude project with this prop Claude update my landing page based on all the analytics of my website  Yeah, but I can't wait to be unemployed with you my guy",
     "principles": [],
@@ -942,8 +632,7 @@
       "method": "llm_batch",
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
-      "principles_count": 0,
-      "prompt_hash": "ad46e79302ae"
+      "principles_count": 0
     }
   },
   {
@@ -959,14 +648,9 @@
     "owner_username": "ayoships",
     "classification": {
       "path": "audio",
-      "paths": [
-        "audio"
-      ],
-      "reason": "Video reel with brief caption (24 words, 0 keywords); queued for audio transcription",
+      "reason": "Video reel with brief caption; queued for audio transcription",
       "word_count": 24,
-      "matched_keywords": [],
-      "has_rich_caption": false,
-      "has_substance": false
+      "matched_keywords": []
     },
     "transcript": "So, your coding agent is probably doing these two things behind your back that are slowly  killing your app, and you can't see either of them.  I've published over 15 apps with AI, and these two things were caught in almost all of them.  The first one is likely why your app is laggy.  When setting up the server, your coding agent probably built the app to ask the server  for data every few seconds forever.  This is called polling.  This might feel fine during testing, but when users actually try the app, it'll  drain their battery and lower their framerate.  Nowadays, modern backends like SuperBase or Convex can actually push data directly to  your app when it changes.  So make sure your AI is not polling, but rather subscribing to events as they happen.  The second one can explain why your AI actually keeps going in circles and breaking things.  Every time you request a change, most AIs don't actually change it.  Rather, they create a version 2 on top of the broken version 1, just in case anybody  was using it.  This causes your app to be full of broken code that nobody was using anyway.  Now for your future prompts, the AI will get confused between which is the working  version and now go in circles and break things that seem to be working before.  To fix this, just tell it not to use fallbacks or backwards compatibility.  Just replace the old feature and make sure the new one works.  And if you're like me and you're too lazy to type all of that, you can just send  this video to your AI and it'll figure it out.",
     "principles": [],
@@ -974,8 +658,7 @@
       "method": "llm_batch",
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
-      "principles_count": 0,
-      "prompt_hash": "ad46e79302ae"
+      "principles_count": 0
     }
   },
   {
@@ -991,14 +674,9 @@
     "owner_username": "lincolndevine",
     "classification": {
       "path": "audio",
-      "paths": [
-        "audio"
-      ],
-      "reason": "Video reel with brief caption (21 words, 0 keywords); queued for audio transcription",
+      "reason": "Video reel with brief caption; queued for audio transcription",
       "word_count": 21,
-      "matched_keywords": [],
-      "has_rich_caption": false,
-      "has_substance": false
+      "matched_keywords": []
     },
     "transcript": "Last year, Apple rejected 1.2 million app store submissions.  Here are the top five reasons yours got sent back.  First reason is that you basically vibe coded a website  and then put it into a wrapper.  Apple can tell.  Second reason is that you built a beautiful signup flow  but you didn't build a way to delete an account  and it has to be done inside the app.  Third reason is that you may be collecting data  that you don't know about  and you're required to disclose.  Things like crash reporting, analytics, ad delivery.  Fourth is that your app icon matches an icon  associated with an in-app purchase.  It's a weird one but they look for this.  Last, you don't have the EULA or the end user  license agreement link in the app description.  Super easy one to miss.  Follow and leave a comment rejected  if you want the full app store launch guide.",
     "principles": [],
@@ -1006,8 +684,7 @@
       "method": "llm_batch",
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
-      "principles_count": 0,
-      "prompt_hash": "ad46e79302ae"
+      "principles_count": 0
     }
   },
   {
@@ -1023,42 +700,17 @@
     "owner_username": "murphmaxxing",
     "classification": {
       "path": "audio",
-      "paths": [
-        "audio"
-      ],
-      "reason": "Video reel with brief caption (10 words, 0 keywords); queued for audio transcription",
+      "reason": "Video reel with brief caption; queued for audio transcription",
       "word_count": 10,
-      "matched_keywords": [],
-      "has_rich_caption": false,
-      "has_substance": false
+      "matched_keywords": []
     },
     "transcript": "10 ways your shitty vibe coded app is getting sued but they get progressively more niche.  No privacy policy at all, $2,500 per user.  Privacy policy doesn't say you collect user data, $8,000 per user.  Privacy policy doesn't say you use AI, $8,000 per user.  Privacy policy doesn't name third parties you send data to, $8,000 per user.  Uploads you promise to delete are still in storage, $750 per user.  Storage buckets set to public, $750 per user.  Fake testimonials on your website, $53,000 per review.  Canceling subscription takes more clicks than signing up, $53,000 per violation.  Free trial auto charges with no reminder, every single dollar refunded.  AI chatbot has no self-harm response, $1,000 per violation.  Comment sued to get sent over my full guide on how to fix all of this using chat  to your clod so your ass doesn't get sued to the ground.",
-    "principles": [
-      {
-        "principle": "Subscription Cancellation Asymmetry Prevention",
-        "category": "accessibility",
-        "trigger_context": "Account settings, billing dashboards, or subscription management interfaces where users attempt to downgrade or terminate a paid plan.",
-        "do_this": "Provide a direct, single-action cancellation path that requires equal or fewer interaction steps than the initial subscription onboarding flow.",
-        "dont_do_this": "Bury the cancellation trigger behind multi-step confirmation screens, deceptive dark patterns, retention questionnaires, or hidden navigation paths.",
-        "rule": "Ensure subscription cancellation flows require no more steps or clicks than the original sign-up process.",
-        "why": "Making cancellation unnecessarily arduous creates cognitive friction and violates consumer protection standards, leading to severe legal penalties and severe brand erosion.",
-        "example": "Before: Requiring a 5-step retention survey, chat with support, and two confirmation pages to cancel. After: A single 'Cancel Subscription' button in billing settings that processes immediately with one confirmation dialog.",
-        "confidence": "high",
-        "sources": [
-          {
-            "handle": "murphmaxxing",
-            "date": "2026-09-10",
-            "url": "https://www.instagram.com/p/Dcq_kZlpGsQ/"
-          }
-        ]
-      }
-    ],
+    "principles": [],
     "extraction_metadata": {
       "method": "llm_batch",
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
-      "principles_count": 1,
-      "prompt_hash": "ad46e79302ae"
+      "principles_count": 0
     }
   },
   {
@@ -1074,28 +726,20 @@
     "owner_username": "adam_ha_yes",
     "classification": {
       "path": "audio",
-      "paths": [
-        "audio"
-      ],
-      "reason": "Video reel with brief caption (14 words, keywords: ux); queued for audio transcription",
+      "reason": "Video reel with brief caption; queued for audio transcription",
       "word_count": 14,
       "matched_keywords": [
         "ux"
-      ],
-      "has_rich_caption": false,
-      "has_substance": false
+      ]
     },
     "transcript": "Reduce choices per screen. Make targets large. Follow familiar patterns.  Group related information. Break content into chunks.  Interactions within 400 milliseconds. Highlight the primary action.  Place key actions nearby. Put essentials first.  End flows memorably. Show visible progress. Simplify complex interfaces.  Use sensible defaults. Prevent errors proactively.  Make errors recoverable. Maintain pattern consistency.  Connect related elements visually. Reduce task completion time.  Reveal complexity gradually. Make completion feel closer.",
     "principles": [
       {
-        "principle": "Low-Latency Interface Interactions",
+        "principle": "Low-Latency Interface Interaction Response",
         "category": "motion",
-        "trigger_context": "any interactive UI component responding to user input, such as button taps, form submissions, or state transitions",
-        "do_this": "Execute state updates and feedback animations within a 400-millisecond window to ensure perceived system instantaneousness.",
-        "dont_do_this": "Allow interaction response times or transition delays to exceed 400 milliseconds, which degrades user engagement and creates perceived sluggishness.",
-        "rule": "Complete all primary interface interactions within 400 milliseconds.",
-        "why": "Delays exceeding 400ms disrupt the user's flow state and reduce the perceived responsiveness and quality of the software application.",
-        "example": "A button tap triggers an immediate visual feedback state change and loader within 200ms, followed by network resolution.",
+        "rule": "Ensure all interactive UI feedback and state changes execute within 400 milliseconds.",
+        "why": "Faster response times keep users feeling in control and prevent the application from feeling sluggish or unresponsive.",
+        "example": "Button press triggers an immediate loading spinner or state change within 200ms rather than a delayed network block.",
         "confidence": "high",
         "sources": [
           {
@@ -1110,8 +754,7 @@
       "method": "llm_batch",
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
-      "principles_count": 1,
-      "prompt_hash": "ad46e79302ae"
+      "principles_count": 1
     }
   },
   {
@@ -1127,43 +770,17 @@
     "owner_username": "shubhamnalingupta",
     "classification": {
       "path": "audio",
-      "paths": [
-        "audio",
-        "caption"
-      ],
-      "reason": "Video reel with detailed caption (66 words, 0 keywords); routed to audio transcription and rich caption extraction",
+      "reason": "Video reel with brief caption; queued for audio transcription",
       "word_count": 66,
-      "matched_keywords": [],
-      "has_rich_caption": true,
-      "has_substance": true
+      "matched_keywords": []
     },
     "transcript": "مرزا نامی",
-    "principles": [
-      {
-        "principle": "Non-UI Content Filtering",
-        "category": "layout",
-        "trigger_context": "Any unstructured content intake or social media corpus ingestion pipeline",
-        "do_this": "Filter out promotional creator metadata, personal branding hooks, and off-topic social captions that contain no interface design instructions.",
-        "dont_do_this": "Process non-design text, general marketing copy, or personal introduction statements through design rule extraction engines.",
-        "rule": "Discard any input source lacking concrete UI/UX design mechanics, layout values, component states, or accessibility directives.",
-        "why": "Ingesting non-design content contaminates design system guidelines with irrelevant noise, reducing the precision and reliability of the synthesized skill set.",
-        "example": "Before: Extracting principles from a general bio. After: Returning an empty array `[]` when no design context is present.",
-        "confidence": "high",
-        "sources": [
-          {
-            "handle": "shubhamnalingupta",
-            "date": "2026-09-03",
-            "url": "https://www.instagram.com/p/Dc0ZxxvzdE8/"
-          }
-        ]
-      }
-    ],
+    "principles": [],
     "extraction_metadata": {
-      "method": "llm_batch",
+      "method": "llm",
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
-      "principles_count": 1,
-      "prompt_hash": "ad46e79302ae"
+      "principles_count": 0
     }
   },
   {
@@ -1179,14 +796,9 @@
     "owner_username": "ayesha.appdev",
     "classification": {
       "path": "audio",
-      "paths": [
-        "audio"
-      ],
-      "reason": "Video reel with brief caption (57 words, 0 keywords); queued for audio transcription",
+      "reason": "Video reel with brief caption; queued for audio transcription",
       "word_count": 57,
-      "matched_keywords": [],
-      "has_rich_caption": false,
-      "has_substance": false
+      "matched_keywords": []
     },
     "transcript": "You're a skunk, you're a skunk, you're a skunk",
     "principles": [],
@@ -1194,8 +806,7 @@
       "method": "llm_batch",
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
-      "principles_count": 0,
-      "prompt_hash": "ad46e79302ae"
+      "principles_count": 0
     }
   },
   {
@@ -1211,14 +822,9 @@
     "owner_username": "joshtheaiguy",
     "classification": {
       "path": "audio",
-      "paths": [
-        "audio"
-      ],
-      "reason": "Video reel with brief caption (43 words, 0 keywords); queued for audio transcription",
+      "reason": "Video reel with brief caption; queued for audio transcription",
       "word_count": 43,
-      "matched_keywords": [],
-      "has_rich_caption": false,
-      "has_substance": false
+      "matched_keywords": []
     },
     "transcript": "Hey Claude, my VibeCoded website is so slow. I need you to compress all images, add lazy loading,  split the code into chunks, cache API responses, add a CDN, minify JS and CSS, index the database,  reduce unnecessary rebenders, debounce input handlers, paginate large lists, remove unused  dependencies, defer non-critical scripts, add a loading skeleton, add a load balancer,  compress API payloads, add database connection pooling, cache expensive computed results,  fix nplus1 database queries, enable server-side caching and run a lighthouse audit. Make no mistakes.",
     "principles": [],
@@ -1226,8 +832,7 @@
       "method": "llm_batch",
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
-      "principles_count": 0,
-      "prompt_hash": "ad46e79302ae"
+      "principles_count": 0
     }
   },
   {
@@ -1243,26 +848,18 @@
     "owner_username": "millee.md",
     "classification": {
       "path": "audio",
-      "paths": [
-        "audio"
-      ],
-      "reason": "Video reel with brief caption (4 words, 0 keywords); queued for audio transcription",
+      "reason": "Video reel with brief caption; queued for audio transcription",
       "word_count": 4,
-      "matched_keywords": [],
-      "has_rich_caption": false,
-      "has_substance": false
+      "matched_keywords": []
     },
     "transcript": "Add Privacy Policy page, add Terms and Conditions page, get your secrets off the front end,  force HTTPS, add a cookie consent banner, add meta titles and descriptions, add a social  preview image, add a favicon, generate a sitemap and robots.txt, add alt text to your images,  compress your images, check your page load speed, fix your color contrast, make it  mobile friendly, add a custom 404 page, fix any broken links, add form validation,  add band protection, set up analytics, add one clear color action, and follow me  for more.",
     "principles": [
       {
-        "principle": "Accessible Color Contrast Enforcement",
+        "principle": "Accessible Text Color Contrast",
         "category": "accessibility",
-        "trigger_context": "Any web page or UI component containing text displayed over background surfaces",
-        "do_this": "Verify and adjust all text-to-background color combinations to meet or exceed WCAG minimum contrast ratio thresholds",
-        "dont_do_this": "Deploy low-contrast color pairings that cause readability strain for users with visual impairments",
-        "rule": "Audit and correct all color contrast pairs to satisfy WCAG accessibility standards across the entire application interface",
-        "why": "Insufficient contrast makes text unreadable for users with low vision or when viewing displays under high ambient lighting, causing abandonment.",
-        "example": "Before: Light gray text on a white background (#CCCCCC on #FFFFFF). After: Dark slate text on a white background (#333333 on #FFFFFF).",
+        "rule": "Ensure all text elements meet minimum contrast ratios against their background to support users with visual impairments.",
+        "why": "Sufficient contrast prevents eye strain and ensures content is legible for users with low vision or when viewing screens in bright sunlight.",
+        "example": "Change secondary gray text from #A0A0A0 to #595959 on a white background to achieve a 4.5:1 contrast ratio.",
         "confidence": "high",
         "sources": [
           {
@@ -1273,14 +870,26 @@
         ]
       },
       {
-        "principle": "Primary Call-to-Action Color Focus",
-        "category": "color",
-        "trigger_context": "Landing pages, conversion funnels, and primary interaction screens",
-        "do_this": "Designate a single, highly distinct accent color dedicated exclusively to the primary conversion action on the screen",
-        "dont_do_this": "Use multiple competing saturated colors for primary actions, which dilutes visual hierarchy and user focus",
-        "rule": "Limit the interface to one singular high-contrast color for the primary call-to-action element",
-        "why": "Multiple competing primary colors create cognitive load and paralyze decision-making, lowering conversion rates.",
-        "example": "Before: Multiple vibrant blue and orange buttons in the hero section. After: One prominent emerald green primary button with secondary actions styled as ghost buttons.",
+        "principle": "Informative Image Alternative Text",
+        "category": "accessibility",
+        "rule": "Provide descriptive alt attributes for all meaningful images to support screen reader users.",
+        "why": "Screen readers rely on alt text to convey the content and function of images to users who cannot see them.",
+        "example": "Update `<img src=\"avatar.png\">` to `<img src=\"avatar.png\" alt=\"Profile portrait of Jane Doe\">`.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "millee.md",
+            "date": "2026-09-09",
+            "url": "https://www.instagram.com/p/DdFJTtMganO/"
+          }
+        ]
+      },
+      {
+        "principle": "Single Primary Call-to-Action",
+        "category": "hierarchy",
+        "rule": "Designate one dominant, high-contrast visual action per view to guide user conversion and minimize cognitive load.",
+        "why": "Multiple competing primary buttons cause decision fatigue and slow down user progression.",
+        "example": "Style the primary 'Create Account' action as a filled solid brand button while secondary 'Sign In' is styled as a low-emphasis ghost button.",
         "confidence": "high",
         "sources": [
           {
@@ -1295,8 +904,7 @@
       "method": "llm_batch",
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
-      "principles_count": 2,
-      "prompt_hash": "ad46e79302ae"
+      "principles_count": 3
     }
   },
   {
@@ -1312,26 +920,48 @@
     "owner_username": "julianxuofficial",
     "classification": {
       "path": "audio",
-      "paths": [
-        "audio"
-      ],
-      "reason": "Video reel with brief caption (6 words, 0 keywords); queued for audio transcription",
+      "reason": "Video reel with brief caption; queued for audio transcription",
       "word_count": 6,
-      "matched_keywords": [],
-      "has_rich_caption": false,
-      "has_substance": false
+      "matched_keywords": []
     },
     "transcript": "Add subtle haptics, use FA symbols, match native transitions, add swipe to dismiss, use  spring animations, add interactive gestures, use native sheets, smooth keyboard transitions,  use match transitions, add scroll linked motion, animate sheet presentation, animate stage  changes, add press feedback, add contest menus, use system materials, match native  navigation, animate loading states, respect safe areas, respect reduced motion, remove  web styled motion. Follow for more.",
     "principles": [
       {
-        "principle": "Native Motion System Integration",
+        "principle": "Physics-Based Spring Animations",
         "category": "motion",
-        "trigger_context": "interactive touch targets, modal sheets, and page transitions in mobile applications",
-        "do_this": "Implement physics-based spring animations and match OS-native navigation transitions while respecting user reduced-motion accessibility preferences",
-        "dont_do_this": "Use generic, web-style linear or ease-in-out easing curves that feel disconnected from the platform's native feel",
-        "rule": "Use spring-based physics curves and platform-native transition patterns for all interactive state changes and sheet presentations.",
-        "why": "Web-styled motion feels sluggish and unpolished on native hardware, violating user expectations for fluid, tactile feedback and causing cognitive friction.",
-        "example": "Before: A modal slides up using a standard linear ease. After: A modal uses a damped spring animation that responds to a swipe-to-dismiss gesture with matching velocity.",
+        "rule": "Utilize spring physics curves instead of linear or basic ease-in-out transitions for UI state changes.",
+        "why": "Spring animations mimic natural real-world physics, making interfaces feel tactile, responsive, and organic.",
+        "example": "Apply a damping ratio of 0.8 and response time of 300ms to modal popups instead of a static linear fade.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "julianxuofficial",
+            "date": "2026-09-15",
+            "url": "https://www.instagram.com/p/DdQhclcxcL-/"
+          }
+        ]
+      },
+      {
+        "principle": "Reduced Motion Preference Compliance",
+        "category": "accessibility",
+        "rule": "Disable or substitute motion-heavy transitions when the operating system's reduced motion setting is enabled.",
+        "why": "Abrupt or scaling animations can trigger vestibular disorders, dizziness, or nausea for sensitive users.",
+        "example": "Wrap expansive zoom transitions in `@media (prefers-reduced-motion: no-preference)` queries.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "julianxuofficial",
+            "date": "2026-09-15",
+            "url": "https://www.instagram.com/p/DdQhclcxcL-/"
+          }
+        ]
+      },
+      {
+        "principle": "Immediate Interactive Press Feedback",
+        "category": "motion",
+        "rule": "Provide instantaneous visual and haptic feedback when a user touches or clicks an interactive surface.",
+        "why": "Instantaneous feedback confirms touch registration and reassures the user that their input is being processed.",
+        "example": "Scale a button down to 98% and trigger a light haptic pulse immediately upon touch down.",
         "confidence": "high",
         "sources": [
           {
@@ -1346,8 +976,7 @@
       "method": "llm_batch",
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
-      "principles_count": 1,
-      "prompt_hash": "ad46e79302ae"
+      "principles_count": 3
     }
   }
 ]

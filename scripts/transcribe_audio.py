@@ -18,7 +18,16 @@ import yaml
 logger = logging.getLogger("transcribe_audio")
 
 
-# Cache whisper model instance in memory across calls
+# Fix faster-whisper compatibility with PyAV >= 14.0.0 where metadata_errors was removed from av.open
+try:
+    import av
+    _orig_av_open = av.open
+    def _patched_av_open(*args, **kwargs):
+        kwargs.pop("metadata_errors", None)
+        return _orig_av_open(*args, **kwargs)
+    av.open = _patched_av_open
+except Exception:
+    pass
 _WHISPER_MODEL = None
 _WHISPER_BACKEND = None  # 'faster_whisper' or 'whisper'
 
