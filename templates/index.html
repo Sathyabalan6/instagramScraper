@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design Skill Studio</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Vue 3 CDN -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            apple: {
+              blue: '#0071e3',
+              blueHover: '#0077ed',
+              systemBlue: '#0a84ff',
+              green: '#30d158',
+              amber: '#ff9f0a',
+              red: '#ff453a',
+              teal: '#30b0c7',
+              indigo: '#5e5ce6',
+              surface: '#141416',
+              elevated: '#1c1c1f',
+              card: '#161618',
+              border: 'rgba(255, 255, 255, 0.08)',
+              borderFocus: 'rgba(10, 132, 255, 0.6)'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Apple SF Pro typography hierarchy */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "SF Pro", -apple-system, system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      letter-spacing: -0.011em;
+    }
+    code, pre, .font-mono {
+      font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Monaco, Consolas, monospace;
+    }
+    /* macOS-style smooth scrollbars */
+    ::-webkit-scrollbar { width: 7px; height: 7px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.16); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.28); }
+
+    /* Transitions */
+    .toast-enter-active, .toast-leave-active {
+      transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .toast-enter-from, .toast-leave-to {
+      opacity: 0;
+      transform: translate(-50%, 12px) scale(0.96);
+    }
+  </style>
+</head>
+<body class="bg-black text-neutral-100 min-h-screen flex flex-col selection:bg-[#0a84ff]/30 selection:text-white">
+  <div id="app" class="flex-1 flex flex-col">
+
+    <!-- macOS / iOS Glass Navigation Bar -->
+    <header class="border-b border-white/[0.08] bg-black/80 backdrop-blur-xl sticky top-0 z-40 px-6 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <!-- App Icon Glyph -->
+        <div class="h-9 w-9 rounded-xl bg-gradient-to-b from-[#2c2c2e] to-[#1c1c1e] border border-white/[0.12] flex items-center justify-center shadow-sm">
+          <app-icon name="sparkles" class="w-4 h-4 text-[#0a84ff]"></app-icon>
+        </div>
+        <div>
+          <h1 class="text-sm font-semibold text-white tracking-tight leading-none">Design Skill Studio</h1>
+          <p class="text-[11px] text-neutral-400 mt-1 leading-none">Synthesize Production UI/UX Principles from Instagram</p>
+        </div>
+      </div>
+
+      <!-- Segmented Navigation Bar -->
+      <nav class="hidden md:flex items-center gap-1 bg-[#18181b] p-1 rounded-full border border-white/[0.08]">
+        <button 
+          v-for="t in tabs" 
+          :key="t.id"
+          @click="currentTab = t.id"
+          :class="[
+            'px-3.5 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 transition-all duration-150',
+            currentTab === t.id 
+              ? 'bg-white/[0.14] text-white shadow-sm border border-white/[0.12]' 
+              : 'text-neutral-400 hover:text-neutral-200 hover:bg-white/[0.04]'
+          ]"
+        >
+          <app-icon :name="t.icon" class="w-3.5 h-3.5"></app-icon>
+          <span>{{ t.label }}</span>
+          <span v-if="t.id === 'principles' && principlesTotal" class="text-[10px] font-semibold px-1.5 py-0.2 rounded-full bg-[#0a84ff]/20 text-[#0a84ff]">
+            {{ principlesTotal }}
+          </span>
+        </button>
+      </nav>
+
+      <!-- System Status Pills -->
+      <div class="flex items-center gap-2.5">
+        <!-- Instagram Session Status Button -->
+        <button 
+          @click="currentTab = 'settings'" 
+          :class="[
+            'text-xs px-3 py-1.5 rounded-full border flex items-center gap-2 transition-all',
+            status.cookies.valid 
+              ? 'bg-[#30d158]/10 border-[#30d158]/25 text-[#30d158] hover:bg-[#30d158]/15' 
+              : 'bg-[#ff9f0a]/10 border-[#ff9f0a]/25 text-[#ff9f0a] hover:bg-[#ff9f0a]/15'
+          ]"
+          :title="status.cookies.valid ? 'Instagram session verified and active' : 'Instagram session required'"
+        >
+          <span class="w-1.5 h-1.5 rounded-full" :class="status.cookies.valid ? 'bg-[#30d158] animate-pulse' : 'bg-[#ff9f0a]'"></span>
+          <span class="font-medium">{{ status.cookies.valid ? 'Session Active' : 'Configure Session' }}</span>
+        </button>
+
+        <!-- LLM Engine Pill -->
+        <div class="hidden sm:flex text-xs px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.08] text-neutral-300 items-center gap-1.5">
+          <app-icon name="cpu" class="w-3.5 h-3.5 text-[#0a84ff]"></app-icon>
+          <span class="text-neutral-400">Model:</span>
+          <span class="font-medium text-white">{{ activeLLMProvider || 'Ready' }}</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Navigation Bar -->
+    <div class="md:hidden border-b border-white/[0.08] bg-[#121215] px-4 py-2 flex items-center justify-around overflow-x-auto">
+      <button 
+        v-for="t in tabs" 
+        :key="t.id"
+        @click="currentTab = t.id"
+        :class="[
+          'px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 whitespace-nowrap',
+          currentTab === t.id ? 'bg-white/[0.14] text-white' : 'text-neutral-400'
+        ]"
+      >
+        <app-icon :name="t.icon" class="w-3.5 h-3.5"></app-icon>
+        {{ t.label }}
+      </button>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 p-6 max-w-7xl w-full mx-auto space-y-6">
+
+      <!-- ==================== TAB 1: RUN EXTRACTION ==================== -->
+      <section v-if="currentTab === 'run'" class="space-y-6">
+        
+        <!-- Notice Banner when Cookies Missing -->
+        <div v-if="!status.cookies.valid" class="p-4 rounded-2xl bg-[#ff9f0a]/10 border border-[#ff9f0a]/25 text-[#ff9f0a] flex items-start justify-between gap-4">
+          <div class="flex items-start gap-3">
+            <app-icon name="alert-triangle" class="w-5 h-5 text-[#ff9f0a] shrink-0 mt-0.5"></app-icon>
+            <div>
+              <p class="text-sm font-semibold">Instagram Session Required</p>
+              <p class="text-xs text-neutral-300 mt-0.5">An active session cookie is needed to access private saved bookmark collections and avoid guest rate limits.</p>
+            </div>
+          </div>
+          <button @click="currentTab = 'settings'" class="text-xs px-3.5 py-1.5 bg-[#ff9f0a] text-black font-semibold rounded-xl hover:bg-[#ff9f0a]/90 transition shrink-0">
+            Setup Session
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          
+          <!-- Configuration Card -->
+          <div class="lg:col-span-5 bg-[#141416] border border-white/[0.08] rounded-2xl p-6 space-y-5 shadow-sm">
+            <div>
+              <h2 class="text-base font-semibold text-white tracking-tight flex items-center gap-2">
+                <app-icon name="play-circle" class="w-4 h-4 text-[#0a84ff]"></app-icon>
+                Extract Principles
+              </h2>
+              <p class="text-xs text-neutral-400 mt-1">Harvest posts, transcribe audio, and distill actionable design rules.</p>
+            </div>
+
+            <!-- Ingestion Mode Selector (Apple Segmented Control) -->
+            <div>
+              <label class="block text-[11px] font-semibold text-neutral-400 uppercase tracking-wider mb-2">Ingestion Mode</label>
+              <div class="grid grid-cols-2 gap-1 bg-[#1c1c1f] p-1 rounded-xl border border-white/[0.06]">
+                <button 
+                  type="button"
+                  @click="runForm.mode = 'collection'"
+                  :class="[
+                    'py-2 px-3 text-xs font-semibold rounded-lg flex items-center justify-center gap-2 transition-all duration-150',
+                    runForm.mode === 'collection' ? 'bg-[#0071e3] text-white shadow-sm' : 'text-neutral-400 hover:text-white'
+                  ]"
+                >
+                  <app-icon name="bookmark" class="w-3.5 h-3.5"></app-icon>
+                  Saved Collection
+                </button>
+                <button 
+                  type="button"
+                  @click="runForm.mode = 'handle'"
+                  :class="[
+                    'py-2 px-3 text-xs font-semibold rounded-lg flex items-center justify-center gap-2 transition-all duration-150',
+                    runForm.mode === 'handle' ? 'bg-[#0071e3] text-white shadow-sm' : 'text-neutral-400 hover:text-white'
+                  ]"
+                >
+                  <app-icon name="user" class="w-3.5 h-3.5"></app-icon>
+                  Creator Handle
+                </button>
+              </div>
+            </div>
+
+            <!-- Target Input -->
+            <div>
+              <label class="block text-[11px] font-semibold text-neutral-400 uppercase tracking-wider mb-2">
+                {{ runForm.mode === 'collection' ? 'Collection URL or Folder Slug' : 'Instagram Username' }}
+              </label>
+              <input 
+                type="text" 
+                v-model="runForm.target" 
+                :placeholder="runForm.mode === 'collection' ? 'https://www.instagram.com/username/saved/collection-slug/ or folder-slug' : 'zanderwhitehurst'" 
+                class="w-full bg-[#1c1c1f] border border-white/[0.12] rounded-xl px-4 py-2.5 text-sm text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-[#0a84ff]/40 focus:border-[#0a84ff] transition" 
+              />
+
+              <!-- Detected Collections Pills (if available) -->
+              <div v-if="runForm.mode === 'collection' && status.saved_collections && status.saved_collections.length" class="mt-3 space-y-1.5">
+                <span class="text-[10px] font-semibold text-neutral-400 uppercase tracking-wider block">Detected Browser Folders:</span>
+                <div class="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto pr-1">
+                  <button 
+                    v-for="col in status.saved_collections" 
+                    :key="col.id"
+                    type="button"
+                    @click="runForm.target = col.url || col.slug"
+                    class="px-2.5 py-1 text-xs rounded-lg bg-white/[0.05] hover:bg-white/[0.10] border border-white/[0.08] text-neutral-300 transition flex items-center gap-1.5"
+                    :class="{'border-[#0a84ff] text-[#0a84ff] bg-[#0a84ff]/10 font-medium': runForm.target && (runForm.target.includes(col.slug) || runForm.target.includes(col.id))}"
+                  >
+                    <app-icon name="bookmark" class="w-3 h-3 text-[#0a84ff]"></app-icon>
+                    <span>{{ col.name }}</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Quick Handle Suggestions -->
+              <div v-else-if="runForm.mode === 'handle'" class="mt-2.5 flex items-center gap-1.5 flex-wrap">
+                <span class="text-[10px] text-neutral-500">Popular:</span>
+                <button 
+                  v-for="h in ['zanderwhitehurst', 'designcode.io', 'createwithalena']" 
+                  :key="h" 
+                  type="button" 
+                  @click="runForm.target = h" 
+                  class="text-[11px] px-2 py-0.5 rounded-md bg-white/[0.04] text-neutral-400 hover:text-white border border-white/[0.06] transition"
+                >
+                  @{{ h }}
+                </button>
+              </div>
+            </div>
+
+            <!-- Post Limit & Options -->
+            <div class="grid grid-cols-2 gap-4 pt-1">
+              <div>
+                <label class="block text-[11px] font-semibold text-neutral-400 uppercase tracking-wider mb-2">Max Posts</label>
+                <input 
+                  type="number" 
+                  v-model.number="runForm.limit" 
+                  min="5" 
+                  max="100" 
+                  class="w-full bg-[#1c1c1f] border border-white/[0.12] rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#0a84ff]/40 focus:border-[#0a84ff] transition" 
+                />
+              </div>
+              <div class="flex flex-col justify-end">
+                <label class="flex items-center gap-2 cursor-pointer text-xs text-neutral-300 select-none pb-2.5">
+                  <input type="checkbox" v-model="runForm.skip_transcribe" class="rounded bg-[#1c1c1f] border-white/[0.2] text-[#0a84ff] focus:ring-0 w-4 h-4">
+                  <span>Skip Audio STT</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Primary Action Button -->
+            <button 
+              @click="triggerPipeline" 
+              :disabled="isRunning || !runForm.target" 
+              :class="[
+                'w-full py-3 px-4 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 transition-all shadow-sm',
+                isRunning || !runForm.target 
+                  ? 'bg-neutral-800 text-neutral-500 cursor-not-allowed border border-white/[0.05]' 
+                  : 'bg-[#0071e3] hover:bg-[#0077ed] text-white'
+              ]"
+            >
+              <app-icon v-if="!isRunning" name="play" class="w-4 h-4 fill-current"></app-icon>
+              <app-icon v-else name="loader-2" class="w-4 h-4 animate-spin"></app-icon>
+              <span>{{ isRunning ? 'Extracting in Background...' : 'Launch Extraction' }}</span>
+            </button>
+
+            <!-- Architecture & Safety Note -->
+            <div class="p-3.5 bg-[#18181b] rounded-xl border border-white/[0.06] text-[11px] text-neutral-400 flex items-start gap-2.5">
+              <app-icon name="shield-check" class="w-4 h-4 text-[#30d158] shrink-0 mt-0.5"></app-icon>
+              <div class="space-y-1">
+                <p class="font-medium text-neutral-300">Privacy & Architecture Guarantee</p>
+                <p class="leading-relaxed">Zero video files are stored. Audio streams are transcribed directly via Whisper in scratch storage and immediately deleted. Extracted principles are synthesized in original language.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Terminal / macOS Console -->
+          <div class="lg:col-span-7 bg-[#101012] border border-white/[0.08] rounded-2xl flex flex-col h-[580px] overflow-hidden shadow-sm">
+            
+            <!-- macOS Window Title Bar -->
+            <div class="px-4 py-3 border-b border-white/[0.08] bg-[#141416] flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-[#ff5f56]"></span>
+                <span class="w-3 h-3 rounded-full bg-[#ffbd2e]"></span>
+                <span class="w-3 h-3 rounded-full bg-[#27c93f]"></span>
+                <span class="ml-2 text-xs font-mono text-neutral-400 font-medium">Terminal — Execution Stream</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <span v-if="isRunning" class="text-[11px] text-[#30d158] font-mono flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-[#30d158] animate-ping"></span>
+                  Active Stream
+                </span>
+                <button @click="copyConsoleLogs" class="text-xs text-neutral-400 hover:text-white transition flex items-center gap-1">
+                  <app-icon name="copy" class="w-3 h-3"></app-icon>
+                  Copy
+                </button>
+                <button @click="terminalLogs = []" class="text-xs text-neutral-400 hover:text-white transition">Clear</button>
+              </div>
+            </div>
+
+            <!-- Console Log Output -->
+            <div ref="terminalBox" class="flex-1 p-4 font-mono text-xs bg-[#09090b] overflow-y-auto space-y-1 leading-relaxed">
+              <div v-if="terminalLogs.length === 0" class="h-full flex flex-col items-center justify-center text-neutral-600 space-y-2">
+                <app-icon name="terminal" class="w-8 h-8 opacity-40"></app-icon>
+                <p>Console idle. Launch an extraction above to observe live progress.</p>
+              </div>
+              <div 
+                v-for="(log, idx) in terminalLogs" 
+                :key="idx"
+                :class="[
+                  'break-all',
+                  log.includes('[ERROR]') || log.includes('Traceback') ? 'text-[#ff453a]' :
+                  log.includes('[WARNING]') ? 'text-[#ff9f0a]' :
+                  log.includes('===') || log.includes('---') ? 'text-[#30d158] font-semibold' :
+                  log.includes('Stage') ? 'text-[#0a84ff] font-semibold' : 'text-neutral-300'
+                ]"
+              >
+                {{ log }}
+              </div>
+            </div>
+
+            <!-- Console Footer -->
+            <div class="px-4 py-2.5 bg-[#141416] border-t border-white/[0.08] text-[11px] text-neutral-400 flex items-center justify-between">
+              <span>Lines: {{ terminalLogs.length }}</span>
+              <span v-if="taskResultStatus" :class="taskResultStatus === 'completed' ? 'text-[#30d158]' : 'text-[#ff453a]'" class="font-medium">
+                Status: {{ taskResultStatus.toUpperCase() }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ==================== TAB 2: PRINCIPLES EXPLORER ==================== -->
+      <section v-if="currentTab === 'principles'" class="space-y-6">
+        
+        <!-- Controls Toolbar -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#141416] border border-white/[0.08] p-4 rounded-2xl">
+          
+          <!-- Deliverable Scope Selector -->
+          <div class="flex items-center gap-2.5">
+            <label class="text-xs font-semibold text-neutral-400 uppercase tracking-wider">Skill Target:</label>
+            <select 
+              v-model="selectedTarget" 
+              @change="fetchPrinciples"
+              class="bg-[#1c1c1f] border border-white/[0.12] text-xs font-medium text-white rounded-xl px-3 py-2 focus:outline-none focus:border-[#0a84ff]"
+            >
+              <option v-if="!status.targets || status.targets.length === 0" value="">No skills generated yet</option>
+              <option v-for="t in status.targets" :key="t" :value="t">{{ t }}</option>
+            </select>
+          </div>
+
+          <!-- Search Filter -->
+          <div class="flex-1 max-w-md relative">
+            <app-icon name="search" class="w-4 h-4 text-neutral-500 absolute left-3.5 top-2.5"></app-icon>
+            <input 
+              type="text" 
+              v-model="searchQuery" 
+              @input="debounceSearch" 
+              placeholder="Search by rule, rationale, UI element, or creator..." 
+              class="w-full bg-[#1c1c1f] border border-white/[0.12] rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-[#0a84ff] transition" 
+            />
+          </div>
+
+          <!-- Action Button: Copy Prompt for Claude -->
+          <button 
+            @click="copyClaudePrompt" 
+            class="px-3.5 py-2 bg-white/[0.08] hover:bg-white/[0.12] text-white rounded-xl text-xs font-semibold flex items-center gap-2 transition border border-white/[0.08]"
+          >
+            <app-icon name="clipboard-copy" class="w-3.5 h-3.5 text-[#0a84ff]"></app-icon>
+            <span>Copy for Claude</span>
+          </button>
+        </div>
+
+        <!-- Category Filter Pills -->
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-1">
+          <button 
+            v-for="cat in categories" 
+            :key="cat" 
+            @click="selectedCategory = cat; fetchPrinciples();" 
+            :class="[
+              'px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all duration-150',
+              selectedCategory === cat 
+                ? 'bg-white text-black shadow-sm font-semibold' 
+                : 'bg-[#18181b] border border-white/[0.08] text-neutral-400 hover:text-white'
+            ]"
+          >
+            {{ cat.charAt(0).toUpperCase() + cat.slice(1) }}
+          </button>
+        </div>
+
+        <!-- Principles State Displays -->
+        <div v-if="principlesLoading" class="py-20 text-center text-neutral-500 space-y-3">
+          <app-icon name="loader-2" class="w-6 h-6 animate-spin mx-auto text-[#0a84ff]"></app-icon>
+          <p class="text-xs">Loading principles...</p>
+        </div>
+
+        <div v-else-if="principles.length === 0" class="py-20 text-center bg-[#141416] border border-white/[0.08] rounded-2xl space-y-3">
+          <app-icon name="book-open" class="w-8 h-8 mx-auto text-neutral-600"></app-icon>
+          <h3 class="text-sm font-semibold text-white">No principles found</h3>
+          <p class="text-xs text-neutral-400 max-w-sm mx-auto">Try selecting another deliverable or launch an extraction on a handle or collection.</p>
+        </div>
+
+        <!-- Principles Grid -->
+        <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div 
+            v-for="(p, idx) in principles" 
+            :key="idx" 
+            class="bg-[#141416] border border-white/[0.08] hover:border-white/[0.16] rounded-2xl p-5 flex flex-col justify-between space-y-4 shadow-sm transition-all"
+          >
+            <div class="space-y-3">
+              <!-- Card Top Header -->
+              <div class="flex items-start justify-between gap-3">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span :class="['text-[10px] font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full border', getCategoryBadgeClass(p.category)]">
+                    {{ p.category }}
+                  </span>
+                  <span v-if="p.sources && p.sources.length >= 2" class="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-[#0a84ff]/10 text-[#0a84ff] border border-[#0a84ff]/25">
+                    Multi-Source Consensus ({{ p.sources.length }})
+                  </span>
+                  <span v-else class="text-[10px] font-medium px-2.5 py-0.5 rounded-full bg-white/[0.06] text-neutral-400 border border-white/[0.08]">
+                    Creator Guideline
+                  </span>
+                </div>
+                <button @click="copyPrinciple(p)" class="text-neutral-500 hover:text-white transition p-1" title="Copy Rule">
+                  <app-icon name="copy" class="w-3.5 h-3.5"></app-icon>
+                </button>
+              </div>
+
+              <!-- Principle Title -->
+              <h3 class="text-base font-semibold text-white tracking-tight leading-snug">
+                {{ p.principle }}
+              </h3>
+
+              <!-- Actionable Rule Callout -->
+              <div class="p-3.5 bg-[#1a1a1d] border border-white/[0.06] rounded-xl space-y-1">
+                <div class="text-[10px] uppercase font-semibold text-[#0a84ff] tracking-wider">Actionable Rule</div>
+                <p class="text-xs text-neutral-200 leading-relaxed font-normal">{{ p.rule }}</p>
+              </div>
+
+              <!-- Rationale -->
+              <div v-if="p.why" class="text-xs text-neutral-400 leading-relaxed">
+                <span class="text-neutral-300 font-medium">Why:</span> {{ p.why }}
+              </div>
+
+              <!-- Practical Application Example -->
+              <div v-if="p.example && p.example !== 'None specified'" class="text-xs text-neutral-300 bg-white/[0.03] p-2.5 rounded-xl border border-white/[0.06]">
+                <span class="text-[#0a84ff] font-medium">Example:</span> {{ p.example }}
+              </div>
+            </div>
+
+            <!-- Footer / Citations -->
+            <div class="pt-3 border-t border-white/[0.06] flex items-center justify-between text-[11px] text-neutral-500">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span>Sources:</span>
+                <template v-for="(src, sidx) in (p.sources || [])" :key="sidx">
+                  <a 
+                    :href="src.url" 
+                    target="_blank" 
+                    class="text-[#0a84ff] hover:underline flex items-center gap-0.5"
+                  >
+                    @{{ src.handle || 'post' }}
+                    <app-icon name="external-link" class="w-2.5 h-2.5"></app-icon>
+                  </a>
+                  <span v-if="sidx < p.sources.length - 1">,</span>
+                </template>
+              </div>
+              <span class="capitalize text-[10px] text-neutral-500">Confidence: {{ p.confidence || 'high' }}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ==================== TAB 3: DELIVERABLE SKILL.MD ==================== -->
+      <section v-if="currentTab === 'skillmd'" class="space-y-4">
+        <div class="flex items-center justify-between bg-[#141416] border border-white/[0.08] p-4 rounded-2xl">
+          <div class="flex items-center gap-3">
+            <select 
+              v-model="selectedTarget" 
+              @change="fetchSkillMd" 
+              class="bg-[#1c1c1f] border border-white/[0.12] text-xs font-medium text-white rounded-xl px-3 py-2"
+            >
+              <option v-if="!status.targets || status.targets.length === 0" value="">No skills generated yet</option>
+              <option v-for="t in status.targets" :key="t" :value="t">skills/{{ t }}/SKILL.md</option>
+            </select>
+          </div>
+          <button 
+            @click="copySkillMdText" 
+            class="px-4 py-2 bg-[#0071e3] hover:bg-[#0077ed] text-white font-semibold rounded-xl text-xs flex items-center gap-2 transition"
+          >
+            <app-icon name="copy" class="w-3.5 h-3.5"></app-icon>
+            <span>Copy Document</span>
+          </button>
+        </div>
+
+        <div class="bg-[#141416] border border-white/[0.08] rounded-2xl p-6 overflow-x-auto shadow-sm">
+          <pre class="font-mono text-xs text-neutral-300 whitespace-pre-wrap leading-relaxed">{{ skillMdContent }}</pre>
+        </div>
+      </section>
+
+
+      <!-- ==================== TAB 4: POST ARCHIVE & TRANSCRIPTS ==================== -->
+      <section v-if="currentTab === 'posts'" class="space-y-6">
+        <div class="flex items-center justify-between bg-[#141416] border border-white/[0.08] p-4 rounded-2xl">
+          <div class="flex items-center gap-3">
+            <label class="text-xs font-semibold text-neutral-400 uppercase tracking-wider">Target Archive:</label>
+            <select 
+              v-model="selectedPostsTarget" 
+              @change="fetchPostsData" 
+              class="bg-[#1c1c1f] border border-white/[0.12] text-xs font-medium text-white rounded-xl px-3 py-2"
+            >
+              <option v-for="t in status.targets" :key="t" :value="t">{{ t }}</option>
+            </select>
+          </div>
+          <span class="text-xs text-neutral-400">Total Posts: {{ postsData.length }}</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div 
+            v-for="post in postsData" 
+            :key="post.shortcode" 
+            class="bg-[#141416] border border-white/[0.08] rounded-2xl p-5 flex flex-col justify-between space-y-4 shadow-sm"
+          >
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono font-medium text-[#0a84ff]">Post {{ post.shortcode }}</span>
+                <span :class="['text-[10px] font-semibold px-2.5 py-0.5 rounded-full border', post.is_video ? 'bg-[#30b0c7]/10 text-[#30b0c7] border-[#30b0c7]/25' : 'bg-white/[0.05] text-neutral-400 border-white/[0.08]']">
+                  {{ post.is_video ? 'Reel / Video' : 'Carousel' }}
+                </span>
+              </div>
+
+              <!-- Caption -->
+              <div>
+                <span class="text-[10px] uppercase font-semibold text-neutral-500 tracking-wider">Caption</span>
+                <p class="text-xs text-neutral-300 mt-1 line-clamp-3 leading-relaxed">{{ post.caption || '(No caption text)' }}</p>
+              </div>
+
+              <!-- Audio Transcript -->
+              <div v-if="post.transcript" class="bg-[#1a1a1d] p-3 rounded-xl border border-white/[0.06] space-y-1">
+                <span class="text-[10px] uppercase font-semibold text-[#30d158] flex items-center gap-1">
+                  <app-icon name="mic" class="w-3 h-3"></app-icon>
+                  Whisper Transcript
+                </span>
+                <p class="text-xs text-neutral-300 line-clamp-4 leading-relaxed">{{ post.transcript }}</p>
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-white/[0.06] flex items-center justify-between text-xs text-neutral-400">
+              <span>{{ post.date || 'Recent' }}</span>
+              <a :href="post.url" target="_blank" class="text-[#0a84ff] hover:underline flex items-center gap-1">
+                <span>View on Instagram</span>
+                <app-icon name="external-link" class="w-3 h-3"></app-icon>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ==================== TAB 5: COOKIES & SETTINGS ==================== -->
+      <section v-if="currentTab === 'settings'" class="space-y-6 max-w-4xl mx-auto">
+        
+        <!-- Instagram Session Diagnostic Card -->
+        <div class="bg-[#141416] border border-white/[0.08] rounded-2xl p-6 space-y-4 shadow-sm">
+          <div class="flex items-center justify-between">
+            <h2 class="text-sm font-semibold text-white flex items-center gap-2">
+              <app-icon name="key" class="w-4 h-4 text-[#0a84ff]"></app-icon>
+              Instagram Session Health
+            </h2>
+            <span :class="['text-xs font-semibold px-2.5 py-1 rounded-full border', status.cookies.valid ? 'bg-[#30d158]/10 border-[#30d158]/25 text-[#30d158]' : 'bg-[#ff453a]/10 border-[#ff453a]/25 text-[#ff453a]']">
+              {{ status.cookies.valid ? 'Active & Ready' : 'Incomplete / Missing' }}
+            </span>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 pt-2">
+            <div 
+              v-for="(val, k) in status.cookies.keys" 
+              :key="k" 
+              class="bg-[#1c1c1f] p-3 rounded-xl border border-white/[0.06] flex items-center justify-between"
+            >
+              <span class="text-xs font-mono text-neutral-300">{{ k }}</span>
+              <app-icon v-if="val" name="check-circle-2" class="w-4 h-4 text-[#30d158]"></app-icon>
+              <app-icon v-else name="x-circle" class="w-4 h-4 text-neutral-600"></app-icon>
+            </div>
+          </div>
+        </div>
+
+        <!-- Automatic Browser Profile Sync Card -->
+        <div class="bg-[#141416] border border-white/[0.08] rounded-2xl p-6 space-y-3 shadow-sm">
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex items-start gap-3">
+              <div class="p-2.5 rounded-xl bg-[#30d158]/10 text-[#30d158] mt-0.5">
+                <app-icon name="zap" class="w-4 h-4"></app-icon>
+              </div>
+              <div>
+                <h3 class="text-sm font-semibold text-white">Browser Auto-Sync</h3>
+                <p class="text-xs text-neutral-300 mt-1 leading-relaxed">
+                  The studio can automatically detect active Instagram cookies directly from your local browser profile (Chrome, Firefox, Brave, Chromium) with zero browser extensions required.
+                </p>
+                <div class="text-xs text-neutral-400 mt-2 space-y-1">
+                  <p>Source: <span class="text-neutral-200">{{ status.cookies.source || 'Local Browser Profile' }}</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Manual Cookie Input Card -->
+        <div class="bg-[#141416] border border-white/[0.08] rounded-2xl p-6 space-y-4 shadow-sm">
+          <div>
+            <h3 class="text-sm font-semibold text-white">Manual Cookie Paste</h3>
+            <p class="text-xs text-neutral-400 mt-0.5">Paste Netscape-format or JSON cookies to explicitly set the session.</p>
+          </div>
+
+          <textarea 
+            v-model="rawCookieInput" 
+            rows="5" 
+            placeholder="# Netscape HTTP Cookie File&#10;.instagram.com&#9;TRUE&#9;/&#9;TRUE&#9;1740000000&#9;sessionid&#9;your_session_id..." 
+            class="w-full bg-[#1c1c1f] border border-white/[0.12] rounded-xl p-3.5 text-xs font-mono text-neutral-200 placeholder-neutral-600 focus:outline-none focus:border-[#0a84ff] transition"
+          ></textarea>
+
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-neutral-400">Target: <code>cookies/instagram_cookies.txt</code> (gitignored)</span>
+            <button 
+              @click="submitCookies" 
+              :disabled="!rawCookieInput" 
+              class="px-4 py-2 bg-[#0071e3] hover:bg-[#0077ed] disabled:bg-neutral-800 disabled:text-neutral-500 text-white font-semibold rounded-xl text-xs transition"
+            >
+              Save & Verify Session
+            </button>
+          </div>
+        </div>
+
+        <!-- LLM API Keys Configuration Card -->
+        <div class="bg-[#141416] border border-white/[0.08] rounded-2xl p-6 space-y-4 shadow-sm">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-semibold text-white flex items-center gap-2">
+              <app-icon name="cpu" class="w-4 h-4 text-[#0a84ff]"></app-icon>
+              LLM Provider Configuration
+            </h3>
+            <span v-if="activeLLMProvider" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#30d158]/10 text-[#30d158] border border-[#30d158]/25">
+              Active: {{ activeLLMProvider }}
+            </span>
+            <span v-else class="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#ff9f0a]/10 text-[#ff9f0a] border border-[#ff9f0a]/25">
+              No API Key Configured
+            </span>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div 
+              v-for="(active, prov) in status.llm" 
+              :key="prov"
+              class="bg-[#1c1c1f] p-3 rounded-xl border border-white/[0.06] flex items-center justify-between"
+            >
+              <span class="text-xs font-semibold uppercase text-neutral-300">{{ prov }}</span>
+              <span :class="['text-[10px] font-semibold px-2 py-0.5 rounded-full', active ? 'bg-[#30d158]/10 text-[#30d158]' : 'bg-white/[0.05] text-neutral-500']">
+                {{ active ? 'Configured' : 'Missing' }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Add / Update Key Form -->
+          <div class="pt-3 border-t border-white/[0.06] space-y-3">
+            <div class="text-xs font-medium text-neutral-300">Set API Key:</div>
+            <div class="flex flex-col sm:flex-row gap-2">
+              <select 
+                v-model="selectedKeyProvider" 
+                class="bg-[#1c1c1f] border border-white/[0.12] text-xs font-medium text-white rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#0a84ff]"
+              >
+                <option value="GEMINI_API_KEY">Google Gemini (Recommended)</option>
+                <option value="GROQ_API_KEY">Groq (Ultra-Fast)</option>
+                <option value="OPENAI_API_KEY">OpenAI (GPT-4o)</option>
+                <option value="ANTHROPIC_API_KEY">Anthropic (Claude 3.5)</option>
+              </select>
+              <input 
+                type="password" 
+                v-model="keyValueInput" 
+                placeholder="Paste API key here" 
+                class="flex-1 bg-[#1c1c1f] border border-white/[0.12] rounded-xl px-3.5 py-2.5 text-xs font-mono text-neutral-200 placeholder-neutral-600 focus:outline-none focus:border-[#0a84ff] transition"
+              />
+              <button 
+                @click="saveApiKey" 
+                :disabled="!keyValueInput || isSavingKey" 
+                class="px-4 py-2.5 bg-[#0071e3] hover:bg-[#0077ed] disabled:bg-neutral-800 disabled:text-neutral-500 text-white font-semibold rounded-xl text-xs transition flex items-center justify-center gap-1.5"
+              >
+                <app-icon v-if="!isSavingKey" name="save" class="w-3.5 h-3.5"></app-icon>
+                <app-icon v-else name="loader-2" class="w-3.5 h-3.5 animate-spin"></app-icon>
+                <span>Save Key</span>
+              </button>
+            </div>
+            <p class="text-xs text-neutral-500">Keys are written to local <code>.env</code> (gitignored) and activated in memory immediately.</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Floating Toast Notification (Apple HIG Style) -->
+    <transition name="toast">
+      <div 
+        v-if="toast.show" 
+        class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 backdrop-blur-xl bg-neutral-900/90 border border-white/15 text-white px-4 py-2.5 rounded-full shadow-2xl flex items-center gap-2.5 text-xs font-medium"
+      >
+        <app-icon v-if="toast.type === 'success'" name="check-circle-2" class="w-4 h-4 text-[#30d158]"></app-icon>
+        <app-icon v-else-if="toast.type === 'error'" name="alert-triangle" class="w-4 h-4 text-[#ff453a]"></app-icon>
+        <app-icon v-else name="info" class="w-4 h-4 text-[#0a84ff]"></app-icon>
+        <span>{{ toast.message }}</span>
+      </div>
+    </transition>
+
+  </div>
+
+  <script>
+    const { createApp, ref, onMounted, nextTick } = Vue;
+
+    const _svgCache = {};
+    const AppIcon = {
+      props: {
+        name: { type: String, required: true },
+        class: { type: String, default: '' }
+      },
+      template: `<span class="inline-flex items-center justify-center shrink-0 align-middle leading-none" :class="$props.class" v-html="svg"></span>`,
+      computed: {
+        svg() {
+          if (!this.name || !window.lucide) return '';
+          if (_svgCache[this.name]) return _svgCache[this.name];
+          const pascal = this.name
+            .split('-')
+            .map(p => p.charAt(0).toUpperCase() + p.slice(1))
+            .join('');
+          const iconDef = window.lucide.icons[pascal] || window.lucide.icons[this.name];
+          if (!iconDef) return '';
+          try {
+            const el = window.lucide.createElement(iconDef, { class: 'w-full h-full' });
+            _svgCache[this.name] = el.outerHTML;
+            return _svgCache[this.name];
+          } catch (e) {
+            return '';
+          }
+        }
+      }
+    };
+
+    const app = createApp({
+      setup() {
+        const tabs = [
+          { id: 'run', label: 'Extract', icon: 'play' },
+          { id: 'principles', label: 'Principles', icon: 'sparkles' },
+          { id: 'skillmd', label: 'Skill Document', icon: 'file-text' },
+          { id: 'posts', label: 'Post Archive', icon: 'film' },
+          { id: 'settings', label: 'Settings', icon: 'sliders' }
+        ];
+
+        const currentTab = ref('run');
+        const status = ref({
+          cookies: { valid: false, keys: {} },
+          llm: {},
+          targets: []
+        });
+
+        const activeLLMProvider = ref('');
+        const runForm = ref({
+          mode: 'collection',
+          target: '',
+          limit: 20,
+          skip_transcribe: false
+        });
+
+        const isRunning = ref(false);
+        const terminalLogs = ref([]);
+        const terminalBox = ref(null);
+        const taskResultStatus = ref(null);
+
+        // Toast Feedback System
+        const toast = ref({ show: false, message: '', type: 'info' });
+        let toastTimeout = null;
+        const showToast = (message, type = 'info') => {
+          clearTimeout(toastTimeout);
+          toast.value = { show: true, message, type };
+          toastTimeout = setTimeout(() => {
+            toast.value.show = false;
+          }, 2600);
+        };
+
+        // Principles Explorer State
+        const selectedTarget = ref('');
+        const selectedCategory = ref('all');
+        const searchQuery = ref('');
+        const categories = ['all', 'spacing', 'color', 'typography', 'hierarchy', 'motion', 'accessibility', 'layout'];
+        const principles = ref([]);
+        const principlesTotal = ref(0);
+        const principlesLoading = ref(false);
+
+        // SKILL.md Deliverable State
+        const skillMdContent = ref('');
+        const copiedSkillMd = ref(false);
+        const copiedPrompt = ref(false);
+
+        // Posts State
+        const selectedPostsTarget = ref('');
+        const postsData = ref([]);
+
+        // Cookies State
+        const rawCookieInput = ref('');
+
+        // API Keys State
+        const selectedKeyProvider = ref('GEMINI_API_KEY');
+        const keyValueInput = ref('');
+        const isSavingKey = ref(false);
+
+        const saveApiKey = async () => {
+          if (!keyValueInput.value) return;
+          isSavingKey.value = true;
+          try {
+            const body = {};
+            body[selectedKeyProvider.value] = keyValueInput.value.trim();
+            const r = await fetch('/api/settings/keys', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(body)
+            });
+            const data = await r.json();
+            if (data.status === 'ok') {
+              keyValueInput.value = '';
+              await fetchStatus();
+              showToast('API Key saved and activated', 'success');
+            } else {
+              showToast('Failed to save API key', 'error');
+            }
+          } catch (e) {
+            showToast('Error saving key: ' + e.message, 'error');
+          } finally {
+            isSavingKey.value = false;
+          }
+        };
+
+        const fetchStatus = async () => {
+          try {
+            const r = await fetch('/api/status');
+            const data = await r.json();
+            status.value = data;
+            if (data.targets && data.targets.length > 0) {
+              if (!selectedTarget.value || selectedTarget.value === 'global') {
+                selectedTarget.value = data.targets[0];
+              }
+              if (!selectedPostsTarget.value) {
+                selectedPostsTarget.value = data.targets[0];
+              }
+            }
+            // Detect active LLM
+            for (const [k, v] of Object.entries(data.llm || {})) {
+              if (v) {
+                activeLLMProvider.value = k.toUpperCase();
+                break;
+              }
+            }
+          } catch (e) {
+            console.error('Status fetch failed:', e);
+          }
+        };
+
+        const fetchPrinciples = async () => {
+          principlesLoading.value = true;
+          try {
+            const params = new URLSearchParams({
+              target: selectedTarget.value,
+              category: selectedCategory.value,
+              q: searchQuery.value
+            });
+            const r = await fetch(`/api/principles?${params.toString()}`);
+            const data = await r.json();
+            principles.value = data.principles || [];
+            principlesTotal.value = data.total || 0;
+          } catch (e) {
+            console.error('Principles fetch error:', e);
+          } finally {
+            principlesLoading.value = false;
+          }
+        };
+
+        let searchTimeout = null;
+        const debounceSearch = () => {
+          clearTimeout(searchTimeout);
+          searchTimeout = setTimeout(fetchPrinciples, 300);
+        };
+
+        const fetchSkillMd = async () => {
+          try {
+            const r = await fetch(`/api/skill_md?target=${selectedTarget.value}`);
+            skillMdContent.value = await r.text();
+          } catch (e) {
+            skillMdContent.value = 'Failed to load SKILL.md';
+          }
+        };
+
+        const fetchPostsData = async () => {
+          if (!selectedPostsTarget.value) return;
+          try {
+            const r = await fetch(`/api/posts?target=${selectedPostsTarget.value}`);
+            const data = await r.json();
+            postsData.value = data.posts || [];
+          } catch (e) {
+            console.error('Failed to load posts:', e);
+          }
+        };
+
+        const triggerPipeline = async () => {
+          if (isRunning.value) return;
+          isRunning.value = true;
+          taskResultStatus.value = null;
+          terminalLogs.value = ['Initiating execution pipeline...'];
+
+          try {
+            const r = await fetch('/api/run', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(runForm.value)
+            });
+            const res = await r.json();
+            if (!r.ok) throw new Error(res.detail || 'Launch failed');
+
+            // Connect to SSE stream
+            const eventSource = new EventSource(`/api/run/stream/${res.task_id}`);
+            eventSource.onmessage = (event) => {
+              const payload = JSON.parse(event.data);
+              terminalLogs.value.push(payload.line);
+              nextTick(() => {
+                if (terminalBox.value) {
+                  terminalBox.value.scrollTop = terminalBox.value.scrollHeight;
+                }
+              });
+            };
+
+            eventSource.addEventListener('end', (event) => {
+              const payload = JSON.parse(event.data);
+              taskResultStatus.value = payload.status;
+              isRunning.value = false;
+              eventSource.close();
+              fetchStatus();
+              fetchPrinciples();
+              showToast('Extraction complete!', 'success');
+            });
+
+            eventSource.onerror = () => {
+              isRunning.value = false;
+              eventSource.close();
+            };
+          } catch (e) {
+            terminalLogs.value.push(`[ERROR] ${e.message}`);
+            isRunning.value = false;
+            showToast('Extraction failed: ' + e.message, 'error');
+          }
+        };
+
+        const submitCookies = async () => {
+          try {
+            const r = await fetch('/api/cookies', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ cookies: rawCookieInput.value })
+            });
+            const data = await r.json();
+            rawCookieInput.value = '';
+            await fetchStatus();
+            showToast('Session cookies updated successfully', 'success');
+          } catch (e) {
+            showToast('Failed to save cookies: ' + e.message, 'error');
+          }
+        };
+
+        const copyPrinciple = (p) => {
+          const text = `**${p.principle}** (${p.category})\nRule: ${p.rule}\nWhy: ${p.why}\nExample: ${p.example}`;
+          navigator.clipboard.writeText(text);
+          showToast('Rule copied to clipboard', 'success');
+        };
+
+        const copySkillMdText = () => {
+          navigator.clipboard.writeText(skillMdContent.value);
+          showToast('SKILL.md copied to clipboard', 'success');
+        };
+
+        const copyClaudePrompt = () => {
+          const prompt = `Please load and strictly apply these distilled UI/UX design guidelines during design synthesis:\n\n${skillMdContent.value || 'See SKILL.md'}`;
+          navigator.clipboard.writeText(prompt);
+          showToast('Prompt copied for Claude', 'success');
+        };
+
+        const copyConsoleLogs = () => {
+          if (!terminalLogs.value.length) return;
+          navigator.clipboard.writeText(terminalLogs.value.join('\n'));
+          showToast('Console output copied', 'success');
+        };
+
+        const getCategoryBadgeClass = (cat) => {
+          const map = {
+            spacing: 'bg-[#0a84ff]/10 text-[#0a84ff] border-[#0a84ff]/25',
+            color: 'bg-pink-500/10 text-pink-400 border-pink-500/25',
+            typography: 'bg-[#ff9f0a]/10 text-[#ff9f0a] border-[#ff9f0a]/25',
+            hierarchy: 'bg-purple-500/10 text-purple-400 border-purple-500/25',
+            motion: 'bg-[#30b0c7]/10 text-[#30b0c7] border-[#30b0c7]/25',
+            accessibility: 'bg-[#30d158]/10 text-[#30d158] border-[#30d158]/25',
+            layout: 'bg-[#5e5ce6]/10 text-[#5e5ce6] border-[#5e5ce6]/25'
+          };
+          return map[cat] || 'bg-white/[0.06] text-neutral-300 border-white/[0.08]';
+        };
+
+        onMounted(async () => {
+          await fetchStatus();
+          await fetchPrinciples();
+          await fetchSkillMd();
+          if (status.value.targets.length > 0) {
+            selectedPostsTarget.value = status.value.targets[0];
+            await fetchPostsData();
+          }
+
+          window.addEventListener('focus', fetchStatus);
+          setInterval(fetchStatus, 4000);
+        });
+
+        return {
+          tabs,
+          currentTab,
+          status,
+          activeLLMProvider,
+          runForm,
+          isRunning,
+          terminalLogs,
+          terminalBox,
+          taskResultStatus,
+          toast,
+          showToast,
+          selectedTarget,
+          selectedCategory,
+          searchQuery,
+          categories,
+          principles,
+          principlesTotal,
+          principlesLoading,
+          skillMdContent,
+          copiedSkillMd,
+          copiedPrompt,
+          selectedPostsTarget,
+          postsData,
+          rawCookieInput,
+          fetchPrinciples,
+          debounceSearch,
+          fetchSkillMd,
+          fetchPostsData,
+          triggerPipeline,
+          submitCookies,
+          selectedKeyProvider,
+          keyValueInput,
+          isSavingKey,
+          saveApiKey,
+          copyPrinciple,
+          copySkillMdText,
+          copyClaudePrompt,
+          copyConsoleLogs,
+          getCategoryBadgeClass
+        };
+      }
+    });
+
+    app.component('app-icon', AppIcon);
+    app.mount('#app');
+  </script>
+</body>
+</html>

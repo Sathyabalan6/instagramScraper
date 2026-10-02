@@ -17,6 +17,17 @@ import yaml
 
 logger = logging.getLogger("transcribe_audio")
 
+# Fix faster-whisper compatibility with PyAV >= 14.0.0 where metadata_errors was removed from av.open
+try:
+    import av
+    _orig_av_open = av.open
+    def _patched_av_open(*args, **kwargs):
+        kwargs.pop("metadata_errors", None)
+        return _orig_av_open(*args, **kwargs)
+    av.open = _patched_av_open
+except Exception:
+    pass
+
 # Cache whisper model instance in memory across calls
 _WHISPER_MODEL = None
 _WHISPER_BACKEND = None  # 'faster_whisper' or 'whisper'
@@ -35,8 +46,8 @@ def get_whisper_model(model_name: str = "small"):
         # Try faster-whisper first for massive CPU/GPU speedups
         try:
             from faster_whisper import WhisperModel
-            logger.info(f"Loading faster-whisper model '{model_name}'...")
-            _WHISPER_MODEL = WhisperModel(model_name, device="auto", compute_type="default")
+            logger.info(f"Loading faster-whisper model '{model_name}' (compute_type='int8')...")
+            _WHISPER_MODEL = WhisperModel(model_name, device="auto", compute_type="int8")
             _WHISPER_BACKEND = "faster_whisper"
             return _WHISPER_MODEL
         except ImportError:
@@ -104,7 +115,10 @@ def download_audio_only(
     if direct_video_url:
         try:
             cmd_ffmpeg = [
-                "ffmpeg", "-y", "-i", direct_video_url,
+                "ffmpeg", "-y",
+                "-hide_banner", "-loglevel", "error",
+                "-reconnect", "1", "-reconnect_streamed", "1", "-reconnect_delay_max", "5",
+                "-i", direct_video_url,
                 "-vn", "-acodec", "libmp3lame", "-q:a", "5",
                 out_file
             ]
@@ -169,17 +183,24 @@ def transcribe_single_audio(
             return result.get("text", "").strip()
 
     # Fallback to whisper CLI if package import didn't work
-    cmd = ["whisper", audio_path, "--model", model_name, "--output_format", "txt", "--output_dir", str(Path(audio_path).parent)]
-    res = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    txt_path = Path(audio_path).with_suffix(".txt")
-    if txt_path.exists():
-        try:
-            with open(txt_path, "r", encoding="utf-8") as f:
-                text = f.read().strip()
-            os.remove(txt_path)
-            return text
-        except Exception:
-            pass
+    try:
+        cmd = ["whisper", audio_path, "--model", model_name, "--output_format", "txt", "--output_dir", str(Path(audio_path).parent)]
+        res = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        txt_path = Path(audio_path).with_suffix(".txt")
+        if txt_path.exists():
+            try:
+                with open(txt_path, "r", encoding="utf-8") as f:
+                    text = f.read().strip()
+                os.remove(txt_path)
+                return text
+            except Exception:
+                pass
+    except FileNotFoundError:
+        logger.warning("Whisper CLI is not installed on system. Audio transcription skipped.")
+        return ""
+    except Exception as e:
+        logger.warning(f"Whisper CLI execution failed: {e}")
+        return ""
 
     return ""
 

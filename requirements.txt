@@ -1,8 +1,13 @@
 instaloader>=4.11
 yt-dlp>=2024.1
+faster-whisper>=1.0.0
+av>=11.0.0
 openai-whisper>=20231117
 pyyaml>=6.0
 rapidfuzz>=3.6
 tqdm>=4.66
 python-dotenv>=1.0.0
 requests>=2.31.0
+curl_cffi>=0.7.0
+fastapi>=0.110.0
+uvicorn>=0.28.0

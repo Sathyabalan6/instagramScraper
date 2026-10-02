@@ -52,23 +52,35 @@ def classify_single_post(
         if re.search(pattern, caption_lower):
             matched_keywords.append(kw)
 
-    has_substance = (word_count >= min_words) and (len(matched_keywords) > 0)
+    # Substantive caption check: either meets word count with design keywords, or is exceptionally detailed (>=60 words)
+    has_substance = bool((word_count >= min_words and len(matched_keywords) > 0) or (word_count >= 60))
+    has_rich_caption = bool(has_substance or (word_count >= 25 and len(matched_keywords) > 0))
 
-    if has_substance:
+    kw_summary = f", keywords: {', '.join(matched_keywords[:4])}" if matched_keywords else ", 0 keywords"
+
+    if has_substance and not post.get("is_video", False):
         path = "caption"
-        reason = f"Detailed caption ({word_count} words) with design keywords: {', '.join(matched_keywords[:3])}"
+        reason = f"Detailed static post caption ({word_count} words{kw_summary})"
     elif post.get("is_video", False):
         path = "audio"
-        reason = "Video reel with brief caption; queued for audio transcription"
+        if has_substance:
+            reason = f"Video reel with detailed caption ({word_count} words{kw_summary}); queued for audio transcription with caption retention"
+        else:
+            reason = f"Video reel with brief caption ({word_count} words{kw_summary}); queued for audio transcription"
+    elif word_count >= 25 and len(matched_keywords) > 0:
+        path = "caption"
+        reason = f"Moderate caption ({word_count} words{kw_summary})"
     else:
         path = "skip"
-        reason = f"Static image without substantial design caption ({word_count} words, {len(matched_keywords)} keywords)"
+        reason = f"Static image without substantial design caption ({word_count} words{kw_summary})"
 
     return {
         "path": path,
         "reason": reason,
         "word_count": word_count,
-        "matched_keywords": matched_keywords
+        "matched_keywords": matched_keywords,
+        "has_rich_caption": has_rich_caption,
+        "has_substance": has_substance
     }
 
 

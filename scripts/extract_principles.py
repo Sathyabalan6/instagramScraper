@@ -65,6 +65,48 @@ Return ONLY a JSON array matching this schema:
 Only output valid JSON. No conversational filler or markdown fences outside the JSON.
 """
 
+EXTRACTION_BATCH_SYSTEM_PROMPT = """You are an expert design-systems engineer and senior UI/UX reviewer.
+Your job is to analyze multiple social media creator posts (captions or spoken video transcripts) and extract production-ready, actionable UI/UX and interface design principles.
+
+Analyze each provided post independently. A post may contain zero, one, or multiple design principles.
+
+Allowed categories:
+- spacing
+- color
+- typography
+- hierarchy
+- motion
+- accessibility
+- layout
+
+HARD QUALITY & COPYRIGHT CONSTRAINTS:
+1. ALWAYS PARAPHRASE: Under no circumstances should you copy or quote text verbatim from the source. State the rule, why, and example clearly in your own concise, authoritative words.
+2. STRICT ACTIONABILITY & SPECIFICITY TEST:
+   - If the rule could apply to any UI decision without meaningfully constraining it (e.g. 'maintain visual balance', 'use consistent styling', 'structure elements cleanly'), DO NOT INCLUDE IT.
+   - The `rule` field MUST name a specific, checkable action, value, pairing, technique, ratio, or threshold.
+3. CONFIDENCE RATING:
+   - 'high': Concrete, specific, highly actionable design rule or pairing taught directly.
+   - 'medium': Actionable guideline with clear practical context.
+   - 'low': Vague, speculative, or loosely implied concept.
+4. NO FABRICATION: If a post does not contain any concrete, actionable UI/UX design guideline (e.g. it is a personal vlog, general photo edit, lifestyle clip, sponsorship, meme, or vague promotional text), you MUST NOT invent or return principles for it.
+5. SHORTCODE MATCHING: You MUST include the "shortcode" field matching the corresponding post's shortcode.
+6. FUSION DEDUPLICATION: If a post provides both a video transcript and a caption describing the same underlying design rule, synthesize them into a SINGLE comprehensive principle citing both aspects. Never output duplicate or overlapping principles for the same post.
+
+Return ONLY a JSON array matching this schema:
+[
+  {
+    "shortcode": "<post shortcode matching the input post, e.g. 'Dd6TWQ0hpfH'>",
+    "principle": "<Concise, descriptive title, e.g. 'Debounced Interactive Tap State'>",
+    "category": "<one of: spacing|color|typography|hierarchy|motion|accessibility|layout>",
+    "rule": "<Specific, imperative, checkable UI/UX rule>",
+    "why": "<Cognitive, visual, or ergonomic rationale>",
+    "example": "<Concrete UI implementation or component before/after>",
+    "confidence": "<high|medium|low>"
+  }
+]
+Only output valid JSON. No conversational filler or markdown fences outside the JSON.
+"""
+
 
 def load_config(config_path: str = "config.yaml") -> dict:
     """Load configuration from YAML file."""
@@ -72,15 +114,16 @@ def load_config(config_path: str = "config.yaml") -> dict:
         return yaml.safe_load(f)
 
 
-def call_llm_for_extraction(text: str, categories: list = None) -> tuple:
+def call_llm_for_extraction(text: str, categories: list = None, system_prompt: str = None) -> tuple:
     """
     Call an available LLM API (Anthropic, OpenAI, Gemini, Groq, or OpenAI-compatible endpoint).
     Returns (list_of_principles, provider_info_dict).
     Raises RuntimeError if no LLM API key/endpoint is configured.
     """
+    active_prompt = system_prompt or EXTRACTION_SYSTEM_PROMPT
     anthropic_key = os.environ.get("ANTHROPIC_API_KEY")
     openai_key = os.environ.get("OPENAI_API_KEY")
-    gemini_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
+    gemini_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY") or os.environ.get("GOOGLE_GENERATIVE_AI_API_KEY")
     groq_key = os.environ.get("GROQ_API_KEY")
     openai_base = os.environ.get("OPENAI_BASE_URL")
     attempt_errors = []
@@ -91,8 +134,8 @@ def call_llm_for_extraction(text: str, categories: list = None) -> tuple:
             model = os.environ.get("ANTHROPIC_MODEL", "claude-3-5-sonnet-20241022")
             req_data = {
                 "model": model,
-                "max_tokens": 1200,
-                "system": EXTRACTION_SYSTEM_PROMPT,
+                "max_tokens": 2500,
+                "system": active_prompt,
                 "messages": [
                     {"role": "user", "content": f"Extract design principles from this creator content:\n\n{text}"}
                 ]
@@ -124,8 +167,9 @@ def call_llm_for_extraction(text: str, categories: list = None) -> tuple:
             base_url = openai_base.rstrip("/") if openai_base else "https://api.openai.com/v1"
             req_data = {
                 "model": model,
+                "max_tokens": 2500,
                 "messages": [
-                    {"role": "system", "content": EXTRACTION_SYSTEM_PROMPT},
+                    {"role": "system", "content": active_prompt},
                     {"role": "user", "content": f"Extract design principles from this creator content:\n\n{text}"}
                 ],
                 "temperature": 0.1
@@ -156,8 +200,9 @@ def call_llm_for_extraction(text: str, categories: list = None) -> tuple:
             model = os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile")
             req_data = {
                 "model": model,
+                "max_tokens": 2500,
                 "messages": [
-                    {"role": "system", "content": EXTRACTION_SYSTEM_PROMPT},
+                    {"role": "system", "content": active_prompt},
                     {"role": "user", "content": f"Extract design principles from this creator content:\n\n{text}"}
                 ],
                 "temperature": 0.1
@@ -183,57 +228,67 @@ def call_llm_for_extraction(text: str, categories: list = None) -> tuple:
 
     # 4. Google Gemini
     if gemini_key:
-        model = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash-lite")
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
-        req_data = {
-            "contents": [
-                {
-                    "parts": [
-                        {"text": f"{EXTRACTION_SYSTEM_PROMPT}\n\nCreator Content to Analyze:\n{text}"}
-                    ]
-                }
-            ],
-            "generationConfig": {"temperature": 0.1}
-        }
+        preferred_model = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash-lite")
+        models_to_try = [preferred_model, "gemini-3.5-flash-lite", "gemini-3.1-flash-lite", "gemini-2.5-flash", "gemini-flash-latest"]
+        seen_models = set()
+        models = [m for m in models_to_try if m and not (m in seen_models or seen_models.add(m))]
 
-        # Retry up to 3 times on 429 / rate limits
-        for attempt in range(4):
-            try:
-                req = urllib.request.Request(
-                    url,
-                    data=json.dumps(req_data).encode("utf-8"),
-                    headers={
-                        "Content-Type": "application/json",
-                        "X-goog-api-key": gemini_key
-                    },
-                    method="POST"
-                )
-                with urllib.request.urlopen(req, timeout=45) as resp:
-                    data = json.loads(resp.read().decode("utf-8"))
-                    reply_text = data["candidates"][0]["content"]["parts"][0]["text"]
-                    # Clean possible markdown fence ```json ... ```
-                    clean_text = re.sub(r"^```(?:json)?\s*", "", reply_text.strip(), flags=re.MULTILINE)
-                    clean_text = re.sub(r"\s*```$", "", clean_text.strip(), flags=re.MULTILINE)
-                    match = re.search(r"\[.*\]", clean_text, re.DOTALL)
-                    if match:
-                        return json.loads(match.group(0)), {"provider": "gemini", "model": model}
-                    elif clean_text.startswith("[") and clean_text.endswith("]"):
-                        return json.loads(clean_text), {"provider": "gemini", "model": model}
-                    return [], {"provider": "gemini", "model": model}
-            except urllib.error.HTTPError as e:
-                if e.code == 429 and attempt < 3:
-                    wait_time = (attempt + 1) * 5
-                    logger.warning(f"Gemini API 429 rate limit hit. Backing off for {wait_time}s (attempt {attempt + 1}/3)...")
-                    import time
-                    time.sleep(wait_time)
-                else:
-                    logger.warning(f"Gemini API HTTP Error {e.code}: {e}")
-                    attempt_errors.append(f"Gemini: HTTP {e.code} - {e}")
-                    break
-            except Exception as e:
-                logger.warning(f"Gemini API extraction error: {e}")
-                attempt_errors.append(f"Gemini: {e}")
-                break
+        for model in models:
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+            req_data = {
+                "contents": [
+                    {
+                        "parts": [
+                            {"text": f"{active_prompt}\n\nCreator Content to Analyze:\n{text}"}
+                        ]
+                    }
+                ],
+                "generationConfig": {"temperature": 0.1}
+            }
+
+            success = False
+            for attempt in range(4):
+                try:
+                    req = urllib.request.Request(
+                        url,
+                        data=json.dumps(req_data).encode("utf-8"),
+                        headers={
+                            "Content-Type": "application/json",
+                            "X-goog-api-key": gemini_key
+                        },
+                        method="POST"
+                    )
+                    with urllib.request.urlopen(req, timeout=45) as resp:
+                        data = json.loads(resp.read().decode("utf-8"))
+                        reply_text = data["candidates"][0]["content"]["parts"][0]["text"]
+                        clean_text = re.sub(r"^```(?:json)?\s*", "", reply_text.strip(), flags=re.MULTILINE)
+                        clean_text = re.sub(r"\s*```$", "", clean_text.strip(), flags=re.MULTILINE)
+                        match = re.search(r"\[.*\]", clean_text, re.DOTALL)
+                        if match:
+                            return json.loads(match.group(0)), {"provider": "gemini", "model": model}
+                        elif clean_text.startswith("[") and clean_text.endswith("]"):
+                            return json.loads(clean_text), {"provider": "gemini", "model": model}
+                        return [], {"provider": "gemini", "model": model}
+                except urllib.error.HTTPError as e:
+                    if e.code in (429, 500, 502, 503, 504) and attempt < 3:
+                        wait_time = (attempt + 1) * 3
+                        logger.warning(f"Gemini API transient {e.code} error on {model}. Retrying in {wait_time}s (attempt {attempt + 1}/3)...")
+                        import time
+                        time.sleep(wait_time)
+                    else:
+                        logger.warning(f"Gemini API HTTP Error {e.code} on model {model}: {e}")
+                        attempt_errors.append(f"Gemini ({model}): HTTP {e.code} - {e}")
+                        break
+                except Exception as e:
+                    if attempt < 3:
+                        wait_time = (attempt + 1) * 3
+                        logger.warning(f"Gemini network error ({e}). Retrying in {wait_time}s...")
+                        import time
+                        time.sleep(wait_time)
+                    else:
+                        logger.warning(f"Gemini API extraction error on {model}: {e}")
+                        attempt_errors.append(f"Gemini ({model}): {e}")
+                        break
 
     # If providers were attempted but all failed
     if attempt_errors:
@@ -251,6 +306,88 @@ def call_llm_for_extraction(text: str, categories: list = None) -> tuple:
         "  - GROQ_API_KEY      (e.g. Llama 3.3 70B on Groq)\n"
         "  - OPENAI_BASE_URL   (Local Ollama / LM Studio endpoint)"
     )
+
+
+def extract_principles_batch(
+    batch_items: list,
+    allowed_categories: list
+) -> tuple:
+    """
+    Extract structured principles across a batch of posts using LLM analysis.
+    Each item in batch_items must be a dict:
+      {"shortcode": str, "handle": str, "date": str, "url": str, "text": str}
+    Returns (dict_of_shortcode_to_principles, provider_info).
+    """
+    if not batch_items:
+        return {}, {"provider": "none", "model": "none"}
+
+    formatted_blocks = []
+    for item in batch_items:
+        sc = item.get("shortcode", "")
+        author = item.get("handle", "")
+        date = item.get("date", "")
+        text = item.get("text", "")
+        formatted_blocks.append(
+            f"--- POST START ---\n"
+            f"Shortcode: {sc}\n"
+            f"Author: @{author}\n"
+            f"Date: {date}\n"
+            f"Content:\n{text}\n"
+            f"--- POST END ---"
+        )
+    combined_text = "\n\n".join(formatted_blocks)
+
+    extracted, info = call_llm_for_extraction(
+        combined_text,
+        categories=allowed_categories,
+        system_prompt=EXTRACTION_BATCH_SYSTEM_PROMPT
+    )
+
+    results_by_shortcode = {item.get("shortcode"): [] for item in batch_items if item.get("shortcode")}
+    lookup = {item.get("shortcode"): item for item in batch_items if item.get("shortcode")}
+
+    for p in extracted:
+        if not isinstance(p, dict):
+            continue
+        sc = p.get("shortcode")
+        if sc not in results_by_shortcode:
+            matching = [s for s in results_by_shortcode if s and s in str(p)]
+            if matching:
+                sc = matching[0]
+            elif len(batch_items) == 1:
+                sc = batch_items[0].get("shortcode")
+            else:
+                continue
+
+        meta = lookup.get(sc, {})
+        cat = (p.get("category") or "layout").lower()
+        if allowed_categories and cat not in allowed_categories:
+            cat = "layout"
+
+        p_name = (p.get("principle") or "Design Principle").strip()
+        rule = (p.get("rule") or "").strip()
+        why = (p.get("why") or "").strip()
+        example = (p.get("example") or "None specified").strip()
+        confidence = (p.get("confidence") or "medium").lower()
+
+        if not p_name or not rule:
+            continue
+
+        results_by_shortcode[sc].append({
+            "principle": p_name,
+            "category": cat,
+            "rule": rule,
+            "why": why,
+            "example": example,
+            "confidence": confidence,
+            "sources": [{
+                "handle": meta.get("handle", ""),
+                "date": meta.get("date", ""),
+                "url": meta.get("url", "")
+            }]
+        })
+
+    return results_by_shortcode, info
 
 
 def extract_principles_from_text(
@@ -306,7 +443,8 @@ def extract_principles_from_text(
 
 def extract_principles(
     handle: str,
-    config_path: str = "config.yaml"
+    config_path: str = "config.yaml",
+    refresh: bool = False
 ) -> list:
     """
     Load classified & transcribed posts, extract principles via LLM analysis,
@@ -341,64 +479,119 @@ def extract_principles(
     extraction_stats = {"llm_calls": 0, "principles_found": 0, "posts_analyzed": 0}
     provider_used = "unknown"
 
-    for idx, post in enumerate(posts, 1):
+    posts_to_analyze = []
+    for post in posts:
+        # If not refreshing and post already has extracted principles, skip
+        if not refresh and post.get("principles") is not None and len(post.get("principles", [])) > 0:
+            continue
+
         classification = post.get("classification", {})
         path = classification.get("path")
         shortcode = post.get("shortcode")
         url = post.get("url")
         date = post.get("date")
+        author = post.get("owner_username") or handle
 
-        # Determine source text (caption or transcript)
-        source_text = None
-        if path == "caption":
-            source_text = post.get("caption", "")
-        elif path == "audio":
-            source_text = post.get("transcript", "")
-            if not source_text:
-                source_text = post.get("caption", "")
+        transcript = (post.get("transcript") or "").strip()
+        caption = (post.get("caption") or "").strip()
+
+        # Combine transcript and caption context if both exist, so creator caption specs aren't lost
+        if transcript and caption and len(caption.split()) >= 15:
+            source_text = f"Spoken Video Transcript:\n{transcript}\n\nPost Caption:\n{caption}"
+        elif transcript:
+            source_text = transcript
+        elif caption:
+            source_text = caption
+        else:
+            source_text = ""
 
         if not source_text or len(source_text.strip().split()) < 6:
-            logger.debug(f"Post {shortcode}: No sufficient text for principle extraction.")
-            post["principles"] = []
+            if "principles" not in post:
+                post["principles"] = []
             continue
 
-        extraction_stats["posts_analyzed"] += 1
-        logger.info(f"Extracting principles via LLM [{extraction_stats['posts_analyzed']}]: Post {shortcode}...")
+        posts_to_analyze.append({
+            "post_ref": post,
+            "shortcode": shortcode,
+            "handle": author,
+            "date": date,
+            "url": url,
+            "text": source_text
+        })
+
+    logger.info(f"Queued {len(posts_to_analyze)} posts with sufficient text for LLM principle extraction.")
+
+    # Batch process in chunks (default 1 for maximum fidelity and zero cross-post contamination)
+    batch_size = max(1, int(extract_cfg.get("batch_size", 1)))
+    for i in range(0, len(posts_to_analyze), batch_size):
+        batch = posts_to_analyze[i:i + batch_size]
+        batch_codes = [b["shortcode"] for b in batch]
+        logger.info(
+            f"Extracting principles via LLM batch [{i + 1}-{min(i + batch_size, len(posts_to_analyze))}/{len(posts_to_analyze)}]: "
+            f"{', '.join(batch_codes)}..."
+        )
 
         try:
-            principles, info = extract_principles_from_text(
-                source_text,
-                handle=handle,
-                date=date,
-                url=url,
-                allowed_categories=allowed_cats
-            )
+            batch_results, info = extract_principles_batch(batch, allowed_categories=allowed_cats)
             provider_used = f"{info.get('provider')}:{info.get('model')}"
             extraction_stats["llm_calls"] += 1
-            extraction_stats["principles_found"] += len(principles)
-            post["principles"] = principles
-            post["extraction_metadata"] = {
-                "method": "llm",
-                "provider": info.get("provider"),
-                "model": info.get("model"),
-                "principles_count": len(principles)
-            }
-            all_extracted.extend(principles)
-            logger.info(f"  -> Extracted {len(principles)} principle(s) from {shortcode} using {provider_used}")
-            import time
-            time.sleep(3)
-        except RuntimeError as e:
-            logger.error(str(e))
-            raise
-        except Exception as e:
-            logger.error(f"Error extracting principles for {shortcode}: {e}")
-            post["principles"] = []
+            extraction_stats["posts_analyzed"] += len(batch)
 
-    # Save updated posts.json with extraction data
-    for pfile in [out_posts_file, raw_posts_file]:
-        pfile.parent.mkdir(parents=True, exist_ok=True)
-        with open(pfile, "w", encoding="utf-8") as f:
-            json.dump(posts, f, indent=2)
+            for item in batch:
+                post = item["post_ref"]
+                sc = item["shortcode"]
+                p_list = batch_results.get(sc, [])
+                post["principles"] = p_list
+                post["extraction_metadata"] = {
+                    "method": "llm_batch",
+                    "provider": info.get("provider"),
+                    "model": info.get("model"),
+                    "principles_count": len(p_list)
+                }
+                extraction_stats["principles_found"] += len(p_list)
+                all_extracted.extend(p_list)
+                logger.info(f"  -> Extracted {len(p_list)} principle(s) from {sc} ({provider_used})")
+
+        except Exception as e:
+            logger.warning(f"Batch LLM extraction failed ({e}). Falling back to single-post extraction for this batch...")
+            for item in batch:
+                post = item["post_ref"]
+                sc = item["shortcode"]
+                extraction_stats["posts_analyzed"] += 1
+                try:
+                    p_list, info = extract_principles_from_text(
+                        item["text"],
+                        handle=item["handle"],
+                        date=item["date"],
+                        url=item["url"],
+                        allowed_categories=allowed_cats
+                    )
+                    provider_used = f"{info.get('provider')}:{info.get('model')}"
+                    extraction_stats["llm_calls"] += 1
+                    post["principles"] = p_list
+                    post["extraction_metadata"] = {
+                        "method": "llm",
+                        "provider": info.get("provider"),
+                        "model": info.get("model"),
+                        "principles_count": len(p_list)
+                    }
+                    extraction_stats["principles_found"] += len(p_list)
+                    all_extracted.extend(p_list)
+                    logger.info(f"  -> Extracted {len(p_list)} principle(s) from {sc} ({provider_used})")
+                except Exception as sub_e:
+                    logger.error(f"Fallback extraction failed for {sc}: {sub_e}")
+                    post["principles"] = []
+                    post["extraction_metadata"] = {"method": "error", "error": str(sub_e)}
+
+        # Incremental write
+        for pfile in [out_posts_file, raw_posts_file]:
+            pfile.parent.mkdir(parents=True, exist_ok=True)
+            with open(pfile, "w", encoding="utf-8") as f:
+                json.dump(posts, f, indent=2, ensure_ascii=False)
+
+    # If posts were analyzed but all LLM calls failed, alert loudly
+    if extraction_stats["posts_analyzed"] > 0 and extraction_stats["llm_calls"] == 0:
+        raise RuntimeError("All attempted LLM calls failed. Please check your API key, network, or provider status.")
 
     # Gather all principles across all posts for full source-of-truth integrity
     full_principles_list = []
@@ -406,11 +599,8 @@ def extract_principles(
         for p in (post.get("principles", []) or post.get("extracted_principles", [])):
             full_principles_list.append(p)
 
-    # Save creator-specific principles.json
-    out_principles_file = Path(output_dir) / handle / "principles.json"
-    out_principles_file.parent.mkdir(parents=True, exist_ok=True)
-    with open(out_principles_file, "w", encoding="utf-8") as f:
-        json.dump(full_principles_list, f, indent=2)
+    # Note: principles.json is strictly derived in Stage 5 (merge_skill.py)
+    # posts.json is the single source of truth for extracted post principles.
 
     logger.info(
         f"Extraction complete for @{handle}: {len(all_extracted)} new principle(s) extracted "
@@ -423,11 +613,12 @@ def main():
     parser = argparse.ArgumentParser(description="Extract design principles via LLM analysis")
     parser.add_argument("--handle", required=True, help="Instagram handle (without @)")
     parser.add_argument("--config", default="config.yaml", help="Path to config.yaml")
+    parser.add_argument("--refresh", action="store_true", help="Re-extract principles even if already extracted")
 
     args = parser.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 
-    extract_principles(args.handle, config_path=args.config)
+    extract_principles(args.handle, config_path=args.config, refresh=args.refresh)
 
 
 if __name__ == "__main__":

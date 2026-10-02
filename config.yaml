@@ -66,14 +66,15 @@ extraction:
     - motion
     - accessibility
     - layout
+  batch_size: 1                     # 1 = maximum fidelity, no cross-post contamination
   paraphrase_only: true             # must stay true — see AGENTS.md rule 3
 
 merge:
   dedup_similarity_threshold: 85    # rapidfuzz score (0-100), lower = more aggressive merging
-  skill_output_path: "skills/design-ui-ux/SKILL.md"
-  principles_store_path: "skills/design-ui-ux/principles.json"
+  skills_dir: "skills"
 
 paths:
+  skills_dir: "skills"
   output_dir: "output"
   raw_data_dir: "data/raw"
   state_file: "state/processed.json"

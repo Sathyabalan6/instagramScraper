@@ -20,7 +20,21 @@ if str(_CURRENT_DIR) not in sys.path:
     sys.path.insert(0, str(_CURRENT_DIR))
 
 import yaml
-from tqdm import tqdm
+
+try:
+    from tqdm import tqdm
+except ImportError:
+    class tqdm:
+        def __init__(self, *args, **kwargs):
+            pass
+        def __enter__(self):
+            return self
+        def __exit__(self, exc_type, exc_val, exc_tb):
+            pass
+        def update(self, *args, **kwargs):
+            pass
+        def set_description(self, *args, **kwargs):
+            pass
 
 # Import pipeline stage modules
 try:
@@ -73,45 +87,136 @@ def setup_pipeline_logging(logs_dir: str, verbose: bool = False) -> tuple:
     return root_logger, log_file
 
 
-def update_processed_state(state_file: str, new_post_ids: list):
-    """Update state/processed.json with newly processed post IDs."""
+def resolve_target(
+    target: str = None,
+    handle: str = None,
+    collection: str = None
+) -> tuple:
+    """
+    Resolve target into (clean_handle, clean_collection).
+    Auto-detects:
+    - Collection URLs (e.g. https://www.instagram.com/<user>/saved/<name>/<id>/) -> collection
+    - Profile URLs (e.g. https://www.instagram.com/<user>/) -> handle
+    - Handles with or without @ (e.g. @zanderwhitehurst, zanderwhitehurst) -> handle
+    """
+    import re
+
+    if handle:
+        # Check if user passed a URL inside --handle
+        if "http://" in handle or "https://" in handle or "/saved/" in handle:
+            target = handle
+            handle = None
+        else:
+            return handle.lstrip("@").strip(), None
+
+    if collection:
+        return None, collection.strip()
+
+    if not target:
+        raise ValueError("Either --target, --handle, or --collection must be specified.")
+
+    target = target.strip()
+
+    # Case 1: Saved collection URL or slug
+    if "/saved/" in target or "/collection/" in target:
+        return None, target
+
+    # Case 2: Full Instagram profile URL
+    if target.startswith("http://") or target.startswith("https://") or "instagram.com" in target:
+        match = re.search(r"instagram\.com/([a-zA-Z0-9._]+)/?", target)
+        if match:
+            u = match.group(1)
+            if u not in ["p", "reel", "stories", "explore", "direct"]:
+                return u, None
+        return None, target
+
+    # Case 3: Standard creator handle
+    return target.lstrip("@"), None
+
+
+def update_processed_state(state_file: str, posts_or_ids: list):
+    """
+    Update state/processed.json with newly processed posts or IDs.
+    Maintains a rich stage ledger while preserving full backward-compatibility with flat lists.
+    """
     p = Path(state_file)
     p.parent.mkdir(parents=True, exist_ok=True)
 
-    existing = []
+    state_data = {"version": "2.0", "posts": {}}
     if p.exists():
         try:
             with open(p, "r", encoding="utf-8") as f:
-                data = json.load(f)
-                if isinstance(data, list):
-                    existing = data
+                raw = json.load(f)
+                if isinstance(raw, list):
+                    for pid in raw:
+                        state_data["posts"][str(pid)] = {
+                            "stages": {"fetched": True, "completed": True},
+                            "last_updated": datetime.now().isoformat()
+                        }
+                elif isinstance(raw, dict):
+                    if "posts" in raw and isinstance(raw["posts"], dict):
+                        state_data = raw
+                    else:
+                        for k, v in raw.items():
+                            state_data["posts"][str(k)] = v if isinstance(v, dict) else {"stages": {"completed": True}}
         except Exception:
-            existing = []
+            pass
 
-    existing_set = set(str(x) for x in existing)
-    for pid in new_post_ids:
-        existing_set.add(str(pid))
+    for item in posts_or_ids:
+        if isinstance(item, dict):
+            pid = str(item.get("post_id") or "")
+            if not pid:
+                continue
+            sc = item.get("shortcode", "")
+            has_trans = bool(item.get("transcript"))
+            has_prin = bool(item.get("principles"))
+            state_data["posts"][pid] = {
+                "shortcode": sc,
+                "date": item.get("date", ""),
+                "is_video": item.get("is_video", False),
+                "stages": {
+                    "fetched": True,
+                    "transcribed": has_trans,
+                    "extracted": has_prin,
+                    "completed": True
+                },
+                "principles_count": len(item.get("principles", [])),
+                "last_updated": datetime.now().isoformat()
+            }
+        else:
+            pid = str(item)
+            if pid and pid not in state_data["posts"]:
+                state_data["posts"][pid] = {
+                    "stages": {"fetched": True, "completed": True},
+                    "last_updated": datetime.now().isoformat()
+                }
 
     with open(p, "w", encoding="utf-8") as f:
-        json.dump(sorted(list(existing_set)), f, indent=2)
+        json.dump(state_data, f, indent=2)
 
 
 def run_pipeline(
-    handle: str,
+    target: str = None,
+    handle: str = None,
+    collection: str = None,
     limit: int = 50,
     config_path: str = "config.yaml",
     skip_transcribe: bool = False,
-    verbose: bool = False
+    verbose: bool = False,
+    refresh: bool = False
 ):
     """
     Run full extraction pipeline:
-    1. Fetch posts metadata
-    2. Classify posts (caption vs audio vs skip)
-    3. Transcribe audio (audio-only, temporary mp3 cleaned up immediately)
-    4. Extract structured principles (paraphrased)
-    5. Merge into principles.json and update SKILL.md
-    6. Record processed post IDs in state/processed.json
+    1. Resolve target (URL, @handle, or collection)
+    2. Fetch posts metadata (from creator handle or saved collection)
+    3. Classify posts (caption vs audio vs skip)
+    4. Transcribe audio (audio-only, temporary mp3 cleaned up immediately)
+    5. Extract structured principles via LLM analysis
+    6. Merge into principles.json and update SKILL.md
+    7. Record processed post IDs and stages in state/processed.json
     """
+    handle, collection = resolve_target(target=target, handle=handle, collection=collection)
+
     config = load_config(config_path)
     paths_cfg = config.get("paths", {})
     logs_dir = paths_cfg.get("logs_dir", "logs")
@@ -120,22 +225,25 @@ def run_pipeline(
 
     logger, log_file = setup_pipeline_logging(logs_dir, verbose)
 
-    logger.info(f"=== Starting IG Design-Skill Extractor for @{handle} ===")
+    if collection:
+        import re
+        slug_match = re.search(r"/saved/([^/?#]+)", collection)
+        col_slug = slug_match.group(1) if slug_match else collection.strip().rstrip("/").split("/")[-1]
+        target_name = handle or f"collection_{col_slug.lower()}"
+        display_name = f"Collection '{col_slug}'"
+    else:
+        target_name = handle
+        display_name = f"@{handle}"
+
+    logger.info(f"=== Starting IG Design-Skill Extractor for {display_name} ===")
     logger.info(f"Configuration: {config_path} | Post limit: {limit} | Log: {log_file}")
 
-    stages = [
-        "1. Fetch Metadata",
-        "2. Classify & Branch",
-        "3. Transcribe Audio",
-        "4. Extract Principles",
-        "5. Merge & Generate Skill"
-    ]
-
-    with tqdm(total=5, desc=f"Pipeline @{handle}", unit="stage") as pbar:
+    total_stages = 4 if skip_transcribe else 5
+    with tqdm(total=total_stages, desc=f"Pipeline {display_name}", unit="stage") as pbar:
         # Stage 1: Fetch
         pbar.set_description("Stage 1: Fetching post metadata")
         logger.info("--- Stage 1: Fetching post metadata ---")
-        posts = fetch_posts(handle, limit=limit, config_path=config_path)
+        posts = fetch_posts(handle=handle, collection=collection, limit=limit, config_path=config_path)
         pbar.update(1)
 
         if not posts:
@@ -145,65 +253,85 @@ def run_pipeline(
         # Stage 2: Classify
         pbar.set_description("Stage 2: Classifying posts")
         logger.info("--- Stage 2: Classifying posts ---")
-        classified_posts = classify_posts(handle, config_path=config_path)
+        classified_posts = classify_posts(target_name, config_path=config_path)
         pbar.update(1)
 
-        # Stage 3: Transcribe
-        pbar.set_description("Stage 3: Transcribing audio")
-        logger.info("--- Stage 3: Transcribing audio ---")
+        # Stage 3: Transcribe (if not skipped)
         if not skip_transcribe:
-            transcribe_posts(handle, config_path=config_path)
-        else:
-            logger.info("Skipping audio transcription (--skip-transcribe specified).")
+            pbar.set_description("Stage 3: Transcribing audio")
+            logger.info("--- Stage 3: Transcribing audio ---")
+            transcribe_posts(target_name, config_path=config_path)
+            pbar.update(1)
+
+        # Stage Extract
+        extract_stage = 3 if skip_transcribe else 4
+        pbar.set_description(f"Stage {extract_stage}: Extracting principles")
+        logger.info(f"--- Stage {extract_stage}: Extracting design principles ---")
+        extracted = extract_principles(target_name, config_path=config_path, refresh=refresh)
         pbar.update(1)
 
-        # Stage 4: Extract
-        pbar.set_description("Stage 4: Extracting principles")
-        logger.info("--- Stage 4: Extracting design principles ---")
-        extracted = extract_principles(handle, config_path=config_path)
+        # Stage Merge
+        merge_stage = 4 if skip_transcribe else 5
+        pbar.set_description(f"Stage {merge_stage}: Merging skill")
+        logger.info(f"--- Stage {merge_stage}: Merging into SKILL.md & creator output folder ---")
+        merged = merge_skill(handle=target_name, config_path=config_path)
         pbar.update(1)
 
-        # Stage 5: Merge
-        pbar.set_description("Stage 5: Merging skill")
-        logger.info("--- Stage 5: Merging into SKILL.md & creator output folder ---")
-        merged = merge_skill(handle=handle, config_path=config_path)
-        pbar.update(1)
-
-    # Update processed state
-    post_ids = [p.get("post_id") for p in posts if p.get("post_id")]
-    update_processed_state(state_file, post_ids)
-    logger.info(f"Updated state: {len(post_ids)} post IDs recorded in {state_file}")
+    # Update processed state with full stage ledger
+    update_processed_state(state_file, posts)
+    logger.info(f"Updated stage state ledger: {len(posts)} posts recorded in {state_file}")
 
     output_dir = paths_cfg.get("output_dir", "output")
-    creator_dir = Path(output_dir) / handle
+    skills_dir = paths_cfg.get("skills_dir", "skills")
+    creator_dir = Path(output_dir) / target_name
 
-    logger.info(f"=== Pipeline completed successfully for @{handle} ===")
-    logger.info(f"Creator Output Directory: {creator_dir.resolve()}")
-    logger.info(f"  |-- Skill Deliverable:  {creator_dir / 'SKILL.md'}")
-    logger.info(f"  |-- Summary Report:     {creator_dir / 'SUMMARY.md'}")
-    logger.info(f"  |-- Principles JSON:    {creator_dir / 'principles.json'}")
-    logger.info(f"  \\-- Posts & Audio Data: {creator_dir / 'posts.json'}")
-    logger.info(f"Global Aggregated Skill: skills/design-ui-ux/SKILL.md (Total {len(merged)} principles)")
+    from scripts.merge_skill import get_clean_skill_name
+    clean_skill_name = get_clean_skill_name(target_name)
+    skill_dir = Path(skills_dir) / clean_skill_name
+
+    logger.info(f"=== Pipeline completed successfully for {display_name} ===")
+    logger.info(f"Target Skill Directory: {skill_dir.resolve()}")
+    logger.info(f"  |-- Skill Deliverable:  {skill_dir / 'SKILL.md'}")
+    logger.info(f"  |-- Summary Report:     {skill_dir / 'SUMMARY.md'}")
+    logger.info(f"  \\-- Principles JSON:    {skill_dir / 'principles.json'}")
+    logger.info(f"Raw Posts & Media Data:   {creator_dir / 'posts.json'}")
 
 
 def main():
     parser = argparse.ArgumentParser(description="IG Design-Skill Extractor Pipeline Orchestrator")
-    parser.add_argument("--handle", required=True, help="Instagram handle (without @)")
+    parser.add_argument(
+        "--target", "-t",
+        help="Target Instagram handle, profile URL, or saved collection URL (smart auto-detection)"
+    )
+    parser.add_argument("--handle", help="Instagram handle (without @)")
+    parser.add_argument(
+        "--collection", "--collection-url",
+        dest="collection",
+        help="Instagram saved collection slug or URL"
+    )
     parser.add_argument("--limit", type=int, default=50, help="Maximum number of new posts to process")
     parser.add_argument("--config", default="config.yaml", help="Path to config.yaml")
     parser.add_argument("--skip-transcribe", action="store_true", help="Skip Whisper audio transcription")
+    parser.add_argument("--refresh", action="store_true", help="Force re-extraction of design principles on all posts")
     parser.add_argument("--verbose", "-v", action="store_true", help="Enable verbose debug logs")
 
     args = parser.parse_args()
 
+    if not args.target and not args.handle and not args.collection:
+        parser.error("At least one target must be provided via --target, --handle, or --collection.")
+
     run_pipeline(
+        target=args.target,
         handle=args.handle,
+        collection=args.collection,
         limit=args.limit,
         config_path=args.config,
         skip_transcribe=args.skip_transcribe,
-        verbose=args.verbose
+        verbose=args.verbose,
+        refresh=args.refresh
     )
 
 
 if __name__ == "__main__":
     main()
+
