@@ -13,12 +13,12 @@ Reference these principles when architecting screens, refining typographic rhyth
 Before finalizing any interface layout or component hierarchy, audit against these verified fundamentals:
 
 - [ ] **Immediate Touch Feedback for Interactive Elements**: Trigger instant visual state changes (like scale or color shifts) on every tap, executing heavy tasks asynchronously.
+- [ ] **Dedicated 404 Error State Design**: Provide a fully styled, custom 404 error page complete with navigation pathways back to primary site sections rather than falling back to unstyled server defaults.
+- [ ] **Interactive Contact Triggers**: Convert text-based phone numbers and email addresses into active tel: and mailto: hyperlinks to enable direct device action.
+- [ ] **Form Submission Feedback States**: Provide explicit, visible success and error messaging components immediately following user form interactions.
+- [ ] **Above-the-Fold Primary Call to Action**: Position the primary conversion action within the initial viewport so it is visible without requiring vertical scrolling.
+- [ ] **Persistent Mobile Conversion Anchor**: Implement a sticky bottom bar housing the primary conversion action on mobile viewports.
 - [ ] **Interactive Tap Debouncing**: Disable action triggers immediately upon activation to prevent duplicate submissions or purchases from rapid double-tapping.
-- [ ] **User-Friendly Error Notification Toasts**: Replace raw technical error logs or undefined strings with contextual, human-readable notification toasts.
-- [ ] **Viewport Auto-Scrolling for Active Inputs**: Ensure focused input fields automatically scroll into view above the software keyboard when the virtual keyboard expands.
-- [ ] **Client-Side Input State Caching**: Persist form input states and user entries locally on page or route transitions so data is not lost when hitting the back button.
-- [ ] **Skeleton Screen Content Placeholders**: Replace generic spinners with structural skeleton loaders that mimic the dimensions and layout of the incoming content.
-- [ ] **Fixed Primary CTA Positioning in Stepper Flows**: Anchor the primary progression button (e.g., 'Continue') to the exact same screen coordinates across every step of an onboarding flow.
 
 ## Parametric Design Tokens
 

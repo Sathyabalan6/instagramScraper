@@ -72,6 +72,14 @@ extraction:
 merge:
   dedup_similarity_threshold: 85    # rapidfuzz score (0-100), lower = more aggressive merging
   skills_dir: "skills"
+  allowed_cross_category_pairs:
+    - ["layout", "spacing"]
+    - ["layout", "hierarchy"]
+    - ["typography", "hierarchy"]
+    - ["accessibility", "hierarchy"]
+    - ["accessibility", "color"]
+    - ["motion", "layout"]
+    - ["spacing", "typography"]
 
 paths:
   skills_dir: "skills"

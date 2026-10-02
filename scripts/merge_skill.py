@@ -57,6 +57,108 @@ ALLOWED_CROSS_CATEGORY_PAIRS = {
 }
 
 
+def get_allowed_cross_category_pairs(config: dict = None) -> set:
+    """Read allowed cross-category semantic cluster pairings from config, with default fallback."""
+    if config and isinstance(config.get("merge"), dict):
+        raw = config["merge"].get("allowed_cross_category_pairs")
+        if isinstance(raw, list):
+            res = set()
+            for pair in raw:
+                if isinstance(pair, (list, tuple)) and len(pair) == 2:
+                    res.add(frozenset({str(pair[0]).lower().strip(), str(pair[1]).lower().strip()}))
+            if res:
+                return res
+    return ALLOWED_CROSS_CATEGORY_PAIRS
+
+
+def compute_quality_score(p: dict) -> float:
+    """
+    Compute a composite quality score (0 - 100+) for a design principle based on:
+    - Trigger context presence (+30)
+    - Anti-pattern 'dont_do_this' presence (+20)
+    - Direct action 'do_this' presence (+15)
+    - Number of cited sources (+10 per source, cap at +30)
+    - Extraction confidence rating (high: +20, medium: +10, low: 0)
+    - Structured Before/After implementation pattern (+5)
+    """
+    score = 0.0
+    if p.get("trigger_context"):
+        score += 30.0
+    if p.get("dont_do_this"):
+        score += 20.0
+    if p.get("do_this"):
+        score += 15.0
+
+    sources = p.get("sources", [])
+    score += 10.0 * min(len(sources), 3)
+
+    conf = str(p.get("confidence", "medium")).lower()
+    score += {"high": 20.0, "medium": 10.0, "low": 0.0}.get(conf, 10.0)
+
+    ex = str(p.get("example", ""))
+    if "Before:" in ex and "After:" in ex:
+        score += 5.0
+
+    return round(score, 2)
+
+
+def compute_principles_diff(old_principles: list, new_principles: list) -> dict:
+    """Compare previous target principles vs new synthesized principles."""
+    old_map = {p.get("principle", "").strip(): p for p in (old_principles or []) if p.get("principle")}
+    new_map = {p.get("principle", "").strip(): p for p in (new_principles or []) if p.get("principle")}
+
+    added = []
+    modified = []
+    removed = []
+
+    for name, new_p in new_map.items():
+        if name not in old_map:
+            added.append(new_p)
+        else:
+            old_p = old_map[name]
+            old_srcs = len(old_p.get("sources", []))
+            new_srcs = len(new_p.get("sources", []))
+            reasons = []
+            if new_srcs != old_srcs:
+                reasons.append(f"{new_srcs - old_srcs:+d} source(s)")
+            if new_p.get("do_this") != old_p.get("do_this") and new_p.get("do_this"):
+                reasons.append("updated guideline")
+            old_q = old_p.get("quality_score", 0)
+            new_q = new_p.get("quality_score", 0)
+            if old_q != new_q and old_q > 0:
+                reasons.append(f"quality score {old_q} -> {new_q}")
+
+            if reasons:
+                modified.append({"principle": new_p, "reasons": ", ".join(reasons)})
+
+    for name, old_p in old_map.items():
+        if name not in new_map:
+            removed.append(old_p)
+
+    return {"added": added, "modified": modified, "removed": removed}
+
+
+def format_diff_summary(diff: dict, target_name: str) -> str:
+    """Format principles diff into clean CLI string."""
+    lines = [f"=== Principles Diff for '{target_name}' ==="]
+    added = diff.get("added", [])
+    modified = diff.get("modified", [])
+    removed = diff.get("removed", [])
+
+    if not added and not modified and not removed:
+        lines.append("No changes detected.")
+    else:
+        for p in added:
+            lines.append(f"+ Added: {p.get('principle')} [{p.get('category')}] (Quality Score: {p.get('quality_score', 0)})")
+        for m in modified:
+            p = m["principle"]
+            lines.append(f"~ Modified: {p.get('principle')} ({m['reasons']})")
+        for p in removed:
+            lines.append(f"- Removed: {p.get('principle')} [{p.get('category')}]")
+
+    return "\n".join(lines)
+
+
 def load_config(config_path: str = "config.yaml") -> dict:
     """Load configuration from YAML file."""
     with open(config_path, "r", encoding="utf-8") as f:
@@ -274,7 +376,12 @@ def save_embedding_cache(cache: dict):
         logger.debug(f"Could not persist embedding cache: {e}")
 
 
-def cluster_and_synthesize_principles(principles: list, similarity_threshold: float = 0.83) -> list:
+def cluster_and_synthesize_principles(
+    principles: list,
+    similarity_threshold: float = 0.83,
+    config: dict = None,
+    allowed_pairs: set = None
+) -> list:
     """
     Semantic clustering pass that groups principles by concept rather than lexical tokens alone.
     Uses Gemini embeddings (if GEMINI_API_KEY is available) with dynamic centroid cosine similarity clustering,
@@ -285,10 +392,18 @@ def cluster_and_synthesize_principles(principles: list, similarity_threshold: fl
     - Preserves non-canonical alternate rules and implementations as 'variants'.
     - Merges sources from all member principles into a canonical source list.
     - Upgrades confidence ranking to highest within the cluster.
+    - Computes composite quality_score (0-100+) and ranks high-value heuristics first.
     - Retains the most articulate rule and structured implementation example.
     """
-    if not principles or len(principles) <= 1:
+    if not principles:
         return principles
+
+    active_allowed_pairs = allowed_pairs or get_allowed_cross_category_pairs(config)
+
+    if len(principles) == 1:
+        single = dict(principles[0])
+        single["quality_score"] = compute_quality_score(single)
+        return [single]
 
     api_key = os.getenv("GEMINI_API_KEY")
 
@@ -359,7 +474,7 @@ def cluster_and_synthesize_principles(principles: list, similarity_threshold: fl
 
             # Category Guard: Only allow same category or whitelisted cross-category pairs
             if not same_cat:
-                if frozenset({p_cat, c_cat}) not in ALLOWED_CROSS_CATEGORY_PAIRS:
+                if frozenset({p_cat, c_cat}) not in active_allowed_pairs:
                     continue  # Strict rejection for non-whitelisted cross-category pairs
                 threshold = 0.88 if has_full_embeddings else 88.0
             else:
@@ -406,7 +521,9 @@ def cluster_and_synthesize_principles(principles: list, similarity_threshold: fl
 
     for members in clusters:
         if len(members) == 1:
-            synthesized.append(members[0])
+            m = dict(members[0])
+            m["quality_score"] = compute_quality_score(m)
+            synthesized.append(m)
             continue
 
         def member_quality(m):
@@ -465,9 +582,11 @@ def cluster_and_synthesize_principles(principles: list, similarity_threshold: fl
             key=lambda m: conf_rank.get(m.get("confidence", "medium").lower(), 2)
         ).get("confidence", "medium")
         merged_principle["confidence"] = max_conf
+        merged_principle["quality_score"] = compute_quality_score(merged_principle)
 
         synthesized.append(merged_principle)
 
+    synthesized.sort(key=lambda item: (item.get("quality_score", 0), len(item.get("sources", []))), reverse=True)
     return synthesized
 
 
@@ -850,7 +969,9 @@ def get_clean_skill_name(target: str) -> str:
 def merge_skill(
     handle: str = None,
     config_path: str = "config.yaml",
-    new_principles: list = None
+    new_principles: list = None,
+    dry_run: bool = False,
+    show_diff: bool = False
 ) -> list:
     """
     Deduplicate and compile target-specific skill deliverables into skills/<clean_name>/
@@ -885,10 +1006,7 @@ def merge_skill(
 
         clean_skill_name = get_clean_skill_name(tgt)
         target_out_dir = Path(output_dir) / tgt
-        target_out_dir.mkdir(parents=True, exist_ok=True)
-
         target_skill_dir = Path(skills_dir) / clean_skill_name
-        target_skill_dir.mkdir(parents=True, exist_ok=True)
 
         target_principles_raw = []
         target_posts = []
@@ -932,7 +1050,29 @@ def merge_skill(
         target_merged = merge_principles_list(target_principles_raw, [], threshold=threshold)
 
         # Step 2: Semantic clustering & synthesis (cross-creator embedding consensus)
-        target_synthesized = cluster_and_synthesize_principles(target_merged, similarity_threshold=0.83)
+        target_synthesized = cluster_and_synthesize_principles(
+            target_merged,
+            similarity_threshold=0.83,
+            config=config
+        )
+
+        old_principles_file = target_skill_dir / "principles.json"
+        old_principles = load_principles_store(str(old_principles_file))
+        diff = compute_principles_diff(old_principles, target_synthesized)
+        diff_str = format_diff_summary(diff, clean_skill_name)
+        if show_diff or dry_run or logger.isEnabledFor(logging.DEBUG):
+            logger.info(diff_str)
+
+        if dry_run:
+            logger.info(
+                f"[DRY-RUN] Target '{clean_skill_name}': {len(target_synthesized)} principles synthesized. "
+                "No files written to disk."
+            )
+            last_merged = target_synthesized
+            continue
+
+        target_out_dir.mkdir(parents=True, exist_ok=True)
+        target_skill_dir.mkdir(parents=True, exist_ok=True)
 
         # 1. Primary Skill Deliverables in skills/<clean_name>/
         skill_file = target_skill_dir / "SKILL.md"
@@ -981,7 +1121,9 @@ def merge_multi_target(
     targets: list,
     output_skill_name: str = "ui-ux-consensus",
     min_sources: int = 1,
-    config_path: str = "config.yaml"
+    config_path: str = "config.yaml",
+    dry_run: bool = False,
+    show_diff: bool = False
 ) -> list:
     """
     Synthesize design principles across multiple creators and/or saved collections
@@ -1111,7 +1253,11 @@ def merge_multi_target(
     logger.info(f"Lexical deduplication reduced {len(all_principles_raw)} principles to {len(lexical_merged)}.")
 
     # Step 2: Semantic clustering & synthesis (dynamic centroid + persistent cache)
-    synthesized = cluster_and_synthesize_principles(lexical_merged, similarity_threshold=0.83)
+    synthesized = cluster_and_synthesize_principles(
+        lexical_merged,
+        similarity_threshold=0.83,
+        config=config
+    )
     logger.info(f"Semantic clustering synthesized into {len(synthesized)} canonical principles.")
 
     # Step 3: Filter by min_sources
@@ -1124,8 +1270,22 @@ def merge_multi_target(
 
     clean_output_skill = get_clean_skill_name(output_skill_name)
     skill_dir = Path(skills_dir_base) / clean_output_skill
-    skill_dir.mkdir(parents=True, exist_ok=True)
     out_dir = Path(output_dir_base) / clean_output_skill
+
+    old_principles = load_principles_store(str(skill_dir / "principles.json"))
+    diff = compute_principles_diff(old_principles, synthesized)
+    diff_str = format_diff_summary(diff, clean_output_skill)
+    if show_diff or dry_run or logger.isEnabledFor(logging.DEBUG):
+        logger.info(diff_str)
+
+    if dry_run:
+        logger.info(
+            f"[DRY-RUN] Multi-Target Synthesis '{clean_output_skill}': "
+            f"{len(synthesized)} principles synthesized across {len(found_targets)} targets. No files written."
+        )
+        return synthesized
+
+    skill_dir.mkdir(parents=True, exist_ok=True)
     out_dir.mkdir(parents=True, exist_ok=True)
 
     desc = (
@@ -1171,6 +1331,14 @@ def merge_multi_target(
         with open(out_dir / "posts.json", "w", encoding="utf-8") as f:
             json.dump(all_posts, f, indent=2, ensure_ascii=False)
 
+    # Update stage state ledger with pooled posts
+    state_file = paths_cfg.get("state_file", "state/processed.json")
+    try:
+        from scripts.run_pipeline import update_processed_state
+        update_processed_state(state_file, all_posts)
+    except Exception as e:
+        logger.debug(f"Could not update processed state ledger in multi-target synthesis: {e}")
+
     logger.info(
         f"Multi-Target Synthesis Complete: Compiled unified skill '{clean_output_skill}' "
         f"({len(synthesized)} principles) -> {skill_dir}/"
@@ -1197,6 +1365,8 @@ def main():
         default=1,
         help="Minimum sources/citations required in synthesis mode (default: 1)"
     )
+    parser.add_argument("--dry-run", action="store_true", help="Run synthesis/merging without writing files to disk")
+    parser.add_argument("--diff", action="store_true", help="Display detailed principles diff vs existing SKILL store")
     parser.add_argument("--config", default="config.yaml", help="Path to config.yaml")
     parser.add_argument("--threshold", type=float, default=None, help="Override similarity threshold (0-100)")
     parser.add_argument("--verbose", "-v", action="store_true", help="Enable verbose debug logging")
@@ -1213,10 +1383,17 @@ def main():
             targets=args.synthesize,
             output_skill_name=args.output_skill,
             min_sources=args.min_sources,
-            config_path=args.config
+            config_path=args.config,
+            dry_run=args.dry_run,
+            show_diff=args.diff
         )
     else:
-        merge_skill(handle=args.handle, config_path=args.config)
+        merge_skill(
+            handle=args.handle,
+            config_path=args.config,
+            dry_run=args.dry_run,
+            show_diff=args.diff
+        )
 
 
 if __name__ == "__main__":

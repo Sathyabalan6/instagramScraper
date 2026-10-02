@@ -94,7 +94,7 @@ instagramScraper/
 1. Scaffold structure + `requirements.txt` + `.gitignore` (complete).
 2. `fetch_posts.py` — metadata harvesting. Supports `@handle`, profile URLs, and saved collection feeds with JA4 TLS impersonation. **Verify `data/raw/<target>/` contains only `posts.json`, no images/video**.
 3. `classify_posts.py` — caption-vs-audio heuristic routing.
-4. `transcribe_audio.py` — `faster-whisper` CTranslate2 int8 transcription with PyAV 14+ compatibility monkey-patch. **Confirm `data/tmp_audio/` is empty after every run**.
+4. `transcribe_audio.py` — `faster-whisper` CTranslate2 int8 transcription. **Confirm `data/tmp_audio/` is empty after every run**.
 5. `extract_principles.py` — micro-batching (4 posts/prompt) with Gemini 3.5 Flash Lite default. Verify zero verbatim quoting.
 6. `merge_skill.py` — fuzzy deduplication, confidence upgrades, and compilation of `skills/<clean_name>/SKILL.md` (v2 spec with pre-flight checklist and design tokens).
 7. `run_pipeline.py` — orchestrate stages 1 $\rightarrow$ 5. Test with `--limit 10` before scaling up.

@@ -207,7 +207,9 @@ def run_pipeline(
     refresh_low_confidence: bool = False,
     synthesize: list = None,
     output_skill: str = "ui-ux-consensus",
-    min_sources: int = 1
+    min_sources: int = 1,
+    dry_run: bool = False,
+    show_diff: bool = False
 ):
     """
     Run full extraction pipeline or multi-target synthesis:
@@ -234,7 +236,9 @@ def run_pipeline(
             targets=synthesize,
             output_skill_name=output_skill,
             min_sources=min_sources,
-            config_path=config_path
+            config_path=config_path,
+            dry_run=dry_run,
+            show_diff=show_diff
         )
         logger.info(f"Multi-Target Synthesis completed successfully: {len(synthesized)} principles.")
         return synthesized
@@ -303,12 +307,20 @@ def run_pipeline(
         merge_stage = 4 if skip_transcribe else 5
         pbar.set_description(f"Stage {merge_stage}: Merging skill")
         logger.info(f"--- Stage {merge_stage}: Merging into SKILL.md & creator output folder ---")
-        merged = merge_skill(handle=target_name, config_path=config_path)
+        merged = merge_skill(
+            handle=target_name,
+            config_path=config_path,
+            dry_run=dry_run,
+            show_diff=show_diff
+        )
         pbar.update(1)
 
-    # Update processed state with full stage ledger
-    update_processed_state(state_file, posts)
-    logger.info(f"Updated stage state ledger: {len(posts)} posts recorded in {state_file}")
+    if not dry_run:
+        # Update processed state with full stage ledger
+        update_processed_state(state_file, posts)
+        logger.info(f"Updated stage state ledger: {len(posts)} posts recorded in {state_file}")
+    else:
+        logger.info(f"[DRY-RUN] Processed {len(posts)} posts. Skipped state ledger update.")
 
     output_dir = paths_cfg.get("output_dir", "output")
     skills_dir = paths_cfg.get("skills_dir", "skills")
@@ -354,6 +366,8 @@ def main():
         default=1,
         help="Minimum sources/citations required in synthesis mode (default: 1)"
     )
+    parser.add_argument("--dry-run", action="store_true", help="Run synthesis/merging without writing files to disk")
+    parser.add_argument("--diff", action="store_true", help="Display detailed principles diff vs existing SKILL store")
     parser.add_argument("--limit", type=int, default=50, help="Maximum number of new posts to process")
     parser.add_argument("--config", default="config.yaml", help="Path to config.yaml")
     parser.add_argument("--skip-transcribe", action="store_true", help="Skip Whisper audio transcription")
@@ -378,7 +392,9 @@ def main():
         refresh_low_confidence=args.refresh_low_confidence,
         synthesize=args.synthesize,
         output_skill=args.output_skill,
-        min_sources=args.min_sources
+        min_sources=args.min_sources,
+        dry_run=args.dry_run,
+        show_diff=args.diff
     )
 
 

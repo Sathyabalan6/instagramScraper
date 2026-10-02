@@ -1,113 +1,5 @@
 [
   {
-    "principle": "Interactive Tap Debouncing",
-    "category": "motion",
-    "rule": "Disable action triggers immediately upon activation to prevent duplicate submissions or purchases from rapid double-tapping.",
-    "do_this": "Disable action triggers immediately upon activation to prevent duplicate submissions or purchases from rapid double-tapping.",
-    "dont_do_this": "",
-    "trigger_context": "",
-    "why": "Rapid or impatient double-taps cause unintended duplicate requests, leading to user frustration and state corruption.",
-    "example": "Button component enters a disabled loading state on first tap: onClick={() => { setLoading(true); submitForm(); }}",
-    "confidence": "high",
-    "sources": [
-      {
-        "handle": "lincolndevine",
-        "date": "2026-09-30",
-        "url": "https://www.instagram.com/p/Dd6TWQ0hpfH/"
-      }
-    ]
-  },
-  {
-    "principle": "User-Friendly Error Notification Toasts",
-    "category": "hierarchy",
-    "rule": "Replace raw technical error logs or undefined strings with contextual, human-readable notification toasts.",
-    "do_this": "Replace raw technical error logs or undefined strings with contextual, human-readable notification toasts.",
-    "dont_do_this": "",
-    "trigger_context": "",
-    "why": "Exposing raw database errors creates cognitive overload and damages product trust.",
-    "example": "Displaying 'Something went wrong saving your changes. Try again.' instead of 'Error: TypeError: undefined at Object...'",
-    "confidence": "high",
-    "sources": [
-      {
-        "handle": "lincolndevine",
-        "date": "2026-09-30",
-        "url": "https://www.instagram.com/p/Dd6TWQ0hpfH/"
-      }
-    ]
-  },
-  {
-    "principle": "Viewport Auto-Scrolling for Active Inputs",
-    "category": "layout",
-    "rule": "Ensure focused input fields automatically scroll into view above the software keyboard when the virtual keyboard expands.",
-    "do_this": "Ensure focused input fields automatically scroll into view above the software keyboard when the virtual keyboard expands.",
-    "dont_do_this": "",
-    "trigger_context": "",
-    "why": "When keyboards obscure input fields, users cannot see what they are typing, leading to input errors and abandonment.",
-    "example": "Applying scrollIntoView({ behavior: 'smooth', block: 'center' }) on input focus events within mobile viewports.",
-    "confidence": "high",
-    "sources": [
-      {
-        "handle": "lincolndevine",
-        "date": "2026-09-30",
-        "url": "https://www.instagram.com/p/Dd6TWQ0hpfH/"
-      }
-    ]
-  },
-  {
-    "principle": "Theme State Persistence on Back Navigation",
-    "category": "color",
-    "rule": "Maintain consistent color token values and contrast ratios across dark and light mode transitions to prevent unreadable text states.",
-    "do_this": "Maintain consistent color token values and contrast ratios across dark and light mode transitions to prevent unreadable text states.",
-    "dont_do_this": "",
-    "trigger_context": "",
-    "why": "Abrupt theme switches can cause foreground text to blend into newly loaded backgrounds, breaking legibility.",
-    "example": "Using dynamic CSS custom properties (e.g., var(--text-primary)) that update cleanly without orphan color dependencies.",
-    "confidence": "medium",
-    "sources": [
-      {
-        "handle": "lincolndevine",
-        "date": "2026-09-30",
-        "url": "https://www.instagram.com/p/Dd6TWQ0hpfH/"
-      }
-    ]
-  },
-  {
-    "principle": "Client-Side Input State Caching",
-    "category": "layout",
-    "rule": "Persist form input states and user entries locally on page or route transitions so data is not lost when hitting the back button.",
-    "do_this": "Persist form input states and user entries locally on page or route transitions so data is not lost when hitting the back button.",
-    "dont_do_this": "",
-    "trigger_context": "",
-    "why": "Losing typed inputs upon navigating backward causes severe user friction and forces repetitive data entry.",
-    "example": "Autosaving form state to sessionStorage or localStorage on input change events.",
-    "confidence": "high",
-    "sources": [
-      {
-        "handle": "lincolndevine",
-        "date": "2026-09-30",
-        "url": "https://www.instagram.com/p/Dd6TWQ0hpfH/"
-      }
-    ]
-  },
-  {
-    "principle": "Skeleton Screen Content Placeholders",
-    "category": "layout",
-    "rule": "Replace generic spinners with structural skeleton loaders that mimic the dimensions and layout of the incoming content.",
-    "do_this": "Replace generic spinners with structural skeleton loaders that mimic the dimensions and layout of the incoming content.",
-    "dont_do_this": "",
-    "trigger_context": "",
-    "why": "Mimicking the final layout shape reduces perceived waiting time and prevents layout shifts when data resolves.",
-    "example": "Instead of a centered spinner, display grey pulsing rectangular blocks where cards or lists will load.",
-    "confidence": "high",
-    "sources": [
-      {
-        "handle": "jploft.us",
-        "date": "2026-09-16",
-        "url": "https://www.instagram.com/p/DdXFTBoPEHn/"
-      }
-    ]
-  },
-  {
     "principle": "Immediate Touch Feedback for Interactive Elements",
     "category": "motion",
     "rule": "Trigger instant visual state changes (like scale or color shifts) on every tap, executing heavy tasks asynchronously.",
@@ -146,43 +38,8 @@
           }
         ]
       }
-    ]
-  },
-  {
-    "principle": "Fixed Primary CTA Positioning in Stepper Flows",
-    "category": "layout",
-    "rule": "Anchor the primary progression button (e.g., 'Continue') to the exact same screen coordinates across every step of an onboarding flow.",
-    "do_this": "Anchor the primary progression button (e.g., 'Continue') to the exact same screen coordinates across every step of an onboarding flow.",
-    "dont_do_this": "",
-    "trigger_context": "",
-    "why": "Maintaining spatial consistency builds muscle memory, allowing users to progress rapidly without visually searching for the button.",
-    "example": "Pin the primary 'Next' button to the bottom sticky container across all 4 onboarding screens.",
-    "confidence": "high",
-    "sources": [
-      {
-        "handle": "jploft.us",
-        "date": "2026-09-16",
-        "url": "https://www.instagram.com/p/DdXFTBoPEHn/"
-      }
-    ]
-  },
-  {
-    "principle": "Human-Readable Fallback Error States",
-    "category": "accessibility",
-    "rule": "Intercept raw system exceptions (404, 500, stack traces) and display an actionable recovery message with clear next steps.",
-    "do_this": "Intercept raw system exceptions (404, 500, stack traces) and display an actionable recovery message with clear next steps.",
-    "dont_do_this": "",
-    "trigger_context": "",
-    "why": "Technical error codes cause confusion and erode trust, whereas plain-language instructions guide the user toward recovery.",
-    "example": "Instead of 'Error 500: SQL Timeout', show 'We're having trouble connecting. Try again in a moment.' with a retry button.",
-    "confidence": "high",
-    "sources": [
-      {
-        "handle": "jploft.us",
-        "date": "2026-09-16",
-        "url": "https://www.instagram.com/p/DdXFTBoPEHn/"
-      }
-    ]
+    ],
+    "quality_score": 55.0
   },
   {
     "principle": "Dedicated 404 Error State Design",
@@ -200,7 +57,8 @@
         "date": "2026-08-14",
         "url": "https://www.instagram.com/p/DcBqrPsR6BB/"
       }
-    ]
+    ],
+    "quality_score": 50.0
   },
   {
     "principle": "Interactive Contact Triggers",
@@ -218,7 +76,8 @@
         "date": "2026-08-18",
         "url": "https://www.instagram.com/p/DcKiRe3TvdB/"
       }
-    ]
+    ],
+    "quality_score": 50.0
   },
   {
     "principle": "Form Submission Feedback States",
@@ -236,7 +95,8 @@
         "date": "2026-08-18",
         "url": "https://www.instagram.com/p/DcKiRe3TvdB/"
       }
-    ]
+    ],
+    "quality_score": 50.0
   },
   {
     "principle": "Above-the-Fold Primary Call to Action",
@@ -254,7 +114,8 @@
         "date": "2026-08-30",
         "url": "https://www.instagram.com/p/DcEqXsySUaP/"
       }
-    ]
+    ],
+    "quality_score": 50.0
   },
   {
     "principle": "Persistent Mobile Conversion Anchor",
@@ -272,7 +133,141 @@
         "date": "2026-08-30",
         "url": "https://www.instagram.com/p/DcEqXsySUaP/"
       }
-    ]
+    ],
+    "quality_score": 50.0
+  },
+  {
+    "principle": "Interactive Tap Debouncing",
+    "category": "motion",
+    "rule": "Disable action triggers immediately upon activation to prevent duplicate submissions or purchases from rapid double-tapping.",
+    "do_this": "Disable action triggers immediately upon activation to prevent duplicate submissions or purchases from rapid double-tapping.",
+    "dont_do_this": "",
+    "trigger_context": "",
+    "why": "Rapid or impatient double-taps cause unintended duplicate requests, leading to user frustration and state corruption.",
+    "example": "Button component enters a disabled loading state on first tap: onClick={() => { setLoading(true); submitForm(); }}",
+    "confidence": "high",
+    "sources": [
+      {
+        "handle": "lincolndevine",
+        "date": "2026-09-30",
+        "url": "https://www.instagram.com/p/Dd6TWQ0hpfH/"
+      }
+    ],
+    "quality_score": 45.0
+  },
+  {
+    "principle": "User-Friendly Error Notification Toasts",
+    "category": "hierarchy",
+    "rule": "Replace raw technical error logs or undefined strings with contextual, human-readable notification toasts.",
+    "do_this": "Replace raw technical error logs or undefined strings with contextual, human-readable notification toasts.",
+    "dont_do_this": "",
+    "trigger_context": "",
+    "why": "Exposing raw database errors creates cognitive overload and damages product trust.",
+    "example": "Displaying 'Something went wrong saving your changes. Try again.' instead of 'Error: TypeError: undefined at Object...'",
+    "confidence": "high",
+    "sources": [
+      {
+        "handle": "lincolndevine",
+        "date": "2026-09-30",
+        "url": "https://www.instagram.com/p/Dd6TWQ0hpfH/"
+      }
+    ],
+    "quality_score": 45.0
+  },
+  {
+    "principle": "Viewport Auto-Scrolling for Active Inputs",
+    "category": "layout",
+    "rule": "Ensure focused input fields automatically scroll into view above the software keyboard when the virtual keyboard expands.",
+    "do_this": "Ensure focused input fields automatically scroll into view above the software keyboard when the virtual keyboard expands.",
+    "dont_do_this": "",
+    "trigger_context": "",
+    "why": "When keyboards obscure input fields, users cannot see what they are typing, leading to input errors and abandonment.",
+    "example": "Applying scrollIntoView({ behavior: 'smooth', block: 'center' }) on input focus events within mobile viewports.",
+    "confidence": "high",
+    "sources": [
+      {
+        "handle": "lincolndevine",
+        "date": "2026-09-30",
+        "url": "https://www.instagram.com/p/Dd6TWQ0hpfH/"
+      }
+    ],
+    "quality_score": 45.0
+  },
+  {
+    "principle": "Client-Side Input State Caching",
+    "category": "layout",
+    "rule": "Persist form input states and user entries locally on page or route transitions so data is not lost when hitting the back button.",
+    "do_this": "Persist form input states and user entries locally on page or route transitions so data is not lost when hitting the back button.",
+    "dont_do_this": "",
+    "trigger_context": "",
+    "why": "Losing typed inputs upon navigating backward causes severe user friction and forces repetitive data entry.",
+    "example": "Autosaving form state to sessionStorage or localStorage on input change events.",
+    "confidence": "high",
+    "sources": [
+      {
+        "handle": "lincolndevine",
+        "date": "2026-09-30",
+        "url": "https://www.instagram.com/p/Dd6TWQ0hpfH/"
+      }
+    ],
+    "quality_score": 45.0
+  },
+  {
+    "principle": "Skeleton Screen Content Placeholders",
+    "category": "layout",
+    "rule": "Replace generic spinners with structural skeleton loaders that mimic the dimensions and layout of the incoming content.",
+    "do_this": "Replace generic spinners with structural skeleton loaders that mimic the dimensions and layout of the incoming content.",
+    "dont_do_this": "",
+    "trigger_context": "",
+    "why": "Mimicking the final layout shape reduces perceived waiting time and prevents layout shifts when data resolves.",
+    "example": "Instead of a centered spinner, display grey pulsing rectangular blocks where cards or lists will load.",
+    "confidence": "high",
+    "sources": [
+      {
+        "handle": "jploft.us",
+        "date": "2026-09-16",
+        "url": "https://www.instagram.com/p/DdXFTBoPEHn/"
+      }
+    ],
+    "quality_score": 45.0
+  },
+  {
+    "principle": "Fixed Primary CTA Positioning in Stepper Flows",
+    "category": "layout",
+    "rule": "Anchor the primary progression button (e.g., 'Continue') to the exact same screen coordinates across every step of an onboarding flow.",
+    "do_this": "Anchor the primary progression button (e.g., 'Continue') to the exact same screen coordinates across every step of an onboarding flow.",
+    "dont_do_this": "",
+    "trigger_context": "",
+    "why": "Maintaining spatial consistency builds muscle memory, allowing users to progress rapidly without visually searching for the button.",
+    "example": "Pin the primary 'Next' button to the bottom sticky container across all 4 onboarding screens.",
+    "confidence": "high",
+    "sources": [
+      {
+        "handle": "jploft.us",
+        "date": "2026-09-16",
+        "url": "https://www.instagram.com/p/DdXFTBoPEHn/"
+      }
+    ],
+    "quality_score": 45.0
+  },
+  {
+    "principle": "Human-Readable Fallback Error States",
+    "category": "accessibility",
+    "rule": "Intercept raw system exceptions (404, 500, stack traces) and display an actionable recovery message with clear next steps.",
+    "do_this": "Intercept raw system exceptions (404, 500, stack traces) and display an actionable recovery message with clear next steps.",
+    "dont_do_this": "",
+    "trigger_context": "",
+    "why": "Technical error codes cause confusion and erode trust, whereas plain-language instructions guide the user toward recovery.",
+    "example": "Instead of 'Error 500: SQL Timeout', show 'We're having trouble connecting. Try again in a moment.' with a retry button.",
+    "confidence": "high",
+    "sources": [
+      {
+        "handle": "jploft.us",
+        "date": "2026-09-16",
+        "url": "https://www.instagram.com/p/DdXFTBoPEHn/"
+      }
+    ],
+    "quality_score": 45.0
   },
   {
     "principle": "Low-Latency Interface Interaction Response",
@@ -290,7 +285,8 @@
         "date": "2026-09-02",
         "url": "https://www.instagram.com/p/DcwkX6OyduT/"
       }
-    ]
+    ],
+    "quality_score": 45.0
   },
   {
     "principle": "Accessible Text Color Contrast",
@@ -308,7 +304,8 @@
         "date": "2026-09-09",
         "url": "https://www.instagram.com/p/DdFJTtMganO/"
       }
-    ]
+    ],
+    "quality_score": 45.0
   },
   {
     "principle": "Informative Image Alternative Text",
@@ -326,7 +323,8 @@
         "date": "2026-09-09",
         "url": "https://www.instagram.com/p/DdFJTtMganO/"
       }
-    ]
+    ],
+    "quality_score": 45.0
   },
   {
     "principle": "Single Primary Call-to-Action",
@@ -344,7 +342,8 @@
         "date": "2026-09-09",
         "url": "https://www.instagram.com/p/DdFJTtMganO/"
       }
-    ]
+    ],
+    "quality_score": 45.0
   },
   {
     "principle": "Physics-Based Spring Animations",
@@ -362,7 +361,8 @@
         "date": "2026-09-15",
         "url": "https://www.instagram.com/p/DdQhclcxcL-/"
       }
-    ]
+    ],
+    "quality_score": 45.0
   },
   {
     "principle": "Reduced Motion Preference Compliance",
@@ -380,6 +380,26 @@
         "date": "2026-09-15",
         "url": "https://www.instagram.com/p/DdQhclcxcL-/"
       }
-    ]
+    ],
+    "quality_score": 45.0
+  },
+  {
+    "principle": "Theme State Persistence on Back Navigation",
+    "category": "color",
+    "rule": "Maintain consistent color token values and contrast ratios across dark and light mode transitions to prevent unreadable text states.",
+    "do_this": "Maintain consistent color token values and contrast ratios across dark and light mode transitions to prevent unreadable text states.",
+    "dont_do_this": "",
+    "trigger_context": "",
+    "why": "Abrupt theme switches can cause foreground text to blend into newly loaded backgrounds, breaking legibility.",
+    "example": "Using dynamic CSS custom properties (e.g., var(--text-primary)) that update cleanly without orphan color dependencies.",
+    "confidence": "medium",
+    "sources": [
+      {
+        "handle": "lincolndevine",
+        "date": "2026-09-30",
+        "url": "https://www.instagram.com/p/Dd6TWQ0hpfH/"
+      }
+    ],
+    "quality_score": 35.0
   }
 ]

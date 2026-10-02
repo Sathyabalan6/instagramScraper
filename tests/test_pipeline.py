@@ -685,6 +685,164 @@ def test_multi_target_synthesis(tmp_path):
     assert synth_strict[0].get("category") == "layout"
 
 
+def test_quality_score_calculation_and_sorting():
+    """Verify compute_quality_score weights directives, sources, and confidence, and sorts principles descending."""
+    from scripts.merge_skill import compute_quality_score, cluster_and_synthesize_principles
+
+    high_quality_p = {
+        "principle": "High Quality Guideline",
+        "category": "layout",
+        "rule": "Enforce high quality.",
+        "do_this": "Do exact positive action",
+        "dont_do_this": "Avoid anti pattern",
+        "trigger_context": "Layout design",
+        "why": "Clear rationale",
+        "example": "Before: Old. After: New.",
+        "confidence": "high",
+        "sources": [{"handle": "c1"}, {"handle": "c2"}, {"handle": "c3"}]
+    }
+
+    low_quality_p = {
+        "principle": "Bare Guideline",
+        "category": "layout",
+        "rule": "Basic rule.",
+        "confidence": "medium",
+        "sources": [{"handle": "c1"}]
+    }
+
+    score_high = compute_quality_score(high_quality_p)
+    score_low = compute_quality_score(low_quality_p)
+
+    assert score_high > score_low
+    assert score_high >= 110.0  # 30 (trigger) + 20 (dont) + 15 (do) + 30 (sources) + 20 (high conf) + 5 (ex)
+
+    synthesized = cluster_and_synthesize_principles([low_quality_p, high_quality_p])
+    assert synthesized[0]["principle"] == "High Quality Guideline"
+    assert synthesized[0]["quality_score"] == score_high
+
+
+def test_principles_diff_computation():
+    """Verify compute_principles_diff detects added, modified, and removed principles."""
+    from scripts.merge_skill import compute_principles_diff, format_diff_summary
+
+    old_list = [
+        {"principle": "Retained Rule", "category": "layout", "sources": [{"handle": "c1"}]},
+        {"principle": "Obsolete Rule", "category": "color", "sources": [{"handle": "c1"}]}
+    ]
+
+    new_list = [
+        {"principle": "Retained Rule", "category": "layout", "do_this": "Updated action", "sources": [{"handle": "c1"}, {"handle": "c2"}]},
+        {"principle": "Fresh Rule", "category": "motion", "sources": [{"handle": "c2"}], "quality_score": 85.0}
+    ]
+
+    diff = compute_principles_diff(old_list, new_list)
+    assert len(diff["added"]) == 1
+    assert diff["added"][0]["principle"] == "Fresh Rule"
+    assert len(diff["modified"]) == 1
+    assert diff["modified"][0]["principle"]["principle"] == "Retained Rule"
+    assert len(diff["removed"]) == 1
+    assert diff["removed"][0]["principle"] == "Obsolete Rule"
+
+    formatted = format_diff_summary(diff, "test-target")
+    assert "+ Added: Fresh Rule" in formatted
+    assert "~ Modified: Retained Rule" in formatted
+    assert "- Removed: Obsolete Rule" in formatted
+
+
+def test_custom_allowed_cross_category_pairs_from_config():
+    """Verify loading allowed_cross_category_pairs from config overrides defaults."""
+    from scripts.merge_skill import get_allowed_cross_category_pairs, cluster_and_synthesize_principles
+
+    custom_cfg = {
+        "merge": {
+            "allowed_cross_category_pairs": [
+                ["spacing", "typography"]
+            ]
+        }
+    }
+
+    pairs = get_allowed_cross_category_pairs(custom_cfg)
+    assert frozenset({"spacing", "typography"}) in pairs
+    assert frozenset({"layout", "spacing"}) not in pairs
+
+    spacing_p = {
+        "principle": "Consistent Line Spacing",
+        "category": "spacing",
+        "rule": "Maintain 1.5 line height for body paragraphs.",
+        "confidence": "high",
+        "sources": [{"handle": "c1"}]
+    }
+
+    typo_p = {
+        "principle": "Consistent Line Spacing",
+        "category": "typography",
+        "rule": "Maintain 1.5 line height for body paragraphs.",
+        "confidence": "high",
+        "sources": [{"handle": "c2"}]
+    }
+
+    synthesized = cluster_and_synthesize_principles([spacing_p, typo_p], config=custom_cfg)
+    # Since spacing ↔ typography is in custom config, they should cluster into 1 canonical principle!
+    assert len(synthesized) == 1
+    assert len(synthesized[0]["sources"]) == 2
+
+
+def test_dry_run_mode(tmp_path):
+    """Verify that --dry-run computes synthesis and diff without writing files to disk."""
+    import json
+    import yaml
+    from scripts.merge_skill import merge_multi_target
+
+    output_dir = tmp_path / "output"
+    raw_dir = tmp_path / "data" / "raw"
+    skills_dir = tmp_path / "skills"
+    output_dir.mkdir(parents=True)
+    raw_dir.mkdir(parents=True)
+    skills_dir.mkdir(parents=True)
+
+    config_data = {
+        "merge": {"dedup_similarity_threshold": 80.0},
+        "paths": {
+            "output_dir": str(output_dir),
+            "raw_data_dir": str(raw_dir),
+            "skills_dir": str(skills_dir)
+        }
+    }
+    cfg_file = tmp_path / "config.yaml"
+    with open(cfg_file, "w", encoding="utf-8") as f:
+        yaml.dump(config_data, f)
+
+    dir_a = output_dir / "creator_dry"
+    dir_a.mkdir()
+    posts_a = [{
+        "post_id": "9001",
+        "shortcode": "DRY_1",
+        "principles": [{
+            "principle": "Dry Run Spatial Rule",
+            "category": "layout",
+            "rule": "Use 8pt grid.",
+            "confidence": "high",
+            "sources": [{"handle": "creator_dry"}]
+        }]
+    }]
+    with open(dir_a / "posts.json", "w", encoding="utf-8") as f:
+        json.dump(posts_a, f)
+
+    synth_dry = merge_multi_target(
+        targets=["creator_dry"],
+        output_skill_name="dry-skill",
+        config_path=str(cfg_file),
+        dry_run=True,
+        show_diff=True
+    )
+
+    assert len(synth_dry) == 1
+    # Verify NO files were created under skills/dry-skill or output/dry-skill
+    assert not (skills_dir / "dry-skill").exists()
+    assert not (output_dir / "dry-skill").exists()
+
+
+
 
 
 
