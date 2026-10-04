@@ -255,6 +255,17 @@ Before finalizing any interface layout or component hierarchy, audit against the
 - **Status**: Single-Source Guideline (@murphmaxxing)
 - **Sources**: 1 citation(s) (latest: 2026-09-18) — [@murphmaxxing](https://www.instagram.com/p/DdcIywaBDtY/)
 
+#### Complete Application Edge States and Flows
+- **When to apply**: Any application pre-launch checklist or production readiness audit for a new software interface.
+- **Do this**: Implement explicit UI screens and feedback mechanisms for asynchronous data fetching, data-absent conditions, and failure states before considering a product finished.
+- **Don't do this**: Assume an interface is complete when happy-path layouts function correctly without handling empty, loading, and error states.
+- **Why it matters**: Failing to account for non-ideal states results in broken layouts, blank screens, and user confusion when network latency or empty databases occur.
+- **Implementation Pattern**:
+  - **Avoid**: A dashboard displaying blank white space when no data exists.
+  - **Do This**: An empty state component featuring custom illustration, explanatory microcopy, and a clear call-to-action button to create the first item.
+- **Status**: Single-Source Guideline (@corecodevibes)
+- **Sources**: 1 citation(s) (latest: 2026-08-15) — [@corecodevibes](https://www.instagram.com/p/DcCS0Z6oNfW/)
+
 #### Consistent Primary Action Placement in Flows
 - **When to apply**: Multi-step onboarding flows, checkout wizards, or sequential form screens
 - **Do this**: Anchor the primary continue or advance action button to the exact same screen coordinate across every step of the flow.

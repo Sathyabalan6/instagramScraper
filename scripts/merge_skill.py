@@ -13,6 +13,8 @@ import logging
 from pathlib import Path
 from datetime import datetime
 import yaml
+import re
+from typing import Optional
 import requests
 from dotenv import load_dotenv
 
@@ -57,7 +59,7 @@ ALLOWED_CROSS_CATEGORY_PAIRS = {
 }
 
 
-def get_allowed_cross_category_pairs(config: dict = None) -> set:
+def get_allowed_cross_category_pairs(config: dict | None = None) -> set:
     """Read allowed cross-category semantic cluster pairings from config, with default fallback."""
     if config and isinstance(config.get("merge"), dict):
         raw = config["merge"].get("allowed_cross_category_pairs")

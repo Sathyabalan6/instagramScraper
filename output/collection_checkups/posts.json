@@ -499,12 +499,31 @@
       "has_substance": true
     },
     "transcript": "Throw a lot, let me show you how to move, let me show you how  Get that bad, you ain't never coming last  Fuck your man, you know this gon' make him mad",
-    "principles": [],
+    "principles": [
+      {
+        "principle": "Complete Application Edge States and Flows",
+        "category": "layout",
+        "trigger_context": "Any application pre-launch checklist or production readiness audit for a new software interface.",
+        "do_this": "Implement explicit UI screens and feedback mechanisms for asynchronous data fetching, data-absent conditions, and failure states before considering a product finished.",
+        "dont_do_this": "Assume an interface is complete when happy-path layouts function correctly without handling empty, loading, and error states.",
+        "rule": "Design dedicated UI views for empty data collections, active loading skeletons, and runtime error handlers for every functional screen.",
+        "why": "Failing to account for non-ideal states results in broken layouts, blank screens, and user confusion when network latency or empty databases occur.",
+        "example": "Before: A dashboard displaying blank white space when no data exists. After: An empty state component featuring custom illustration, explanatory microcopy, and a clear call-to-action button to create the first item.",
+        "confidence": "high",
+        "sources": [
+          {
+            "handle": "corecodevibes",
+            "date": "2026-08-15",
+            "url": "https://www.instagram.com/p/DcCS0Z6oNfW/"
+          }
+        ]
+      }
+    ],
     "extraction_metadata": {
       "method": "llm_batch",
       "provider": "gemini",
       "model": "gemini-3.5-flash-lite",
-      "principles_count": 0,
+      "principles_count": 1,
       "prompt_hash": "ad46e79302ae"
     }
   },

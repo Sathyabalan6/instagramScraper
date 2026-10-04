@@ -2,7 +2,7 @@
 
 > Automated pipeline that harvests UI/UX design lessons from Instagram reels and carousels, transcribes spoken advice via local AI, synthesizes actionable heuristics via LLMs, and compiles production-ready **Claude Skills** (`SKILL.md`) for AI coding agents.
 
-[![CI Status](https://github.com/your-username/instagramScraper/actions/workflows/ci.yml/badge.svg)](https://github.com/your-username/instagramScraper/actions)
+[![CI Status](https://github.com/sathybalan/instagramScraper/actions/workflows/ci.yml/badge.svg)](https://github.com/sathybalan/instagramScraper/actions)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Design Spec](https://img.shields.io/badge/Design_Spec-v2.0-emerald.svg)](PROJECT_SPEC.md)
@@ -221,7 +221,7 @@ flowchart TD
 
 ### 2. Install Python Dependencies
 ```bash
-git clone https://github.com/your-username/instagramScraper.git
+git clone https://github.com/sathybalan/instagramScraper.git
 cd instagramScraper
 
 pip install -r requirements.txt
